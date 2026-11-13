@@ -208,6 +208,14 @@ describe("proyección del patrimonio", () => {
     expect(p[6].medio).toBeLessThan(p[4].medio);
   });
 
+  it("la plata del retiro no se resta: es el capital con el que la persona se retira", () => {
+    const base = { edad: 35, ahorroMensual: 0, ingresos: null, gastos: null, ahorros: 50000, deudas: [] };
+    const conRetiro = armarPlan(entrada({ situacion: base, objetivos: [objetivo("retiro", 40000, 2031, "imprescindible", "retiro")] })).proyeccion;
+    const conCasa = armarPlan(entrada({ situacion: base, objetivos: [objetivo("casa", 40000, 2031, "imprescindible", "casa")] })).proyeccion;
+    expect(conRetiro[6].medio).toBeGreaterThan(conRetiro[4].medio);
+    expect(conCasa[6].medio).toBeLessThan(conCasa[4].medio);
+  });
+
   it("es determinista", () => {
     const a = armarPlan(entrada({ objetivos: [objetivo("casa", 50000, 2036)] }));
     const b = armarPlan(entrada({ objetivos: [objetivo("casa", 50000, 2036)] }));

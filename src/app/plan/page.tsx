@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import datos from "@datos/frontera.json";
 import cuestionario from "@datos/cuestionario.json";
 import etfs from "@datos/etfs.json";
+import criterios from "@datos/criterios-plan.json";
+import type { Criterios } from "@/plan/patrimonio";
 import type { DatosGenerados } from "@/motor/generado";
 import type { Cuestionario } from "@/plan/perfil";
 import type { ListaEtfs } from "@/plan/etfs";
@@ -23,7 +25,7 @@ export default function PaginaPlan() {
       {d.ejemplo && <AvisoEjemplo />}
       <Encabezado />
       <main className="mx-auto min-h-[70vh] max-w-6xl px-4 pt-4 pb-20 sm:px-8">
-        <PlanCliente datos={d} cuestionario={cuestionario as Cuestionario} etfs={etfs as ListaEtfs} />
+        <PlanCliente datos={d} cuestionario={cuestionario as Cuestionario} etfs={etfs as ListaEtfs} criterios={criterios as Criterios} />
       </main>
       <Pie fuente={d.fuente} />
     </>

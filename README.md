@@ -86,6 +86,17 @@ Las preguntas, opciones y puntajes están en `datos/cuestionario.json`.
 
 Después de cambiarlo, corré `npm test`: hay pruebas que comprueban que cada bloque llegue a 20 puntos y que los cortes den el perfil esperado.
 
+## Cómo cambiar los criterios del plan patrimonial
+
+Están en `datos/criterios-plan.json`:
+
+- `plazos`: qué cartera le toca a cada objetivo según cuántos años faltan. Siempre con tope en el perfil de la persona.
+- `fondoEmergencia`: cuántos meses de gastos (3, o 6 si en el test respondió ingresos variables o personas a cargo).
+- `deudas`: qué tipos se cancelan siempre antes de invertir y cuáles nunca. Las demás, si su tasa supera el retorno esperado.
+- `retiro`: el multiplicador de la regla del 4% (25 veces el gasto anual) y la edad de retiro sugerida.
+
+El orden del plan es fijo: primero el colchón, después las deudas a cancelar y después los objetivos por prioridad (dentro de cada prioridad, el que vence antes). Las probabilidades salen de simular 500 escenarios con una semilla fija, así que los mismos datos dan siempre el mismo resultado.
+
 ## Cómo cambiar la lista de ETFs
 
 Está en `datos/etfs.json`, separada por clase de activo. Para cada ETF: nombre, emisor, ticker, bolsa, ISIN, domicilio, moneda, si acumula o distribuye, costo anual (TER), índice y tipo. Reglas:

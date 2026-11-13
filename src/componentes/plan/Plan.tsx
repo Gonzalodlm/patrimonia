@@ -8,6 +8,9 @@ import { borrarEstado, guardarEstado, leerEstado, type EstadoPlan } from "./esta
 import { Explicacion } from "./Explicacion";
 import { Test } from "./Test";
 import { Cartera } from "./Cartera";
+import { Situacion } from "./Situacion";
+import { PlanPatrimonial } from "./PlanPatrimonial";
+import type { Criterios } from "@/plan/patrimonio";
 
 const PASOS = ["Antes de empezar", "Tu perfil", "Tu situación", "Tu cartera", "Tu plan"];
 
@@ -15,9 +18,11 @@ interface Props {
   datos: DatosGenerados;
   cuestionario: Cuestionario;
   etfs: ListaEtfs;
+  criterios: Criterios;
 }
 
-export function Plan({ datos, cuestionario, etfs }: Props) {
+export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
+  const anioActual = new Date().getFullYear();
   // Este componente solo se dibuja en el navegador, así que puede leer el estado guardado al iniciar.
   const [estado, setEstado] = useState<EstadoPlan>(leerEstado);
   // Se prueba una sola vez si el navegador deja guardar.
@@ -90,10 +95,23 @@ export function Plan({ datos, cuestionario, etfs }: Props) {
         )}
 
         {estado.paso === 2 && (
-          <Pendiente titulo="Tu situación y tus objetivos" onSeguir={() => irAPaso(3)}>
-            Acá vas a cargar tu edad, cuánto podés ahorrar por mes, tus ahorros y deudas, y tus objetivos. Se suma en la próxima etapa del
-            proyecto; por ahora podés seguir a tu cartera.
-          </Pendiente>
+          <Situacion
+            situacion={estado.situacion}
+            objetivos={estado.objetivos}
+            criterios={criterios}
+            mesesColchon={
+              Object.entries(criterios.fondoEmergencia.respuestasInestables).some(([p, ops]) => ops.includes(estado.respuestas[p]))
+                ? criterios.fondoEmergencia.mesesSiIngresosInestables
+                : criterios.fondoEmergencia.meses
+            }
+            anioActual={anioActual}
+            onSituacion={(situacion) =>
+              // El monto de "qué puede pasar" de la cartera arranca en los ahorros que la persona cargó.
+              setEstado((e) => ({ ...e, situacion, monto: situacion.ahorros && situacion.ahorros !== e.situacion.ahorros ? situacion.ahorros : e.monto }))
+            }
+            onObjetivos={(objetivos) => actualizar({ objetivos })}
+            onSeguir={() => irAPaso(3)}
+          />
         )}
 
         {estado.paso === 3 &&
@@ -115,11 +133,33 @@ export function Plan({ datos, cuestionario, etfs }: Props) {
             </Pendiente>
           ))}
 
-        {estado.paso === 4 && (
-          <Pendiente titulo="Tu plan" onSeguir={() => irAPaso(3)} boton="Volver a la cartera">
-            Acá vas a ver cuánto ahorrar por mes para cada objetivo, en qué orden y cómo evoluciona tu patrimonio. Se suma en la próxima
-            etapa del proyecto.
-          </Pendiente>
+        {estado.paso === 4 &&
+          (perfil ? (
+            <PlanPatrimonial
+              datos={datos}
+              etfs={etfs}
+              criterios={criterios}
+              perfil={perfil}
+              tipo={estado.tipoCartera}
+              elegidos={estado.etfs}
+              situacion={estado.situacion}
+              objetivos={estado.objetivos}
+              respuestas={estado.respuestas}
+              anioActual={anioActual}
+              onIrASituacion={() => irAPaso(2)}
+            />
+          ) : (
+            <Pendiente titulo="Primero, tu perfil" onSeguir={() => irAPaso(1)} boton="Ir al test">
+              Para armar tu plan necesitamos saber tu perfil de riesgo.
+            </Pendiente>
+          ))}
+
+        {estado.paso === 4 && perfil && (
+          <div className="mt-12 border-t border-[var(--linea)] pt-8">
+            <button type="button" onClick={() => irAPaso(3)} className="text-[16px] text-[var(--gris)] hover:text-[var(--tinta)]">
+              ← Volver a mi cartera
+            </button>
+          </div>
         )}
 
         {estado.paso === 3 && perfil && (

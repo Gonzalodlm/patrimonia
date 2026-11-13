@@ -2,9 +2,13 @@
 // Si el almacenamiento no está disponible (modo privado, bloqueado), el plan funciona igual,
 // pero se pierde al cerrar la página.
 
+import type { Objetivo, Situacion } from "@/plan/patrimonio";
+
 export type TipoCartera = "simple" | "diversificada";
 
 export interface EstadoPlan {
+  situacion: Situacion;
+  objetivos: Objetivo[];
   version: 1;
   paso: number;
   /** Pregunta del test en la que va (índice). */
@@ -27,6 +31,8 @@ export const estadoInicial: EstadoPlan = {
   tipoCartera: "diversificada",
   monto: 10000,
   etfs: {},
+  situacion: { edad: null, ahorroMensual: null, ingresos: null, gastos: null, ahorros: null, deudas: [] },
+  objetivos: [],
 };
 
 const CLAVE = "patrimonia.plan.v1";

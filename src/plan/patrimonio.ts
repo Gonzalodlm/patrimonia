@@ -338,7 +338,8 @@ function proyectar(e: EntradaPlan, d: DatosProyeccion): PuntoProyeccion[] {
     inicial: o.conAhorros,
     aporte: o.aporte,
     vence: Math.round(o.anios * 12),
-    retiro: o.montoNominal,
+    // La plata del retiro no se gasta de una vez: es el capital con el que la persona se retira.
+    retiro: o.objetivo.categoria === "retiro" ? 0 : o.montoNominal,
   }));
   const mesesColchon = d.mesesColchon ?? Infinity;
   const desde = d.mesesAntes ?? Infinity;
@@ -357,7 +358,11 @@ function proyectar(e: EntradaPlan, d: DatosProyeccion): PuntoProyeccion[] {
       if (m >= desde) sobrante += d.sobranteMensual;
       for (let i = 0; i < bolsillos.length; i++) {
         const b = bolsillos[i];
-        if (m >= b.vence) continue;
+        if (m >= b.vence) {
+          // Lo que queda después de la fecha (el capital del retiro, o un sobrante) sigue invertido en liquidez.
+          valores[i] *= Math.exp(liq.mu + liq.sigma * zm);
+          continue;
+        }
         valores[i] *= Math.exp(b.p.mu + b.p.sigma * zm);
         if (m >= desde) valores[i] += b.aporte;
         if (m === b.vence - 1) valores[i] = Math.max(0, valores[i] - b.retiro); // se usa la plata del objetivo

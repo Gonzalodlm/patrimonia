@@ -4,8 +4,8 @@
 export const sitio = {
   nombre: "Patrimonia",
   dominio: "patrimonia.uy",
-  /** PENDIENTE: dirección del repositorio público en GitHub. */
-  repositorio: null as string | null,
+  /** Repositorio público en GitHub. */
+  repositorio: "https://github.com/Gonzalodlm/patrimonia" as string | null,
   /** Mail de contacto público (aparece en el pie, en "Quién lo hace" y en la página de privacidad). */
   contacto: "gonzalodiaslopez3@gmail.com" as string | null,
 };

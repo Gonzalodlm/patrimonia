@@ -152,19 +152,14 @@ Ojo: aunque los números no estén en el repositorio, el sitio publicado los usa
 
 ## Publicar el sitio
 
-1. **GitHub.** Creá un repositorio público vacío (por ejemplo `patrimonia`) y subí el código:
-   ```
-   git remote add origin https://github.com/TU-USUARIO/patrimonia.git
-   git push -u origin main
-   ```
-   Antes, revisá que el autor de los commits sea el que querés mostrar (`git log`). Los archivos de J.P. Morgan no se suben: están en `.gitignore`.
+1. **GitHub.** El código está en [github.com/Gonzalodlm/patrimonia](https://github.com/Gonzalodlm/patrimonia). Para subir cambios: `git push`. Los archivos de J.P. Morgan no se suben: están en `.gitignore`.
 2. **Vercel.** En [vercel.com](https://vercel.com), «Add New → Project», importá el repositorio. Vercel detecta Next.js solo; no hace falta cambiar nada.
 3. **Variables de entorno** (Settings → Environment Variables), ver `.env.example`:
    - `SUPUESTOS_JSON_BASE64`: los supuestos reales (ver «Los datos de J.P. Morgan»). Sin esta variable el sitio sale con los datos de ejemplo y un aviso.
    - `GEMINI_API_KEY`: la clave de Gemini (plan pago).
    - `DATABASE_URL`: la carga sola Vercel al agregar Neon desde Storage o el Marketplace.
    - `SECRETO_BAJAS`: una frase larga al azar.
-   - `SITIO_URL`: `https://patrimonia.uy`.
+   - `SITIO_URL`: la dirección pública del sitio (la de Vercel, `https://….vercel.app`, hasta tener `https://patrimonia.uy`).
 4. **Estadísticas.** En el proyecto de Vercel, pestaña Analytics, activá Web Analytics.
 5. **Dominio.** En Settings → Domains agregá `patrimonia.uy` y cargá en tu proveedor del dominio los registros DNS que indique Vercel.
 6. Volvé a desplegar (Deployments → Redeploy) para que tome las variables, y recorré el sitio entero una vez.
@@ -173,10 +168,11 @@ Cada `git push` a `main` publica una versión nueva. Cada cambio en otra rama ge
 
 ## Antes de lanzar
 
-- [ ] Decidir si se pueden publicar los supuestos de J.P. Morgan (el sitio los muestra).
+- [x] Decidir si se pueden publicar los supuestos de J.P. Morgan: Gonzalo decidió usarlos, sin cobrar (el informe sigue fuera del repositorio).
 - [ ] Revisar con un abogado los avisos (`src/lib/avisos.ts`), la página de privacidad y el texto de consentimiento.
-- [ ] Reemplazar el texto de ejemplo de «Quién lo hace» (`src/componentes/landing/Secciones.tsx`).
-- [ ] Completar la dirección del repositorio y el mail de contacto en `src/lib/sitio.ts`.
+- [x] Texto de «Quién lo hace» (`src/componentes/landing/Secciones.tsx`).
+- [x] Dirección del repositorio y mail de contacto en `src/lib/sitio.ts`.
+- [ ] Comprar el dominio `patrimonia.uy` y apuntarlo a Vercel.
 - [ ] Cargar las variables de entorno en Vercel, crear la tabla de mails (`npm run mails -- crear`) y probar una suscripción y una baja.
 - [ ] Probar que Gemini responde con la clave real y poner un tope de gasto en Google Cloud.
 - [ ] Revisar en la página de privacidad la región donde Neon guarda los mails, una vez creada la base.

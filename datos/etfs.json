@@ -1,0 +1,129 @@
+{
+  "_comentario": "Opciones de ETF por clase de activo. Ejemplos, no recomendaciones: se muestran ordenados alfabéticamente por emisor y sin destacar ninguno. Cada dato se verificó en justETF el 13/11/2026; el enlace de cada fondo lleva a esa ficha. 'ticker' es el de la Bolsa de Londres en USD salvo que 'bolsa' diga otra cosa. TER en % anual.",
+  "verificado": "2026-11-13",
+  "clases": {
+    "liquidez_usd": {
+      "nota": null,
+      "etfs": [
+        { "nombre": "iShares $ Treasury Bond 0-1yr UCITS ETF (Acc)", "emisor": "iShares", "ticker": "IB01", "bolsa": "Londres, USD", "isin": "IE00BGSF1X88", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.07, "indice": "ICE U.S. Treasury Short Bond", "tipo": "ETF UCITS" },
+        { "nombre": "SPDR Bloomberg 1-3 Month T-Bill UCITS ETF (Acc)", "emisor": "State Street (SPDR)", "ticker": "ZPR1", "bolsa": "Xetra, USD", "isin": "IE00BJXRT698", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.05, "indice": "Bloomberg US Treasury 1-3 Month", "tipo": "ETF UCITS" }
+      ]
+    },
+    "tesoro_medio": {
+      "nota": "No hay un ETF UCITS que siga exactamente el índice de bonos del Tesoro a plazo medio del informe. El de 3 a 7 años es el más parecido; el de 7 a 10 años oscila algo más, y el de Vanguard incluye bonos de todos los plazos, también los largos.",
+      "etfs": [
+        { "nombre": "iShares $ Treasury Bond 3-7yr UCITS ETF (Acc)", "emisor": "iShares", "ticker": "CBU7", "bolsa": "Londres, USD", "isin": "IE00B3VWN393", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.07, "indice": "ICE US Treasury 3-7 Year", "tipo": "ETF UCITS" },
+        { "nombre": "iShares $ Treasury Bond 7-10yr UCITS ETF (Acc)", "emisor": "iShares", "ticker": "CBU0", "bolsa": "Londres, USD", "isin": "IE00B3VWN518", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.07, "indice": "ICE US Treasury 7-10 Year", "tipo": "ETF UCITS" },
+        { "nombre": "Vanguard USD Treasury Bond UCITS ETF Accumulating", "emisor": "Vanguard", "ticker": "VDTA", "bolsa": "Londres, USD", "isin": "IE00BGYWFS63", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.05, "indice": "Bloomberg Global Aggregate US Treasury Float Adjusted", "tipo": "ETF UCITS" }
+      ]
+    },
+    "tesoro_largo": {
+      "nota": "El de SPDR solo existe en versión que distribuye los intereses.",
+      "etfs": [
+        { "nombre": "iShares $ Treasury Bond 20+yr UCITS ETF (Acc)", "emisor": "iShares", "ticker": "DTLA", "bolsa": "Londres, USD", "isin": "IE00BFM6TC58", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.07, "indice": "ICE US Treasury 20+ Year", "tipo": "ETF UCITS" },
+        { "nombre": "SPDR Bloomberg 10+ Year U.S. Treasury Bond UCITS ETF (Dist)", "emisor": "State Street (SPDR)", "ticker": "LUTR", "bolsa": "Londres, USD", "isin": "IE00BYSZ5V04", "domicilio": "Irlanda", "moneda": "USD", "politica": "distribuye", "ter": 0.05, "indice": "Bloomberg US 10+ Year Treasury Bond", "tipo": "ETF UCITS" }
+      ]
+    },
+    "tips": {
+      "nota": "Encontramos una sola opción verificada de un emisor grande.",
+      "etfs": [
+        { "nombre": "iShares $ TIPS UCITS ETF (Acc)", "emisor": "iShares", "ticker": "IDTP", "bolsa": "Londres, USD", "isin": "IE00B1FZSC47", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.10, "indice": "Bloomberg US Government Inflation-Linked Bond", "tipo": "ETF UCITS" }
+      ]
+    },
+    "renta_fija_agregada": {
+      "nota": "El de SPDR solo existe en versión que distribuye los intereses.",
+      "etfs": [
+        { "nombre": "iShares US Aggregate Bond UCITS ETF (Acc)", "emisor": "iShares", "ticker": "IUAA", "bolsa": "Londres, USD", "isin": "IE00BYXYYM63", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.25, "indice": "Bloomberg US Aggregate Bond", "tipo": "ETF UCITS" },
+        { "nombre": "SPDR Bloomberg U.S. Aggregate Bond UCITS ETF (Dist)", "emisor": "State Street (SPDR)", "ticker": "USAG", "bolsa": "Londres, USD", "isin": "IE00B459R192", "domicilio": "Irlanda", "moneda": "USD", "politica": "distribuye", "ter": 0.17, "indice": "Bloomberg US Aggregate Bond", "tipo": "ETF UCITS" }
+      ]
+    },
+    "corporativos_ig": {
+      "nota": null,
+      "etfs": [
+        { "nombre": "iShares $ Corp Bond UCITS ETF (Acc)", "emisor": "iShares", "ticker": "LQDA", "bolsa": "Londres, USD", "isin": "IE00BYXYYJ35", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.20, "indice": "iBoxx USD Liquid Investment Grade", "tipo": "ETF UCITS" },
+        { "nombre": "Vanguard USD Corporate Bond UCITS ETF Accumulating", "emisor": "Vanguard", "ticker": "VDPA", "bolsa": "Londres, USD", "isin": "IE00BGYWFK87", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.07, "indice": "Bloomberg Global Aggregate Corporate USD", "tipo": "ETF UCITS" }
+      ]
+    },
+    "corporativos_hy": {
+      "nota": "Encontramos una sola opción verificada de un emisor grande.",
+      "etfs": [
+        { "nombre": "iShares $ High Yield Corp Bond UCITS ETF (Acc)", "emisor": "iShares", "ticker": "IHYA", "bolsa": "Londres, USD", "isin": "IE00BYXYYL56", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.50, "indice": "iBoxx USD Liquid High Yield Capped", "tipo": "ETF UCITS" }
+      ]
+    },
+    "deuda_emergente": {
+      "nota": null,
+      "etfs": [
+        { "nombre": "iShares J.P. Morgan $ EM Bond UCITS ETF (Acc)", "emisor": "iShares", "ticker": "JPEA", "bolsa": "Londres, USD", "isin": "IE00BYXYYK40", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.45, "indice": "J.P. Morgan EMBI Global Core", "tipo": "ETF UCITS" },
+        { "nombre": "Vanguard USD Emerging Markets Government Bond UCITS ETF Accumulating", "emisor": "Vanguard", "ticker": "VDEA", "bolsa": "Londres, USD", "isin": "IE00BGYWCB81", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.23, "indice": "Bloomberg EM USD Sovereign + Quasi-Sovereign", "tipo": "ETF UCITS" }
+      ]
+    },
+    "acciones_eeuu_grandes": {
+      "nota": null,
+      "etfs": [
+        { "nombre": "iShares Core S&P 500 UCITS ETF (Acc)", "emisor": "iShares", "ticker": "CSPX", "bolsa": "Londres, USD", "isin": "IE00B5BMR087", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.07, "indice": "S&P 500", "tipo": "ETF UCITS" },
+        { "nombre": "SPDR S&P 500 UCITS ETF (Acc)", "emisor": "State Street (SPDR)", "ticker": "SPYL", "bolsa": "Londres, USD", "isin": "IE000XZSV718", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.03, "indice": "S&P 500", "tipo": "ETF UCITS" },
+        { "nombre": "Vanguard S&P 500 UCITS ETF Accumulating", "emisor": "Vanguard", "ticker": "VUAA", "bolsa": "Londres, USD", "isin": "IE00BFMXXD54", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.07, "indice": "S&P 500", "tipo": "ETF UCITS" }
+      ]
+    },
+    "acciones_eeuu_chicas": {
+      "nota": "El de iShares sigue una versión del índice que excluye algunas empresas por criterios ambientales y sociales (ESG), así que no es exactamente el mercado de empresas chicas.",
+      "etfs": [
+        { "nombre": "iShares MSCI USA Small Cap ESG Enhanced CTB UCITS ETF (Acc)", "emisor": "iShares", "ticker": "CUSS", "bolsa": "Londres, USD", "isin": "IE00B3VWM098", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.43, "indice": "MSCI USA Small Cap ESG Enhanced Focus CTB", "tipo": "ETF UCITS" },
+        { "nombre": "SPDR Russell 2000 U.S. Small Cap UCITS ETF", "emisor": "State Street (SPDR)", "ticker": "R2US", "bolsa": "Londres, USD", "isin": "IE00BJ38QD84", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.30, "indice": "Russell 2000", "tipo": "ETF UCITS" }
+      ]
+    },
+    "acciones_desarrollados_ex_eeuu": {
+      "nota": "El informe usa el índice MSCI EAFE (Europa, Australasia y Lejano Oriente). Estos ETFs siguen MSCI World ex USA, que además incluye Canadá. Es una diferencia chica.",
+      "etfs": [
+        { "nombre": "Amundi MSCI World Ex USA UCITS ETF Acc", "emisor": "Amundi", "ticker": "WEXU", "bolsa": "Xetra, USD", "isin": "IE00085PWS28", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.15, "indice": "MSCI World ex USA", "tipo": "ETF UCITS" },
+        { "nombre": "iShares MSCI World ex-USA UCITS ETF (Acc)", "emisor": "iShares", "ticker": "XUSE", "bolsa": "Ámsterdam, USD", "isin": "IE000R4ZNTN3", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.15, "indice": "MSCI World ex USA", "tipo": "ETF UCITS" },
+        { "nombre": "Xtrackers MSCI World ex USA UCITS ETF 1C", "emisor": "Xtrackers", "ticker": "EXUS", "bolsa": "Londres, USD", "isin": "IE0006WW1TQ4", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.15, "indice": "MSCI World ex USA", "tipo": "ETF UCITS" }
+      ]
+    },
+    "acciones_emergentes": {
+      "nota": null,
+      "etfs": [
+        { "nombre": "iShares Core MSCI EM IMI UCITS ETF (Acc)", "emisor": "iShares", "ticker": "EIMI", "bolsa": "Londres, USD", "isin": "IE00BKM4GZ66", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.18, "indice": "MSCI Emerging Markets IMI", "tipo": "ETF UCITS" },
+        { "nombre": "Vanguard FTSE Emerging Markets UCITS ETF Accumulating", "emisor": "Vanguard", "ticker": "VFEA", "bolsa": "Londres, USD", "isin": "IE00BK5BR733", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.17, "indice": "FTSE Emerging", "tipo": "ETF UCITS" }
+      ]
+    },
+    "inmobiliario_cotizado": {
+      "nota": "El de EE.UU. solo distribuye las rentas y sigue un índice que elige las inmobiliarias que más dividendos pagan. El de países desarrollados incluye inmobiliarias de todo el mundo desarrollado, no solo de EE.UU.",
+      "etfs": [
+        { "nombre": "iShares Developed Markets Property Yield UCITS ETF (Acc)", "emisor": "iShares", "ticker": "DPYA", "bolsa": "Londres, USD", "isin": "IE00BFM6T921", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.59, "indice": "FTSE EPRA/NAREIT Developed Dividend+", "tipo": "ETF UCITS" },
+        { "nombre": "iShares US Property Yield UCITS ETF", "emisor": "iShares", "ticker": "IDUP", "bolsa": "Londres, USD", "isin": "IE00B1FZSF77", "domicilio": "Irlanda", "moneda": "USD", "politica": "distribuye", "ter": 0.40, "indice": "FTSE EPRA/NAREIT United States Dividend+", "tipo": "ETF UCITS" }
+      ]
+    },
+    "oro": {
+      "nota": "Son ETC, no ETF UCITS: títulos respaldados por oro físico guardado en bóvedas. Se compran igual que un ETF.",
+      "etfs": [
+        { "nombre": "Invesco Physical Gold ETC", "emisor": "Invesco", "ticker": "SGLD", "bolsa": "Londres, USD", "isin": "IE00B579F325", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.12, "indice": "Precio del oro en USD", "tipo": "ETC" },
+        { "nombre": "iShares Physical Gold ETC", "emisor": "iShares", "ticker": "IGLN", "bolsa": "Londres, USD", "isin": "IE00B4ND3602", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.12, "indice": "Precio del oro en USD", "tipo": "ETC" }
+      ]
+    },
+    "materias_primas": {
+      "nota": "Los dos replican el índice con un contrato con un banco (swap), no comprando materias primas.",
+      "etfs": [
+        { "nombre": "Invesco Bloomberg Commodity UCITS ETF Acc", "emisor": "Invesco", "ticker": "CMOD", "bolsa": "Londres, USD", "isin": "IE00BD6FTQ80", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.19, "indice": "Bloomberg Commodity", "tipo": "ETF UCITS" },
+        { "nombre": "iShares Diversified Commodity Swap UCITS ETF", "emisor": "iShares", "ticker": "ICOM", "bolsa": "Londres, USD", "isin": "IE00BDFL4P12", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.19, "indice": "Bloomberg Commodity", "tipo": "ETF UCITS" }
+      ]
+    },
+    "acciones_globales": {
+      "nota": null,
+      "etfs": [
+        { "nombre": "Invesco FTSE All-World UCITS ETF Acc", "emisor": "Invesco", "ticker": "FWRA", "bolsa": "Londres, USD", "isin": "IE000716YHJ7", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.15, "indice": "FTSE All-World", "tipo": "ETF UCITS" },
+        { "nombre": "iShares MSCI ACWI UCITS ETF (Acc)", "emisor": "iShares", "ticker": "ISAC", "bolsa": "Londres, USD", "isin": "IE00B6R52259", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.20, "indice": "MSCI ACWI", "tipo": "ETF UCITS" },
+        { "nombre": "SPDR MSCI ACWI IMI UCITS ETF (Acc)", "emisor": "State Street (SPDR)", "ticker": "IMID", "bolsa": "Londres, USD", "isin": "IE00B3YLTY66", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.17, "indice": "MSCI ACWI IMI", "tipo": "ETF UCITS" },
+        { "nombre": "Vanguard FTSE All-World UCITS ETF Accumulating", "emisor": "Vanguard", "ticker": "VWRA", "bolsa": "Londres, USD", "isin": "IE00BK5BQT80", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.14, "indice": "FTSE All-World", "tipo": "ETF UCITS" }
+      ]
+    },
+    "bonos_globales": {
+      "nota": "El informe usa bonos de gobiernos del mundo cubiertos a dólares. El único ETF de ese tipo que encontramos es el de Vanguard de gobiernos, que es muy chico. Los otros dos son de renta fija agregada global: además de bonos de gobierno incluyen bonos de empresas, así que rinden y oscilan un poco más.",
+      "etfs": [
+        { "nombre": "iShares Core Global Aggregate Bond UCITS ETF USD Hedged (Acc)", "emisor": "iShares", "ticker": "AGGU", "bolsa": "Londres, USD", "isin": "IE00BZ043R46", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.10, "indice": "Bloomberg Global Aggregate Bond (USD Hedged)", "tipo": "ETF UCITS" },
+        { "nombre": "Vanguard Global Aggregate Bond UCITS ETF USD Hedged Accumulating", "emisor": "Vanguard", "ticker": "VAGU", "bolsa": "Londres, USD", "isin": "IE00BG47KJ78", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.08, "indice": "Bloomberg Global Aggregate Float Adjusted and Scaled (USD Hedged)", "tipo": "ETF UCITS" },
+        { "nombre": "Vanguard Global Government Bond UCITS ETF USD Hedged Accumulating", "emisor": "Vanguard", "ticker": "VGGU", "bolsa": "Londres, USD", "isin": "IE0006YIB0U2", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.10, "indice": "Bloomberg Global Treasury Developed Countries Float Adjusted (USD Hedged)", "tipo": "ETF UCITS" }
+      ]
+    }
+  }
+}

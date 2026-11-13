@@ -12,7 +12,7 @@ export default function PaginaBaja() {
   return (
     <>
       <Encabezado />
-      <main className="mx-auto min-h-[60vh] max-w-2xl px-4 py-16 sm:px-8">
+      <main id="contenido" className="mx-auto min-h-[60vh] max-w-2xl px-4 py-16 sm:px-8">
         <h1 className="font-titular text-[44px] leading-tight">Darme de baja</h1>
         <Suspense fallback={null}>
           <FormularioBaja />

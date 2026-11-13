@@ -38,7 +38,7 @@ export function TextoGenerado({ pedido, plantilla, onTexto }: { pedido: PedidoTe
 
   return (
     <div aria-live="polite" aria-busy={!listo}>
-      <div className={`space-y-3 text-[17px] leading-[1.65] transition-opacity duration-300 ${listo ? "" : "opacity-60"}`}>
+      <div className={`space-y-3 text-[17px] leading-[1.65] transition-opacity duration-300 ${listo ? "" : "opacity-80"}`}>
         {texto.split(/\n{2,}/).map((p, i) => (
           <p key={i}>{p}</p>
         ))}

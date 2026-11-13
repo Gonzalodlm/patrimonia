@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import type { DatosGenerados } from "@/motor/generado";
 import { calcularPerfil, faltantes, type Cuestionario } from "@/plan/perfil";
 import type { ListaEtfs } from "@/plan/etfs";
-import { borrarEstado, guardarEstado, leerEstado, type EstadoPlan } from "./estado";
+import { tienda, type EstadoPlan } from "./estado";
 import { Explicacion } from "./Explicacion";
 import { Test } from "./Test";
 import { Cartera } from "./Cartera";
@@ -21,18 +21,16 @@ interface Props {
   criterios: Criterios;
 }
 
+const sinCambios = () => () => {};
+
 export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
-  const anioActual = new Date().getFullYear();
-  // Este componente solo se dibuja en el navegador, así que puede leer el estado guardado al iniciar.
-  const [estado, setEstado] = useState<EstadoPlan>(leerEstado);
-  // Se prueba una sola vez si el navegador deja guardar.
-  const [sinGuardar] = useState(() => !guardarEstado(leerEstado()));
+  // En el servidor: estado inicial y el año anterior a la edición de los supuestos. En el navegador: lo guardado y el año real.
+  const estado = useSyncExternalStore(tienda.suscribir, tienda.obtener, tienda.inicial);
+  const setEstado = tienda.cambiar;
+  const anioActual = useSyncExternalStore(sinCambios, () => new Date().getFullYear(), () => datos.fuente.edicion - 1);
+  const sinGuardar = useSyncExternalStore(sinCambios, () => !tienda.puedeGuardar(), () => false);
   const arriba = useRef<HTMLDivElement>(null);
   const pasoAnterior = useRef(estado.paso);
-
-  useEffect(() => {
-    guardarEstado(estado);
-  }, [estado]);
 
   useEffect(() => {
     if (pasoAnterior.current !== estado.paso) arriba.current?.scrollIntoView({ block: "start" });
@@ -180,8 +178,7 @@ export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
           type="button"
           onClick={() => {
             if (window.confirm("¿Borrar todo lo que cargaste y empezar de nuevo?")) {
-              borrarEstado();
-              setEstado(leerEstado());
+              tienda.reiniciar();
             }
           }}
           className="underline decoration-[var(--linea)] underline-offset-4 hover:text-[var(--tinta)]"

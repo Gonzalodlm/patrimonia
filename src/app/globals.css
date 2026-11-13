@@ -30,6 +30,22 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Foco visible para quien navega con teclado. */
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+/* Si la persona pidió menos movimiento, se apagan las transiciones. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
 /* Cormorant trae números "a la antigua" (el 1 parece una i): en titulares van de altura completa. */
 .font-titular {
   font-variant-numeric: lining-nums;

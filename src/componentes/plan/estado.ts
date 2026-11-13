@@ -66,3 +66,39 @@ export function borrarEstado() {
     // nada que hacer
   }
 }
+
+// ─── Tienda para React (useSyncExternalStore) ────────────────────────────────
+// El servidor dibuja la primera pantalla con el estado inicial (así carga rápido); en el navegador,
+// React lee lo guardado y actualiza sin errores de diferencia entre servidor y navegador.
+
+let actual: EstadoPlan | null = null;
+let puede: boolean | null = null;
+const oyentes = new Set<() => void>();
+
+export const tienda = {
+  suscribir(oyente: () => void) {
+    oyentes.add(oyente);
+    return () => oyentes.delete(oyente);
+  },
+  obtener(): EstadoPlan {
+    if (!actual) actual = leerEstado();
+    return actual;
+  },
+  inicial(): EstadoPlan {
+    return estadoInicial;
+  },
+  cambiar(cambio: EstadoPlan | ((e: EstadoPlan) => EstadoPlan)) {
+    actual = typeof cambio === "function" ? cambio(tienda.obtener()) : cambio;
+    guardarEstado(actual);
+    oyentes.forEach((o) => o());
+  },
+  reiniciar() {
+    borrarEstado();
+    tienda.cambiar(estadoInicial);
+  },
+  /** Si el navegador deja guardar (se prueba una sola vez). */
+  puedeGuardar(): boolean {
+    if (puede === null) puede = guardarEstado(tienda.obtener());
+    return puede;
+  },
+};

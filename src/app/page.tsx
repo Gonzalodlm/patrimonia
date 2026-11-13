@@ -12,7 +12,7 @@ export default function Inicio() {
     <>
       {d.ejemplo && <AvisoEjemplo />}
       <Encabezado />
-      <main>
+      <main id="contenido">
         <Apertura datos={d} />
         <Numeros datos={d} />
         <ComoFunciona />

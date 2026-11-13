@@ -10,7 +10,7 @@ import type { ListaEtfs } from "@/plan/etfs";
 import { Encabezado } from "@/componentes/landing/Apertura";
 import { AvisoEjemplo } from "@/componentes/AvisoEjemplo";
 import { Pie } from "@/componentes/Pie";
-import { PlanCliente } from "@/componentes/plan/PlanCliente";
+import { Plan } from "@/componentes/plan/Plan";
 
 export const metadata: Metadata = {
   title: "Armar mi plan · Patrimonia",
@@ -24,8 +24,8 @@ export default function PaginaPlan() {
     <>
       {d.ejemplo && <AvisoEjemplo />}
       <Encabezado />
-      <main className="mx-auto min-h-[70vh] max-w-6xl px-4 pt-4 pb-20 sm:px-8">
-        <PlanCliente datos={d} cuestionario={cuestionario as Cuestionario} etfs={etfs as ListaEtfs} criterios={criterios as Criterios} />
+      <main id="contenido" className="mx-auto min-h-[70vh] max-w-6xl px-4 pt-4 pb-20 sm:px-8">
+        <Plan datos={d} cuestionario={cuestionario as Cuestionario} etfs={etfs as ListaEtfs} criterios={criterios as Criterios} />
       </main>
       <Pie fuente={d.fuente} />
     </>

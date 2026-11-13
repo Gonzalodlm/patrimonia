@@ -55,6 +55,7 @@ export function Test(props: Props) {
 
   return (
     <div className="max-w-2xl">
+      <h1 className="sr-only">Test de perfil de riesgo</h1>
       <p className="rotulo tabular">
         Pregunta {pregunta + 1} de {cuestionario.preguntas.length}
       </p>

@@ -153,7 +153,7 @@ Ojo: aunque los números no estén en el repositorio, el sitio publicado los usa
 ## Publicar el sitio
 
 1. **GitHub.** El código está en [github.com/Gonzalodlm/patrimonia](https://github.com/Gonzalodlm/patrimonia). Para subir cambios: `git push`. Los archivos de J.P. Morgan no se suben: están en `.gitignore`.
-2. **Vercel.** En [vercel.com](https://vercel.com), «Add New → Project», importá el repositorio. Vercel detecta Next.js solo; no hace falta cambiar nada.
+2. **Vercel.** Ya está creado: el proyecto `patrimonia`, conectado al repositorio, publicado en [patrimonia-plum.vercel.app](https://patrimonia-plum.vercel.app). Ya tiene cargadas `SUPUESTOS_JSON_BASE64`, `SECRETO_BAJAS` y `SITIO_URL`. El archivo `.vercelignore` impide que los archivos de J.P. Morgan se suban si alguien publica desde la computadora con `vercel deploy`.
 3. **Variables de entorno** (Settings → Environment Variables), ver `.env.example`:
    - `SUPUESTOS_JSON_BASE64`: los supuestos reales (ver «Los datos de J.P. Morgan»). Sin esta variable el sitio sale con los datos de ejemplo y un aviso.
    - `GEMINI_API_KEY`: la clave de Gemini (plan pago).

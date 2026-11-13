@@ -1,18 +1,43 @@
 @import "tailwindcss";
 
-/* Provisorio: la paleta y la tipografía se definen en la fase 2 (landing). */
+/* Paleta corta: blanco cálido, tinta casi negra, grises y un solo acento (rojo pompeyano). */
 :root {
-  --fondo: #fbfaf7;
-  --texto: #1a1917;
-  --gris: #6b6862;
+  --fondo: #f7f5f0;
+  --fondo-hundido: #efece5;
+  --tinta: #1b1a17;
+  --gris: #66625b;
+  --gris-claro: #8a857d;
+  --linea: #e2ded5;
+  --acento: #9b3b2a;
+}
+
+@theme inline {
+  --color-fondo: var(--fondo);
+  --color-fondo-hundido: var(--fondo-hundido);
+  --color-tinta: var(--tinta);
+  --color-gris: var(--gris);
+  --color-gris-claro: var(--gris-claro);
+  --color-linea: var(--linea);
+  --color-acento: var(--acento);
+  --font-titular: var(--fuente-titular);
+  --font-texto: var(--fuente-texto);
 }
 
 body {
   background: var(--fondo);
-  color: var(--texto);
-  font-family: system-ui, sans-serif;
+  color: var(--tinta);
+  font-family: var(--fuente-texto, system-ui), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 .tabular {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Rótulo chico en mayúsculas espaciadas, para numerar pasos y secciones. */
+.rotulo {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gris);
 }

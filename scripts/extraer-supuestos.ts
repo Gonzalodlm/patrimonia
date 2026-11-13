@@ -38,6 +38,7 @@ async function main() {
   const archivo = process.argv[2] && !process.argv[2].startsWith("--") ? process.argv[2] : "referencia/ltcma-2027-matriz-usd.xlsx";
   const edicion = Number(argumento("edicion", "2027"));
   const fecha = argumento("fecha", "2026-09-30");
+  const url = argumento("url", "https://am.jpmorgan.com/us/en/asset-management/institutional/insights/portfolio-insights/ltcma/");
 
   const { clases: lista } = JSON.parse(readFileSync(path.join(raiz, "datos/clases.json"), "utf8")) as {
     clases: Omit<ClaseActivo, "retornoCompuesto" | "retornoAritmetico" | "volatilidad">[];
@@ -95,7 +96,7 @@ async function main() {
       edicion,
       fechaDatos: fecha,
       moneda: "USD",
-      url: null,
+      url,
     },
     inflacionEEUU,
     clases,

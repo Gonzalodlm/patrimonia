@@ -3,9 +3,9 @@
 import type { DatosGenerados } from "@/motor/generado";
 import { numero } from "@/lib/formato";
 
-const ANCHO = 560;
-const ALTO = 400;
-const M = { arriba: 30, derecha: 96, abajo: 52, izquierda: 44 };
+const ANCHO = 480;
+const ALTO = 360;
+const M = { arriba: 30, derecha: 92, abajo: 52, izquierda: 40 };
 
 interface Props {
   datos: DatosGenerados;

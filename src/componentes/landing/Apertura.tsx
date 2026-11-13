@@ -48,36 +48,3 @@ export function Apertura({ datos }: { datos: DatosGenerados }) {
     </section>
   );
 }
-
-/** Muestra de la segunda sección, para comparar cómo se ven los números. */
-export function MuestraNumeros({ datos }: { datos: DatosGenerados }) {
-  const cifras = [
-    ["31", "ediciones anuales del informe"],
-    ["10 a 15", "años de horizonte de las estimaciones"],
-    ["200+", "activos analizados por más de 90 especialistas"],
-    ["7,0%", "retorno anual esperado de una cartera 60% acciones y 40% bonos"],
-  ];
-  return (
-    <section className="border-t border-[var(--linea)]">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-8">
-        <p className="rotulo">De dónde salen los números</p>
-        <h2 className="font-titular mt-4 max-w-[22ch] text-[34px] leading-[1.08] tracking-[-0.015em] sm:text-[44px]">
-          Una estimación de largo plazo, no un pronóstico del año que viene.
-        </h2>
-        <p className="mt-6 max-w-[62ch] text-[18px] leading-[1.6] text-[var(--gris)]">
-          Una vez por año, J.P. Morgan Asset Management, uno de los administradores de inversiones más grandes del mundo,
-          publica cuánto espera que rinda cada tipo de inversión en los próximos 10 a 15 años, cuánto puede oscilar y cómo se
-          mueven unas respecto de otras. Patrimonia usa la edición {datos.fuente.edicion}.
-        </p>
-        <dl className="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-          {cifras.map(([cifra, texto]) => (
-            <div key={texto} className="border-t border-[var(--tinta)] pt-4">
-              <dt className="font-titular text-[44px] leading-none [font-variant-numeric:lining-nums]">{cifra}</dt>
-              <dd className="mt-3 text-[15px] leading-[1.45] text-[var(--gris)]">{texto}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </section>
-  );
-}

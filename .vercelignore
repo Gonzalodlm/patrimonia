@@ -1,0 +1,9 @@
+# Lo que nunca se sube a Vercel al publicar desde esta computadora (lo mismo que queda fuera del repositorio).
+# Los supuestos reales llegan por la variable de entorno SUPUESTOS_JSON_BASE64.
+referencia/
+datos/supuestos-2*.json
+datos/frontera.json
+prompt-claude-code-patrimonia.md
+suscriptores.csv
+.env*
+!.env.example

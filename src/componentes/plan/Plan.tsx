@@ -120,6 +120,7 @@ export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
               datos={datos}
               etfs={etfs}
               perfil={perfil}
+              motivoPerfil={perfil !== perfilTest ? "eleccion" : calcularPerfil(cuestionario, estado.respuestas, ids).limitante}
               tipo={estado.tipoCartera}
               monto={estado.monto}
               elegidos={estado.etfs}

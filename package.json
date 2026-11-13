@@ -9,9 +9,12 @@
     "lint": "eslint",
     "test": "vitest run",
     "extraer": "tsx scripts/extraer-supuestos.ts",
-    "frontera": "tsx scripts/generar-frontera.ts"
+    "frontera": "tsx scripts/generar-frontera.ts",
+    "mails": "tsx scripts/mails.ts"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
+    "jspdf": "^4.2.1",
     "next": "16.4.6",
     "quadprog": "^1.6.1",
     "react": "19.3.0",

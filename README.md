@@ -97,6 +97,32 @@ Están en `datos/criterios-plan.json`:
 
 El orden del plan es fijo: primero el colchón, después las deudas a cancelar y después los objetivos por prioridad (dentro de cada prioridad, el que vence antes). Las probabilidades salen de simular 500 escenarios con una semilla fija, así que los mismos datos dan siempre el mismo resultado.
 
+## Textos con el modelo de lenguaje (Gemini)
+
+La explicación de la cartera y el resumen del plan los redacta Gemini a partir de números ya calculados. El modelo no calcula ni decide nada: si su texto trae un número que no estaba en los datos, se descarta y se muestra el texto de plantilla. Sin clave, o si el modelo falla o tarda, la web usa siempre las plantillas.
+
+Para activarlo:
+
+1. En [Google AI Studio](https://aistudio.google.com) creá una clave de API en un proyecto de Google Cloud **con facturación activa** (plan pago). En el plan gratuito Google usa y puede leer lo que se le envía, y no se puede usar para visitantes de la Unión Europea, Suiza ni Reino Unido.
+2. En Google Cloud, poné un tope de gasto mensual (presupuesto con alerta) para el proyecto.
+3. Cargá la clave como `GEMINI_API_KEY` en Vercel (y en `.env.local` para probar en tu computadora).
+
+Qué se le manda: el perfil, porcentajes y montos ya calculados, y el tipo de cada objetivo (casa, retiro…). Nunca el mail, el nombre de los objetivos ni nada escrito por la persona. El servidor solo acepta pedidos con esa forma exacta, limita los pedidos por IP y guarda en caché las respuestas iguales.
+
+Para cambiar de proveedor alcanza con escribir otra implementación en `src/servidor/modelo/` y elegirla en `src/servidor/modelo/index.ts`. Las instrucciones que recibe el modelo están en `src/textos/instrucciones.ts`.
+
+## Mails del aviso anual (Neon)
+
+Se guarda solo el mail, la fecha y la versión del texto de consentimiento (`src/lib/consentimiento.ts`: si cambiás el texto, cambiá la versión).
+
+Para activarlo:
+
+1. En Vercel, en Storage o en el Marketplace, agregá **Neon** (plan gratuito). Eso carga `DATABASE_URL` en el proyecto.
+2. Cargá `SECRETO_BAJAS` con una frase larga al azar. Sirve para firmar los enlaces de baja: no la cambies una vez que mandaste mails.
+3. Copiá `DATABASE_URL` y `SECRETO_BAJAS` en `.env.local` y creá la tabla una sola vez: `npm run mails -- crear`.
+
+Una vez por año, para mandar el aviso: `npm run mails -- exportar` crea `suscriptores.csv` con cada mail y su enlace personal para darse de baja (la página `/baja`). Ese enlace tiene que ir en cada mail. El archivo no se sube al repositorio.
+
 ## Cómo cambiar la lista de ETFs
 
 Está en `datos/etfs.json`, separada por clase de activo. Para cada ETF: nombre, emisor, ticker, bolsa, ISIN, domicilio, moneda, si acumula o distribuye, costo anual (TER), índice y tipo. Reglas:

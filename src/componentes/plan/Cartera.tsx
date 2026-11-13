@@ -9,13 +9,18 @@ import { avisos } from "@/lib/avisos";
 import { dolares, numero } from "@/lib/formato";
 import { BarraMezcla } from "./BarraMezcla";
 import { FronteraInteractiva } from "./FronteraInteractiva";
-import { colorDeGrupo } from "./grupos";
+import { colorDeGrupo, pesosPorGrupo } from "./grupos";
 import type { TipoCartera } from "./estado";
+import { TextoGenerado } from "./TextoGenerado";
+import { datosCartera } from "@/textos/armar";
+import { plantillaCartera } from "@/textos/plantillas";
 
 interface Props {
   datos: DatosGenerados;
   etfs: ListaEtfs;
   perfil: string;
+  /** Qué definió el perfil (ver DatosTextoCartera.motivoPerfil). */
+  motivoPerfil: string;
   tipo: TipoCartera;
   monto: number;
   elegidos: Record<string, string>;
@@ -24,7 +29,7 @@ interface Props {
   onEtf: (clase: string, isin: string) => void;
 }
 
-export function Cartera({ datos, etfs, perfil, tipo, monto, elegidos, onTipo, onMonto, onEtf }: Props) {
+export function Cartera({ datos, etfs, perfil, motivoPerfil, tipo, monto, elegidos, onTipo, onMonto, onEtf }: Props) {
   const c = datos.carteras[tipo];
   const cp = c.perfiles[perfil];
   const nombrePerfil = datos.perfiles.find((p) => p.id === perfil)!.nombre;
@@ -38,6 +43,19 @@ export function Cartera({ datos, etfs, perfil, tipo, monto, elegidos, onTipo, on
   const caida = peorCaidaUnAnio(monto, aritNeto, cp.volatilidad);
   const filas = clases.filter((x) => (cp.pesos[x.id] ?? 0) >= 0.05).sort((a, b) => cp.pesos[b.id] - cp.pesos[a.id]);
   const indicePerfil = datos.perfiles.findIndex((p) => p.id === perfil);
+  // Lo que se le manda al modelo: números de la cartera tipo, sin el monto de la persona.
+  const datosTexto = datosCartera({
+    perfil: nombrePerfil,
+    cartera: tipo,
+    retorno: compNeto,
+    riesgo: cp.volatilidad,
+    sharpe: cp.sharpe,
+    grupos: pesosPorGrupo(cp.pesos, clases),
+    principales: filas.map((f) => ({ nombre: f.nombre, peso: cp.pesos[f.id] })),
+    caidaPorcentaje: peorCaidaUnAnio(100, aritNeto, cp.volatilidad),
+    riesgoMaximoSharpe: c.maximoSharpe.volatilidad,
+    motivoPerfil,
+  });
 
   return (
     <div>
@@ -91,6 +109,14 @@ export function Cartera({ datos, etfs, perfil, tipo, monto, elegidos, onTipo, on
           <dd className="mt-3 text-[14px] leading-[1.5] text-[var(--gris)]">Retorno extra por cada punto de riesgo, comparado con la liquidez en dólares.</dd>
         </div>
       </dl>
+
+      {/* Por qué esta cartera */}
+      <section className="mt-14 max-w-[64ch]">
+        <h2 className="font-titular text-[30px] leading-tight">Por qué esta cartera</h2>
+        <div className="mt-4">
+          <TextoGenerado pedido={{ tipo: "cartera", datos: datosTexto }} plantilla={plantillaCartera(datosTexto)} />
+        </div>
+      </section>
 
       {/* Mezcla y ETFs */}
       <section className="mt-16">

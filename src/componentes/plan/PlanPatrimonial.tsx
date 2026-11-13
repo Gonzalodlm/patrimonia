@@ -1,16 +1,22 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { DatosGenerados } from "@/motor/generado";
 import { armarPlan, type Criterios, type Objetivo, type ResultadoObjetivo, type ResultadoPlan, type Situacion } from "@/plan/patrimonio";
 import { carterasResumen } from "@/plan/carterasResumen";
 import type { ListaEtfs } from "@/plan/etfs";
-import { dolares, numero } from "@/lib/formato";
+import { nombreDeuda, proximosPasos } from "@/plan/pasos";
+import { descargarPdf, type ContenidoPdf } from "@/plan/pdf";
+import { avisoCorto } from "@/lib/avisos";
+import { dolares, fechaLarga, numero, porcentaje } from "@/lib/formato";
+import { datosPlan } from "@/textos/armar";
+import { plantillaPlan } from "@/textos/plantillas";
 import { GraficoPatrimonio } from "./GraficoPatrimonio";
 import { Avisos } from "./Cartera";
+import { TextoGenerado } from "./TextoGenerado";
+import { Suscripcion } from "./Suscripcion";
 import type { TipoCartera } from "./estado";
 
-const nombreDeuda: Record<string, string> = { tarjeta: "la tarjeta de crédito", prestamo_personal: "el préstamo personal", hipoteca: "la hipoteca", otra: "la deuda" };
 const nombrePrioridad: Record<string, string> = { imprescindible: "Imprescindible", importante: "Importante", deseable: "Deseable" };
 const textoEstado = { cubierto: "Cubierto", parcial: "Cubierto a medias", sin_cubrir: "Sin cubrir" } as const;
 const simboloEstado = { cubierto: "●", parcial: "◐", sin_cubrir: "○" } as const;
@@ -47,6 +53,8 @@ export function PlanPatrimonial(props: Props) {
       }),
     [situacion, objetivos, perfil, datos, carteras, criterios, respuestas, anioActual],
   );
+  const [textoResumen, setTextoResumen] = useState("");
+  const [generandoPdf, setGenerandoPdf] = useState(false);
 
   if (plan.faltanDatos.length) {
     return (
@@ -63,8 +71,20 @@ export function PlanPatrimonial(props: Props) {
   const nombrePerfil = datos.perfiles.find((p) => p.id === perfil)!.nombre;
   const cubiertos = plan.objetivos.filter((o) => o.estado === "cubierto").length;
   const ultimo = plan.proyeccion.at(-1)!;
-  const pasos = proximosPasos(plan, situacion);
+  const pasos = proximosPasos(plan, situacion).map((p) => p.texto);
   const deudasACancelar = plan.deudas.filter((d) => d.cancelarPrimero);
+  const datosTexto = datosPlan(plan, situacion, nombrePerfil);
+
+  const descargar = async () => {
+    setGenerandoPdf(true);
+    try {
+      await descargarPdf(
+        contenidoPdf({ datos, etfs, perfil, nombrePerfil, tipo, elegidos, situacion, plan, pasos, resumen: textoResumen || plantillaPlan(datosTexto), carteras }),
+      );
+    } finally {
+      setGenerandoPdf(false);
+    }
+  };
   let n = 0;
   const numerar = () => String(++n).padStart(2, "0");
 
@@ -84,6 +104,12 @@ export function PlanPatrimonial(props: Props) {
           <Dato titulo="Objetivos cubiertos" valor={`${cubiertos} de ${plan.objetivos.length}`} detalle={plan.aporteFaltanteTotal > 1 ? `Faltan ${dolares(plan.aporteFaltanteTotal)} por mes` : undefined} />
           <Dato titulo={`Patrimonio en ${ultimo.anio}`} valor={dolares(ultimo.medio)} detalle={`Entre ${dolares(ultimo.malo)} y ${dolares(ultimo.bueno)}`} />
         </dl>
+        <div className="mt-8 max-w-[68ch] border-t border-[var(--linea)] pt-6">
+          <h3 className="text-[17px]">En pocas palabras</h3>
+          <div className="mt-3">
+            <TextoGenerado pedido={{ tipo: "plan", datos: datosTexto }} plantilla={plantillaPlan(datosTexto)} onTexto={setTextoResumen} />
+          </div>
+        </div>
         <h3 className="mt-8 text-[17px]">Tus próximos tres pasos</h3>
         <ol className="mt-3 space-y-3">
           {pasos.map((p, i) => (
@@ -93,6 +119,17 @@ export function PlanPatrimonial(props: Props) {
             </li>
           ))}
         </ol>
+        <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2">
+          <button
+            type="button"
+            onClick={descargar}
+            disabled={generandoPdf}
+            className="rounded-[3px] bg-[var(--tinta)] px-5 py-3 text-[15px] text-[var(--fondo)] hover:bg-black disabled:opacity-50"
+          >
+            {generandoPdf ? "Armando el PDF…" : "Descargar mi plan en PDF"}
+          </button>
+          <span className="text-[13px] text-[var(--gris)]">Se arma en tu navegador: no se envía a ningún servidor.</span>
+        </div>
       </section>
 
       {/* 1. Colchón */}
@@ -226,9 +263,120 @@ export function PlanPatrimonial(props: Props) {
         </p>
       </Bloque>
 
+      <section className="mt-16 border-t border-[var(--linea)] pt-10">
+        <Suscripcion />
+      </section>
+
       <Avisos />
     </div>
   );
+}
+
+const textoEstadoPdf = { cubierto: "Cubierto", parcial: "A medias", sin_cubrir: "Sin cubrir" } as const;
+
+function contenidoPdf(a: {
+  datos: DatosGenerados;
+  etfs: ListaEtfs;
+  perfil: string;
+  nombrePerfil: string;
+  tipo: TipoCartera;
+  elegidos: Record<string, string>;
+  situacion: Situacion;
+  plan: ResultadoPlan;
+  pasos: string[];
+  resumen: string;
+  carteras: ReturnType<typeof carterasResumen>;
+}): ContenidoPdf {
+  const { datos, plan } = a;
+  const c = datos.carteras[a.tipo];
+  const cp = c.perfiles[a.perfil];
+  const neta = a.carteras[a.perfil];
+  const nombreClase = new Map(datos.clases.map((x) => [x.id, x.nombre]));
+  const hoy = new Date();
+  const colchon = plan.colchon;
+  return {
+    titulo: "Tu plan patrimonial",
+    subtitulo: `Generado el ${hoy.getDate()}/${hoy.getMonth() + 1}/${hoy.getFullYear()}. Supuestos: ${datos.fuente.nombre}, edición ${datos.fuente.edicion}, con datos al ${fechaLarga(datos.fuente.fechaDatos)}.`,
+    nombreArchivo: "plan-patrimonia.pdf",
+    avisos: avisoCorto,
+    secciones: [
+      {
+        titulo: "Resumen",
+        parrafos: [
+          `Perfil ${a.nombrePerfil.toLowerCase()}, cartera ${c.nombre.toLowerCase()}. Ahorro de ${dolares(a.situacion.ahorroMensual ?? 0)} por mes. Objetivos cubiertos: ${plan.objetivos.filter((o) => o.estado === "cubierto").length} de ${plan.objetivos.length}.`,
+          a.resumen.replace(/\n+/g, " "),
+        ],
+      },
+      { titulo: "Tus próximos tres pasos", lista: a.pasos },
+      {
+        titulo: `Tu cartera de largo plazo (perfil ${a.nombrePerfil.toLowerCase()})`,
+        parrafos: [
+          `Retorno esperado ${porcentaje(neta.retornoCompuesto, 1)} por año (neto de lo que cobran los ETFs, sin comisiones del broker ni impuestos). Riesgo ${porcentaje(cp.volatilidad, 1)}. Ratio de Sharpe ${numero(cp.sharpe, 2)}. Rebalanceo: una vez por año, o si una clase se aleja más de 5 puntos de su peso.`,
+        ],
+        tabla: {
+          columnas: ["Clase de activo", "Peso", "ETF elegido"],
+          anchos: [3, 1, 2.4],
+          derecha: [1],
+          filas: c.clases
+            .filter((id) => (cp.pesos[id] ?? 0) >= 0.05)
+            .sort((x, y) => cp.pesos[y] - cp.pesos[x])
+            .map((id) => {
+              const e = a.etfs.clases[id]?.etfs.find((x) => x.isin === a.elegidos[id]);
+              return [nombreClase.get(id) ?? id, porcentaje(cp.pesos[id], 1), e ? `${e.ticker} (${e.isin})` : "A elegir entre las opciones de la web"];
+            }),
+        },
+      },
+      {
+        titulo: "Colchón y deudas",
+        parrafos: [
+          !colchon.automatico
+            ? "Cargaste tu propio fondo de emergencia: va primero y se guarda en liquidez."
+            : colchon.objetivo === null
+              ? "No cargaste tus gastos: separá entre 3 y 6 meses de gastos en liquidez antes de invertir."
+              : `Fondo de emergencia: ${dolares(colchon.objetivo)} (${colchon.meses} meses de gastos) en liquidez en dólares. ${colchon.faltante > 0 ? `Faltan ${dolares(colchon.faltante)}.` : "Ya está cubierto."}`,
+          ...plan.deudas.map(
+            (d) => `${d.cancelarPrimero ? "Cancelar antes de invertir" : "Seguir pagando normalmente"}: ${nombreDeuda[d.deuda.tipo]} (${dolares(d.deuda.saldo)}). ${d.motivo}`,
+          ),
+        ],
+      },
+      ...(plan.objetivos.length
+        ? [
+            {
+              titulo: "Tus objetivos",
+              tabla: {
+                columnas: ["Objetivo", "Año", "Cartera", "Monto (USD de hoy)", "Ahorro por mes", "Probabilidad", "Estado"],
+                anchos: [2.2, 0.8, 1.6, 1.4, 1.3, 1.1, 1],
+                derecha: [1, 3, 4, 5],
+                filas: plan.objetivos.map((o) => [
+                  o.objetivo.nombre || "Objetivo",
+                  String(o.objetivo.anio),
+                  o.cartera.nombre,
+                  dolares(o.objetivo.monto),
+                  dolares(o.aporte),
+                  porcentaje(o.probabilidad * 100, 0),
+                  textoEstadoPdf[o.estado],
+                ]),
+              },
+              notas:
+                plan.aporteFaltanteTotal > 1
+                  ? [`Para cubrir todos los objetivos faltan ${dolares(plan.aporteFaltanteTotal)} por mes: se puede ahorrar más, esperar más o bajar algún monto.`]
+                  : undefined,
+            },
+          ]
+        : []),
+      {
+        titulo: "Patrimonio proyectado (en dólares de hoy)",
+        parrafos: ["Escenario malo y bueno: 1 de cada 10 veces sale peor o mejor. Incluye el colchón y las carteras de cada objetivo; no incluye la jubilación ni la vivienda."],
+        tabla: {
+          columnas: ["Año", "Edad", "Malo", "Medio", "Bueno"],
+          derecha: [1, 2, 3, 4],
+          filas: plan.proyeccion
+            .filter((p, i, todos) => i % 5 === 0 || i === todos.length - 1)
+            .map((p) => [String(p.anio), p.edad ? String(p.edad) : "", dolares(p.malo), dolares(p.medio), dolares(p.bueno)]),
+        },
+      },
+    ],
+  };
 }
 
 function Dato({ titulo, valor, detalle }: { titulo: string; valor: string; detalle?: string }) {
@@ -322,20 +470,4 @@ function TarjetaResultado({ r }: { r: ResultadoObjetivo }) {
       )}
     </article>
   );
-}
-
-/** Los tres pasos más importantes, en orden. */
-function proximosPasos(plan: ResultadoPlan, s: Situacion): string[] {
-  const pasos: string[] = [];
-  if (plan.colchon.automatico && plan.colchon.objetivo === null) pasos.push("Calculá tus gastos por mes y separá entre 3 y 6 meses en liquidez en dólares: es tu fondo de emergencia.");
-  if (plan.colchon.faltante > 0)
-    pasos.push(`Completá tu fondo de emergencia: juntá ${dolares(plan.colchon.faltante)} más en liquidez en dólares, por ejemplo en un ETF de letras del Tesoro.`);
-  for (const d of plan.deudas) if (d.cancelarPrimero && d.deuda.saldo > 0) pasos.push(`Cancelá ${nombreDeuda[d.deuda.tipo]} (${dolares(d.deuda.saldo)}) antes de invertir.`);
-  pasos.push("Abrí una cuenta en un broker que te dé acceso a las bolsas europeas, comparando cuánto cobra y quién lo regula.");
-  const aportes = plan.objetivos.reduce((t, o) => t + o.aporte, 0) + plan.sobranteMensual;
-  if (aportes > 0) pasos.push(`Programá un aporte de ${dolares(aportes)} por mes y repartilo entre las carteras de tus objetivos como dice este plan.`);
-  else if ((s.ahorros ?? 0) > 0) pasos.push("Invertí tus ahorros en las carteras de tus objetivos, como dice este plan.");
-  if (plan.aporteFaltanteTotal > 1) pasos.push(`Decidí qué ajustar para cubrir todo: ahorrar ${dolares(plan.aporteFaltanteTotal)} más por mes, esperar más o bajar algún objetivo.`);
-  pasos.push("Revisá este plan una vez por año, cuando rebalancees tu cartera.");
-  return pasos.slice(0, 3);
 }

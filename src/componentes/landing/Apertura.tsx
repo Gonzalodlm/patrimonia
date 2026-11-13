@@ -9,12 +9,12 @@ export function Encabezado() {
         Patrimonia
       </Link>
       <nav className="flex items-center gap-6 text-[15px]">
-        <a href="#como-funciona" className="hidden text-[var(--gris)] hover:text-[var(--tinta)] sm:inline">
+        <Link href="/#como-funciona" className="hidden text-[var(--gris)] hover:text-[var(--tinta)] sm:inline">
           Cómo funciona
-        </a>
-        <a href="#preguntas" className="hidden text-[var(--gris)] hover:text-[var(--tinta)] sm:inline">
+        </Link>
+        <Link href="/#preguntas" className="hidden text-[var(--gris)] hover:text-[var(--tinta)] sm:inline">
           Preguntas
-        </a>
+        </Link>
         <Link href="/plan" className="rounded-[3px] bg-[var(--tinta)] px-4 py-2 text-[var(--fondo)] hover:bg-black">
           Armar mi plan
         </Link>

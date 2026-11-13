@@ -75,6 +75,27 @@ Las pruebas de `tests/referencia.test.ts` sobre la cartera diversificada usan la
 
 Los perfiles y su volatilidad objetivo están en `datos/perfiles.json`.
 
+## Cómo cambiar el test de perfil
+
+Las preguntas, opciones y puntajes están en `datos/cuestionario.json`.
+
+- Cada pregunta es de `tolerancia` (cómo reacciona la persona ante una caída) o de `capacidad` (cuánto riesgo puede asumir).
+- `umbrales` dice desde cuántos puntos se pasa al perfil siguiente: con `[4, 8, 12, 16]`, de 0 a 3 es Conservador, de 4 a 7 Moderado conservador, y así.
+- El perfil final es el más bajo de los dos bloques. Una opción con `perfilMaximo` pone un tope: por ejemplo, si la plata se usa en menos de 3 años, Conservador como máximo.
+- La pregunta de tipo `carteras` calcula sola los montos de cada opción a partir de las carteras reales.
+
+Después de cambiarlo, corré `npm test`: hay pruebas que comprueban que cada bloque llegue a 20 puntos y que los cortes den el perfil esperado.
+
+## Cómo cambiar la lista de ETFs
+
+Está en `datos/etfs.json`, separada por clase de activo. Para cada ETF: nombre, emisor, ticker, bolsa, ISIN, domicilio, moneda, si acumula o distribuye, costo anual (TER), índice y tipo. Reglas:
+
+- Dentro de cada clase, ordenados alfabéticamente por emisor. Hasta cuatro por clase.
+- Verificá cada dato en [justETF](https://www.justetf.com) o en la página del emisor antes de agregarlo, y actualizá la fecha `verificado`.
+- `nota` explica en qué se diferencia el ETF del índice que usa el informe, si hace falta.
+
+`npm test` revisa que cada ISIN tenga el dígito verificador correcto, que el orden sea el correcto y que ninguna clase quede sin opciones.
+
 ## Cómo funciona el motor, en pocas palabras
 
 Para cada nivel de riesgo, el motor busca la combinación de clases de activo que da el mayor retorno esperado sin pasar ese riesgo y respetando las reglas. Eso es la **frontera eficiente** de Markowitz. Se calcula una sola vez al compilar (200 carteras por cada tipo de cartera, más la de cada perfil) y el navegador solo lee el resultado. Los mismos datos dan siempre las mismas carteras.

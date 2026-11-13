@@ -30,6 +30,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Cormorant trae números "a la antigua" (el 1 parece una i): en titulares van de altura completa. */
+.font-titular {
+  font-variant-numeric: lining-nums;
+}
+
 .tabular {
   font-variant-numeric: tabular-nums lining-nums;
 }

@@ -1,0 +1,22 @@
+{
+  "_comentario": "Qué clases de activo usa Patrimonia y cómo se llaman en el Excel de J.P. Morgan. El script 'npm run extraer' usa esta lista para leer los números del Excel. Acá no hay números, solo nombres.",
+  "clases": [
+    { "id": "liquidez_usd", "nombre": "Liquidez en USD (letras del Tesoro cortas)", "nombreInforme": "U.S. Cash", "tipo": "liquidez" },
+    { "id": "tesoro_medio", "nombre": "Bonos del Tesoro de EE.UU. a plazo medio", "nombreInforme": "U.S. Intermediate Treasuries", "tipo": "renta_fija" },
+    { "id": "tesoro_largo", "nombre": "Bonos del Tesoro de EE.UU. a largo plazo", "nombreInforme": "U.S. Long Treasuries", "tipo": "renta_fija" },
+    { "id": "tips", "nombre": "Bonos del Tesoro ligados a la inflación (TIPS)", "nombreInforme": "TIPS", "tipo": "renta_fija" },
+    { "id": "renta_fija_agregada", "nombre": "Renta fija agregada de EE.UU.", "nombreInforme": "U.S. Aggregate Bonds", "tipo": "renta_fija" },
+    { "id": "corporativos_ig", "nombre": "Bonos corporativos de grado inversor", "nombreInforme": "U.S. Inv Grade Corporate Bonds", "tipo": "renta_fija" },
+    { "id": "corporativos_hy", "nombre": "Bonos corporativos de alto rendimiento", "nombreInforme": "U.S. High Yield Bonds", "tipo": "renta_fija" },
+    { "id": "deuda_emergente", "nombre": "Deuda soberana emergente en USD", "nombreInforme": "Emerging Markets Sovereign Debt", "tipo": "renta_fija" },
+    { "id": "acciones_eeuu_grandes", "nombre": "Acciones de EE.UU., empresas grandes", "nombreInforme": "U.S. Large Cap", "tipo": "acciones" },
+    { "id": "acciones_eeuu_chicas", "nombre": "Acciones de EE.UU., empresas chicas", "nombreInforme": "U.S. Small Cap", "tipo": "acciones" },
+    { "id": "acciones_desarrollados_ex_eeuu", "nombre": "Acciones de países desarrollados fuera de EE.UU.", "nombreInforme": "EAFE Equity", "tipo": "acciones" },
+    { "id": "acciones_emergentes", "nombre": "Acciones de mercados emergentes", "nombreInforme": "Emerging Markets Equity", "tipo": "acciones" },
+    { "id": "inmobiliario_cotizado", "nombre": "Inmobiliario cotizado (REITs de EE.UU.)", "nombreInforme": "U.S. REITs", "tipo": "alternativos" },
+    { "id": "oro", "nombre": "Oro", "nombreInforme": "Gold", "tipo": "alternativos" },
+    { "id": "materias_primas", "nombre": "Materias primas diversificadas", "nombreInforme": "Commodities", "tipo": "alternativos" },
+    { "id": "acciones_globales", "nombre": "Acciones globales", "nombreInforme": "AC World Equity", "tipo": "acciones" },
+    { "id": "bonos_globales", "nombre": "Bonos de gobiernos del mundo, cubiertos a dólares", "nombreInforme": "World Government Bonds hedged", "tipo": "renta_fija" }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "_aviso": "DATOS INVENTADOS. No son de J.P. Morgan ni de ninguna otra fuente. Sirven solo para que el sitio compile sin los supuestos reales.",
+  "ejemplo": true,
+  "fuente": {
+    "nombre": "Datos de ejemplo (inventados)",
+    "edicion": 2027,
+    "fechaDatos": "2026-09-30",
+    "moneda": "USD",
+    "url": null
+  },
+  "inflacionEEUU": 2.5,
+  "clases": [
+    {
+      "id": "liquidez_usd",
+      "nombre": "Liquidez en USD (letras del Tesoro cortas)",
+      "nombreInforme": "U.S. Cash",
+      "tipo": "liquidez",
+      "retornoCompuesto": 3,
+      "retornoAritmetico": 3,
+      "volatilidad": 1
+    },
+    {
+      "id": "tesoro_medio",
+      "nombre": "Bonos del Tesoro de EE.UU. a plazo medio",
+      "nombreInforme": "U.S. Intermediate Treasuries",
+      "tipo": "renta_fija",
+      "retornoCompuesto": 4,
+      "retornoAritmetico": 4.1,
+      "volatilidad": 4
+    },
+    {
+      "id": "tesoro_largo",
+      "nombre": "Bonos del Tesoro de EE.UU. a largo plazo",
+      "nombreInforme": "U.S. Long Treasuries",
+      "tipo": "renta_fija",
+      "retornoCompuesto": 5,
+      "retornoAritmetico": 5.6,
+      "volatilidad": 12
+    },
+    {
+      "id": "tips",
+      "nombre": "Bonos del Tesoro ligados a la inflación (TIPS)",
+      "nombreInforme": "TIPS",
+      "tipo": "renta_fija",
+      "retornoCompuesto": 4.5,
+      "retornoAritmetico": 4.7,
+      "volatilidad": 6
+    },
+    {
+      "id": "renta_fija_agregada",
+      "nombre": "Renta fija agregada de EE.UU.",
+      "nombreInforme": "U.S. Aggregate Bonds",
+      "tipo": "renta_fija",
+      "retornoCompuesto": 5,
+      "retornoAritmetico": 5.1,
+      "volatilidad": 5
+    },
+    {
+      "id": "corporativos_ig",
+      "nombre": "Bonos corporativos de grado inversor",
+      "nombreInforme": "U.S. Inv Grade Corporate Bonds",
+      "tipo": "renta_fija",
+      "retornoCompuesto": 5.5,
+      "retornoAritmetico": 5.8,
+      "volatilidad": 7
+    },
+    {
+      "id": "corporativos_hy",
+      "nombre": "Bonos corporativos de alto rendimiento",
+      "nombreInforme": "U.S. High Yield Bonds",
+      "tipo": "renta_fija",
+      "retornoCompuesto": 6,
+      "retornoAritmetico": 6.4,
+      "volatilidad": 9
+    },
+    {
+      "id": "deuda_emergente",
+      "nombre": "Deuda soberana emergente en USD",
+      "nombreInforme": "Emerging Markets Sovereign Debt",
+      "tipo": "renta_fija",
+      "retornoCompuesto": 6,
+      "retornoAritmetico": 6.4,
+      "volatilidad": 9
+    },
+    {
+      "id": "acciones_eeuu_grandes",
+      "nombre": "Acciones de EE.UU., empresas grandes",
+      "nombreInforme": "U.S. Large Cap",
+      "tipo": "acciones",
+      "retornoCompuesto": 7,
+      "retornoAritmetico": 8.5,
+      "volatilidad": 17
+    },
+    {
+      "id": "acciones_eeuu_chicas",
+      "nombre": "Acciones de EE.UU., empresas chicas",
+      "nombreInforme": "U.S. Small Cap",
+      "tipo": "acciones",
+      "retornoCompuesto": 7.5,
+      "retornoAritmetico": 9.5,
+      "volatilidad": 21
+    },
+    {
+      "id": "acciones_desarrollados_ex_eeuu",
+      "nombre": "Acciones de países desarrollados fuera de EE.UU.",
+      "nombreInforme": "EAFE Equity",
+      "tipo": "acciones",
+      "retornoCompuesto": 7,
+      "retornoAritmetico": 8.6,
+      "volatilidad": 18
+    },
+    {
+      "id": "acciones_emergentes",
+      "nombre": "Acciones de mercados emergentes",
+      "nombreInforme": "Emerging Markets Equity",
+      "tipo": "acciones",
+      "retornoCompuesto": 7.5,
+      "retornoAritmetico": 9.8,
+      "volatilidad": 22
+    },
+    {
+      "id": "inmobiliario_cotizado",
+      "nombre": "Inmobiliario cotizado (REITs de EE.UU.)",
+      "nombreInforme": "U.S. REITs",
+      "tipo": "alternativos",
+      "retornoCompuesto": 7,
+      "retornoAritmetico": 8.5,
+      "volatilidad": 18
+    },
+    {
+      "id": "oro",
+      "nombre": "Oro",
+      "nombreInforme": "Gold",
+      "tipo": "alternativos",
+      "retornoCompuesto": 5,
+      "retornoAritmetico": 6.5,
+      "volatilidad": 17
+    },
+    {
+      "id": "materias_primas",
+      "nombre": "Materias primas diversificadas",
+      "nombreInforme": "Commodities",
+      "tipo": "alternativos",
+      "retornoCompuesto": 4.5,
+      "retornoAritmetico": 6,
+      "volatilidad": 18
+    },
+    {
+      "id": "acciones_globales",
+      "nombre": "Acciones globales",
+      "nombreInforme": "AC World Equity",
+      "tipo": "acciones",
+      "retornoCompuesto": 7,
+      "retornoAritmetico": 8.5,
+      "volatilidad": 17
+    },
+    {
+      "id": "bonos_globales",
+      "nombre": "Bonos de gobiernos del mundo, cubiertos a dólares",
+      "nombreInforme": "World Government Bonds hedged",
+      "tipo": "renta_fija",
+      "retornoCompuesto": 4.5,
+      "retornoAritmetico": 4.6,
+      "volatilidad": 4
+    }
+  ],
+  "correlaciones": [
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0.68, 0.48, 0.64, 0.48, 0.08, 0.28, 0, -0.04, 0.04, 0.04, 0.16, 0.24, -0.16, 0, 0.6],
+    [0, 0.68, 1, 0.51, 0.68, 0.51, 0.09, 0.3, 0, -0.04, 0.04, 0.04, 0.17, 0.26, -0.17, 0, 0.64],
+    [0, 0.48, 0.51, 1, 0.57, 0.51, 0.28, 0.41, 0.27, 0.23, 0.29, 0.27, 0.35, 0.22, 0, 0.28, 0.49],
+    [0, 0.64, 0.68, 0.57, 1, 0.63, 0.31, 0.48, 0.27, 0.22, 0.3, 0.28, 0.39, 0.28, -0.04, 0.28, 0.65],
+    [0, 0.48, 0.51, 0.51, 0.63, 1, 0.44, 0.54, 0.45, 0.4, 0.45, 0.43, 0.5, 0.26, 0.08, 0.46, 0.52],
+    [0, 0.08, 0.09, 0.28, 0.31, 0.44, 1, 0.52, 0.68, 0.63, 0.64, 0.61, 0.58, 0.14, 0.28, 0.69, 0.19],
+    [0, 0.28, 0.3, 0.41, 0.48, 0.54, 0.52, 1, 0.59, 0.54, 0.57, 0.54, 0.56, 0.2, 0.19, 0.6, 0.36],
+    [0, 0, 0, 0.27, 0.27, 0.45, 0.68, 0.59, 1, 0.77, 0.77, 0.72, 0.68, 0.14, 0.36, 0.83, 0.14],
+    [0, -0.04, -0.04, 0.23, 0.22, 0.4, 0.63, 0.54, 0.77, 1, 0.72, 0.68, 0.63, 0.11, 0.35, 0.78, 0.09],
+    [0, 0.04, 0.04, 0.29, 0.3, 0.45, 0.64, 0.57, 0.77, 0.72, 1, 0.68, 0.65, 0.14, 0.33, 0.78, 0.17],
+    [0, 0.04, 0.04, 0.27, 0.28, 0.43, 0.61, 0.54, 0.72, 0.68, 0.68, 1, 0.61, 0.14, 0.31, 0.74, 0.16],
+    [0, 0.16, 0.17, 0.35, 0.39, 0.5, 0.58, 0.56, 0.68, 0.63, 0.65, 0.61, 1, 0.17, 0.26, 0.69, 0.26],
+    [0, 0.24, 0.26, 0.22, 0.28, 0.26, 0.14, 0.2, 0.14, 0.11, 0.14, 0.14, 0.17, 1, 0, 0.14, 0.25],
+    [0, -0.16, -0.17, 0, -0.04, 0.08, 0.28, 0.19, 0.36, 0.35, 0.33, 0.31, 0.26, 0, 1, 0.37, -0.09],
+    [0, 0, 0, 0.28, 0.28, 0.46, 0.69, 0.6, 0.83, 0.78, 0.78, 0.74, 0.69, 0.14, 0.37, 1, 0.14],
+    [0, 0.6, 0.64, 0.49, 0.65, 0.52, 0.19, 0.36, 0.14, 0.09, 0.17, 0.16, 0.26, 0.25, -0.09, 0.14, 1]
+  ]
+}

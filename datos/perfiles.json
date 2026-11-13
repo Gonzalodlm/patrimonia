@@ -1,0 +1,10 @@
+{
+  "_comentario": "Los cinco perfiles de riesgo y la volatilidad anual (en %) que apunta cada uno.",
+  "perfiles": [
+    { "id": "conservador", "nombre": "Conservador", "volatilidadObjetivo": 4 },
+    { "id": "moderado_conservador", "nombre": "Moderado conservador", "volatilidadObjetivo": 7 },
+    { "id": "moderado", "nombre": "Moderado", "volatilidadObjetivo": 10 },
+    { "id": "moderado_agresivo", "nombre": "Moderado agresivo", "volatilidadObjetivo": 13 },
+    { "id": "agresivo", "nombre": "Agresivo", "volatilidadObjetivo": 16 }
+  ]
+}

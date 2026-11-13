@@ -1,0 +1,42 @@
+{
+  "_comentario": "Reglas que el motor respeta al armar cada cartera. Los números están en porcentaje (20 = 20%). Después de cambiar algo, correr 'npm run frontera' o compilar el sitio.",
+  "carteras": {
+    "simple": {
+      "nombre": "Simple",
+      "descripcion": "Dos piezas: acciones de todo el mundo y bonos de gobiernos del mundo.",
+      "clases": ["acciones_globales", "bonos_globales"],
+      "topeGeneral": 100,
+      "topes": {},
+      "proporciones": []
+    },
+    "diversificada": {
+      "nombre": "Diversificada",
+      "descripcion": "Quince clases de activo, ninguna con más de 20% de la cartera.",
+      "clases": [
+        "liquidez_usd",
+        "tesoro_medio",
+        "tesoro_largo",
+        "tips",
+        "renta_fija_agregada",
+        "corporativos_ig",
+        "corporativos_hy",
+        "deuda_emergente",
+        "acciones_eeuu_grandes",
+        "acciones_eeuu_chicas",
+        "acciones_desarrollados_ex_eeuu",
+        "acciones_emergentes",
+        "inmobiliario_cotizado",
+        "oro",
+        "materias_primas"
+      ],
+      "topeGeneral": 20,
+      "topes": {},
+      "proporciones": []
+    }
+  },
+  "_ayuda": {
+    "topeGeneral": "Peso máximo de cualquier clase de esa cartera.",
+    "topes": "Topes particulares más bajos para alguna clase. Ejemplo: { \"oro\": 10 }.",
+    "proporciones": "Reglas dentro de un grupo de clases. Ejemplo: EE.UU. grandes es al menos 50% de las acciones: { \"clase\": \"acciones_eeuu_grandes\", \"grupo\": [\"acciones_eeuu_grandes\", \"acciones_eeuu_chicas\", \"acciones_desarrollados_ex_eeuu\", \"acciones_emergentes\"], \"minimo\": 50 }. También se puede poner \"maximo\"."
+  }
+}

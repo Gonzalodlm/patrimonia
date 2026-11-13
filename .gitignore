@@ -1,0 +1,55 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Windows
+desktop.ini
+
+# ── Datos de J.P. Morgan: NO se publican hasta resolver el permiso ──
+# El informe y el Excel originales.
+/referencia/
+# Los supuestos reales (cualquier edición). El ejemplo sí se publica.
+/datos/supuestos-*.json
+!/datos/supuestos.ejemplo.json
+# Lo que se genera a partir de los supuestos al compilar.
+/datos/frontera.json
+# El documento de requisitos copia la matriz de correlaciones del informe.
+/prompt-claude-code-patrimonia.md

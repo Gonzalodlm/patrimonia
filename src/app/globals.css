@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* Provisorio: la paleta y la tipografía se definen en la fase 2 (landing). */
+:root {
+  --fondo: #fbfaf7;
+  --texto: #1a1917;
+  --gris: #6b6862;
+}
+
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, sans-serif;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

@@ -169,14 +169,26 @@ export function QueNoEs() {
 export function QuienLoHace() {
   return (
     <Seccion id="quien" rotulo="Quién lo hace" titulo="Un contador uruguayo, con el código a la vista.">
-      {/* PENDIENTE: Gonzalo reemplaza este texto de ejemplo. */}
-      <div className="mt-8 max-w-[62ch] border border-dashed border-[var(--gris-claro)] p-5">
-        <p className="rotulo">Texto de ejemplo para reemplazar</p>
-        <p className="mt-3 text-[18px] leading-[1.6] text-[var(--gris)]">
-          Soy Gonzalo, contador. Armé Patrimonia porque muchas personas tienen ahorros en dólares en el banco y no saben por dónde
-          empezar, y casi toda la información disponible viene de alguien que quiere venderles algo. Reviso cada criterio financiero
-          del sitio; el código lo puede revisar cualquiera.
+      <div className="mt-8 max-w-[62ch] space-y-5 text-[18px] leading-[1.6] text-[var(--gris)]">
+        <p>
+          Soy Gonzalo Díaz López, contador. Hice Patrimonia porque mucha gente en Uruguay ahorra en dólares, deja esa plata quieta en
+          el banco y no sabe por dónde empezar. Y casi toda la información sobre inversiones que le llega viene de alguien que quiere
+          venderle algo.
         </p>
+        <p>
+          El sitio no cobra nada y no tiene socios comerciales: no recibo comisiones de bancos, brokers ni emisores de ETF. Los
+          criterios financieros, desde el test de perfil hasta el orden en que se reparte el ahorro, los reviso yo. El código es
+          público, así que cualquiera puede ver cómo se calcula cada número.
+        </p>
+        {sitio.contacto && (
+          <p>
+            Si encontrás un error o tenés una sugerencia, escribime a{" "}
+            <a href={`mailto:${sitio.contacto}`} className="text-[var(--tinta)] underline decoration-[var(--linea)] underline-offset-4 hover:decoration-current">
+              {sitio.contacto}
+            </a>
+            .
+          </p>
+        )}
       </div>
     </Seccion>
   );

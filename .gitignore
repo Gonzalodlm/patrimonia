@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -53,3 +54,6 @@ desktop.ini
 /datos/frontera.json
 # El documento de requisitos copia la matriz de correlaciones del informe.
 /prompt-claude-code-patrimonia.md
+
+# Lista exportada de mails: nunca al repositorio
+suscriptores.csv

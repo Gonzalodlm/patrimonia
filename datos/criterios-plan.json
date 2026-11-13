@@ -1,0 +1,25 @@
+{
+  "_comentario": "Criterios del plan patrimonial, aprobados el 13/11/2026. Los plazos van en años; 'hasta' es el límite superior sin incluir (un objetivo a 3 años exactos cae en el segundo tramo).",
+  "plazos": [
+    { "hasta": 3, "cartera": "liquidez", "texto": "Menos de 3 años: todo en liquidez en dólares" },
+    { "hasta": 7, "perfilMaximo": "conservador", "texto": "De 3 a 7 años: cartera conservadora" },
+    { "hasta": 15, "perfilMaximo": "moderado", "texto": "De 7 a 15 años: hasta moderada" },
+    { "hasta": null, "perfilMaximo": "agresivo", "texto": "Más de 15 años: hasta tu perfil" }
+  ],
+  "fondoEmergencia": {
+    "meses": 3,
+    "mesesSiIngresosInestables": 6,
+    "_ayuda": "Se usan 6 meses si en el test la persona respondió estas opciones (ingresos variables o no fijos, o personas a cargo).",
+    "respuestasInestables": { "ingresos": ["a", "b"], "dependientes": ["b", "c"] }
+  },
+  "deudas": {
+    "_ayuda": "Las deudas de estos tipos se cancelan siempre antes de invertir; las de 'nuncaCancelarPrimero' nunca. Las demás, si su tasa supera el retorno esperado de la cartera.",
+    "siempreCancelarPrimero": ["tarjeta", "prestamo_personal"],
+    "nuncaCancelarPrimero": ["hipoteca"]
+  },
+  "retiro": {
+    "_ayuda": "Regla del 4%: capital sugerido = gasto anual deseado x 25.",
+    "multiplicadorGastoAnual": 25,
+    "edadDeRetiroSugerida": 65
+  }
+}

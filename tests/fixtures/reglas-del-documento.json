@@ -1,0 +1,41 @@
+{
+  "_comentario": "Las restricciones originales del documento de requisitos (sección 5). Ya no son las del sitio, pero se conservan porque los valores de referencia calculados con cvxpy se hicieron con ellas: sirven para comprobar que el motor resuelve bien.",
+  "nombre": "Restricciones del documento",
+  "descripcion": "Topes por clase y estructura dentro de las acciones.",
+  "clases": [
+    "liquidez_usd",
+    "tesoro_medio",
+    "tesoro_largo",
+    "tips",
+    "renta_fija_agregada",
+    "corporativos_ig",
+    "corporativos_hy",
+    "deuda_emergente",
+    "acciones_eeuu_grandes",
+    "acciones_eeuu_chicas",
+    "acciones_desarrollados_ex_eeuu",
+    "acciones_emergentes",
+    "inmobiliario_cotizado",
+    "oro",
+    "materias_primas"
+  ],
+  "topeGeneral": 100,
+  "topes": {
+    "tesoro_largo": 15,
+    "tips": 15,
+    "corporativos_ig": 20,
+    "corporativos_hy": 10,
+    "deuda_emergente": 10,
+    "acciones_eeuu_chicas": 10,
+    "acciones_emergentes": 15,
+    "inmobiliario_cotizado": 10,
+    "oro": 10,
+    "materias_primas": 5
+  },
+  "proporciones": [
+    { "clase": "acciones_eeuu_grandes", "grupo": ["acciones_eeuu_grandes", "acciones_eeuu_chicas", "acciones_desarrollados_ex_eeuu", "acciones_emergentes"], "minimo": 50 },
+    { "clase": "acciones_desarrollados_ex_eeuu", "grupo": ["acciones_eeuu_grandes", "acciones_eeuu_chicas", "acciones_desarrollados_ex_eeuu", "acciones_emergentes"], "minimo": 15 },
+    { "clase": "acciones_emergentes", "grupo": ["acciones_eeuu_grandes", "acciones_eeuu_chicas", "acciones_desarrollados_ex_eeuu", "acciones_emergentes"], "maximo": 20 },
+    { "clase": "acciones_eeuu_chicas", "grupo": ["acciones_eeuu_grandes", "acciones_eeuu_chicas", "acciones_desarrollados_ex_eeuu", "acciones_emergentes"], "maximo": 15 }
+  ]
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { validarPedido } from "../src/textos/pedido";
-import { revisarTexto } from "../src/textos/validar";
+import { revisarTexto, sinSaludo } from "../src/textos/validar";
 import { plantillaCartera, plantillaPlan } from "../src/textos/plantillas";
 import { mensajePara } from "../src/textos/instrucciones";
 import { Cache, permitir } from "../src/servidor/limites";
@@ -38,7 +38,7 @@ const plan: DatosTextoPlan = {
   objetivos: [{ tipo: "casa", plazo: "10 años", prioridad: "importante", estado: "cubierto a medias", ahorroMensual: "USD 300", probabilidad: "40%" }],
   faltantePorMes: "USD 120",
   sobrantePorMes: null,
-  patrimonio: { anio: "2056", medio: "USD 341.484" },
+  juntado: { hastaAnio: "2056", medio: "USD 341.484" },
   proximosPasos: ["completar_colchon", "abrir_broker", "programar_aporte"],
 };
 
@@ -152,5 +152,18 @@ describe("proveedor Gemini (con la red simulada)", () => {
     } finally {
       globalThis.fetch = original;
     }
+  });
+});
+
+describe("saludo inicial del modelo", () => {
+  it("lo saca y deja la mayúscula", () => {
+    expect(sinSaludo("Hola. Para arrancar, completá tu colchón.")).toBe("Para arrancar, completá tu colchón.");
+    expect(sinSaludo("¡Hola! lo primero es tu colchón.")).toBe("Lo primero es tu colchón.");
+    expect(sinSaludo("Hola, con tu perfil Moderado conviene esperar.")).toBe("Con tu perfil Moderado conviene esperar.");
+  });
+
+  it("no toca un texto que no empieza con saludo", () => {
+    expect(sinSaludo("Tu colchón ya está completo. Hola no va acá.")).toBe("Tu colchón ya está completo. Hola no va acá.");
+    expect(sinSaludo("Buenas noticias no hay: te faltan USD 100.")).toBe("Buenas noticias no hay: te faltan USD 100.");
   });
 });

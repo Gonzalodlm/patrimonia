@@ -18,6 +18,12 @@ export function numerosPermitidos(datos: unknown): Set<string> {
   return salida;
 }
 
+/** Saca un saludo inicial ("Hola.", "¡Hola! ", "Hola, ") si el modelo lo puso igual, y deja la mayúscula inicial. */
+export function sinSaludo(texto: string): string {
+  const limpio = texto.trim().replace(/^¡?\s*(hola|buenas tardes|buenas noches|buenas|buen día|buenos días)\s*[.!,]+\s*/i, "");
+  return limpio.charAt(0).toUpperCase() + limpio.slice(1);
+}
+
 export interface Revision {
   valido: boolean;
   motivo?: string;

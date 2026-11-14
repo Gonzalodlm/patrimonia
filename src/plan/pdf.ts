@@ -100,7 +100,8 @@ export async function descargarPdf(c: ContenidoPdf) {
         doc.setFont("helvetica", encabezado ? "bold" : "normal");
         doc.setFontSize(8.5);
         const partidas = celdas.map((cel, i) => doc.splitTextToSize(cel, anchos[i] - 2) as string[]);
-        const h = Math.max(...partidas.map((p) => p.length)) * 3.8 + 1.5;
+        // Alto de la fila: el texto, y aire arriba y abajo de la línea que la separa de la siguiente.
+        const h = Math.max(...partidas.map((p) => p.length)) * 3.8 + 2.4;
         espacio(h);
         doc.setTextColor(...(encabezado ? GRIS : TINTA));
         let x = margen;
@@ -112,7 +113,7 @@ export async function descargarPdf(c: ContenidoPdf) {
         });
         y += h;
         doc.setDrawColor(...LINEA);
-        doc.line(margen, y - 2.2, ancho - margen, y - 2.2);
+        doc.line(margen, y - 4.2, ancho - margen, y - 4.2);
       };
       y += 1;
       fila(t.columnas, true);

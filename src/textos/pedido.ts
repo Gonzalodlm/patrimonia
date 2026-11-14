@@ -37,7 +37,7 @@ export function validarPedido(cuerpo: unknown, listas: Listas): PedidoTexto | nu
 
   if (tipo === "plan") {
     const c = d.colchon as Record<string, unknown> | undefined;
-    const p = d.patrimonio as Record<string, unknown> | undefined;
+    const p = d.juntado as Record<string, unknown> | undefined;
     const ok =
       enLista(d.perfil, listas.perfiles) &&
       esCifra(d.ahorroMensual) &&
@@ -61,7 +61,7 @@ export function validarPedido(cuerpo: unknown, listas: Listas): PedidoTexto | nu
       (d.faltantePorMes === null || esCifra(d.faltantePorMes)) &&
       (d.sobrantePorMes === null || esCifra(d.sobrantePorMes)) &&
       !!p &&
-      esCifra(p.anio) &&
+      esCifra(p.hastaAnio) &&
       esCifra(p.medio) &&
       Array.isArray(d.proximosPasos) &&
       d.proximosPasos.length <= 3 &&

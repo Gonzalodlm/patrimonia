@@ -24,7 +24,8 @@ export interface DatosTextoPlan {
   objetivos: { tipo: string; plazo: string; prioridad: string; estado: string; ahorroMensual: string; probabilidad: string }[];
   faltantePorMes: string | null;
   sobrantePorMes: string | null;
-  patrimonio: { anio: string; medio: string };
+  /** Todo lo que llega a juntar hasta ese año (escenario medio, dólares de hoy), contando lo que usa en sus objetivos. */
+  juntado: { hastaAnio: string; medio: string };
   /** Códigos de los próximos pasos (ver `pasosConocidos`), nunca texto libre. */
   proximosPasos: string[];
 }

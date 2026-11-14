@@ -222,4 +222,28 @@ describe("proyección del patrimonio", () => {
     const b = armarPlan(entrada({ objetivos: [objetivo("casa", 50000, 2036)] }));
     expect(a).toEqual(b);
   });
+  it("lo juntado cuenta lo que se usa en los objetivos: ahorrar 1.000 por mes 10 años no puede dar 6.000", () => {
+    // El caso que se veía mal: un objetivo que no se llega a cubrir se lleva toda la plata al vencer,
+    // y el patrimonio que queda es solo el colchón. Lo juntado tiene que mostrar todo lo ahorrado.
+    const r = armarPlan(
+      entrada({
+        perfil: "moderado_agresivo",
+        situacion: { edad: 35, ahorroMensual: 1000, ingresos: 3000, gastos: 2000, ahorros: 1000, deudas: [] },
+        objetivos: [objetivo("casa", 350000, 2036, "importante", "casa")],
+      }),
+    );
+    expect(r.objetivos[0].estado).not.toBe("cubierto");
+    expect(r.proyeccion.at(-1)!.medio).toBeLessThan(10000); // después de usar la plata queda el colchón
+    expect(r.juntado.anio).toBe(r.proyeccion.at(-1)!.anio);
+    expect(r.juntado.medio).toBeGreaterThan(100000); // 1.000 x 12 x 11 años = 132.000 aportados, en dólares de hoy
+    expect(r.juntado.medio).toBeLessThan(200000);
+    expect(r.juntado.usado).toBeGreaterThan(90000);
+    expect(r.juntado.bueno).toBeGreaterThan(r.juntado.malo);
+  });
+
+  it("sin objetivos que usen plata, lo juntado es el patrimonio del último año", () => {
+    const r = armarPlan(entrada({ situacion: { edad: 35, ahorroMensual: 1000, ingresos: null, gastos: null, ahorros: 10000, deudas: [] } }));
+    expect(r.juntado.usado).toBe(0);
+    expect(r.juntado.medio).toBeCloseTo(r.proyeccion.at(-1)!.medio, 6);
+  });
 });

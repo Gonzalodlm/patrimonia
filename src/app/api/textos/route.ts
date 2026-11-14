@@ -9,7 +9,7 @@ import { ErrorModelo } from "@/servidor/modelo/proveedor";
 import { Cache, permitir } from "@/servidor/limites";
 import { validarPedido } from "@/textos/pedido";
 import { mensajePara, SISTEMA } from "@/textos/instrucciones";
-import { revisarTexto } from "@/textos/validar";
+import { revisarTexto, sinSaludo } from "@/textos/validar";
 
 const listas = {
   perfiles: perfiles.perfiles.map((p) => p.nombre),
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
   try {
     // El resumen del plan puede tener muchos objetivos: se le da más lugar que a la explicación de la cartera.
     const esPlan = pedido.tipo === "plan";
-    const texto = await proveedor.redactar({ sistema: SISTEMA, mensaje: mensajePara(pedido), maxTokens: esPlan ? 550 : 400, senal: corte.signal });
+    const texto = sinSaludo(await proveedor.redactar({ sistema: SISTEMA, mensaje: mensajePara(pedido), maxTokens: esPlan ? 550 : 400, senal: corte.signal }));
     const revision = revisarTexto(texto, pedido.datos, esPlan ? MAX_PALABRAS_PLAN : undefined);
     if (!revision.valido) {
       console.warn(`[textos] respuesta descartada (${pedido.tipo}): ${revision.motivo}`);

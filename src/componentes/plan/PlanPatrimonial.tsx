@@ -70,7 +70,7 @@ export function PlanPatrimonial(props: Props) {
 
   const nombrePerfil = datos.perfiles.find((p) => p.id === perfil)!.nombre;
   const cubiertos = plan.objetivos.filter((o) => o.estado === "cubierto").length;
-  const ultimo = plan.proyeccion.at(-1)!;
+  const juntado = plan.juntado;
   const pasos = proximosPasos(plan, situacion).map((p) => p.texto);
   const deudasACancelar = plan.deudas.filter((d) => d.cancelarPrimero);
   const datosTexto = datosPlan(plan, situacion, nombrePerfil);
@@ -102,7 +102,11 @@ export function PlanPatrimonial(props: Props) {
           <Dato titulo="Perfil" valor={nombrePerfil} detalle={`Cartera ${datos.carteras[tipo].nombre.toLowerCase()}`} />
           <Dato titulo="Ahorro por mes" valor={dolares(situacion.ahorroMensual ?? 0)} detalle={plan.sobranteMensual > 1 ? `Te sobran ${dolares(plan.sobranteMensual)}` : undefined} />
           <Dato titulo="Objetivos cubiertos" valor={`${cubiertos} de ${plan.objetivos.length}`} detalle={plan.aporteFaltanteTotal > 1 ? `Faltan ${dolares(plan.aporteFaltanteTotal)} por mes` : undefined} />
-          <Dato titulo={`Patrimonio en ${ultimo.anio}`} valor={dolares(ultimo.medio)} detalle={`Entre ${dolares(ultimo.malo)} y ${dolares(ultimo.bueno)}`} />
+          <Dato
+            titulo={`Vas a juntar hasta ${juntado.anio}`}
+            valor={dolares(juntado.medio)}
+            detalle={`Entre ${dolares(juntado.malo)} y ${dolares(juntado.bueno)}${juntado.usado > 1 ? ". Cuenta lo que usás en tus objetivos" : ""}`}
+          />
         </dl>
         <div className="mt-8 max-w-[68ch] border-t border-[var(--linea)] pt-6">
           <h3 className="text-[17px]">En pocas palabras</h3>
@@ -303,7 +307,7 @@ function contenidoPdf(a: {
       {
         titulo: "Resumen",
         parrafos: [
-          `Perfil ${a.nombrePerfil.toLowerCase()}, cartera ${c.nombre.toLowerCase()}. Ahorro de ${dolares(a.situacion.ahorroMensual ?? 0)} por mes. Objetivos cubiertos: ${plan.objetivos.filter((o) => o.estado === "cubierto").length} de ${plan.objetivos.length}.`,
+          `Perfil ${a.nombrePerfil.toLowerCase()}, cartera ${c.nombre.toLowerCase()}. Ahorro de ${dolares(a.situacion.ahorroMensual ?? 0)} por mes. Objetivos cubiertos: ${plan.objetivos.filter((o) => o.estado === "cubierto").length} de ${plan.objetivos.length}. Hasta ${plan.juntado.anio} vas a juntar ${dolares(plan.juntado.medio)} en dólares de hoy (entre ${dolares(plan.juntado.malo)} y ${dolares(plan.juntado.bueno)})${plan.juntado.usado > 1 ? ", contando lo que usás en tus objetivos" : ""}.`,
           a.resumen.replace(/\n+/g, " "),
         ],
       },
@@ -314,15 +318,18 @@ function contenidoPdf(a: {
           `Retorno esperado ${porcentaje(neta.retornoCompuesto, 1)} por año (neto de lo que cobran los ETFs, sin comisiones del broker ni impuestos). Riesgo ${porcentaje(cp.volatilidad, 1)}. Ratio de Sharpe ${numero(cp.sharpe, 2)}. Rebalanceo: una vez por año, o si una clase se aleja más de 5 puntos de su peso.`,
         ],
         tabla: {
-          columnas: ["Clase de activo", "Peso", "ETF elegido"],
-          anchos: [3, 1, 2.4],
+          columnas: ["Clase de activo", "Peso", "ETF"],
+          anchos: [3, 0.9, 2.6],
           derecha: [1],
           filas: c.clases
             .filter((id) => (cp.pesos[id] ?? 0) >= 0.05)
             .sort((x, y) => cp.pesos[y] - cp.pesos[x])
             .map((id) => {
-              const e = a.etfs.clases[id]?.etfs.find((x) => x.isin === a.elegidos[id]);
-              return [nombreClase.get(id) ?? id, porcentaje(cp.pesos[id], 1), e ? `${e.ticker} (${e.isin})` : "A elegir entre las opciones de la web"];
+              const opciones = a.etfs.clases[id]?.etfs ?? [];
+              const e = opciones.find((x) => x.isin === a.elegidos[id]);
+              // Si la persona no eligió, van las opciones que muestra la web para esa clase.
+              const etf = e ? `${e.ticker} (${e.isin})` : opciones.length ? `Opciones: ${opciones.map((x) => x.ticker).join(", ")}` : "Sin opciones cargadas";
+              return [nombreClase.get(id) ?? id, porcentaje(cp.pesos[id], 1), etf];
             }),
         },
       },
@@ -366,7 +373,9 @@ function contenidoPdf(a: {
         : []),
       {
         titulo: "Patrimonio proyectado (en dólares de hoy)",
-        parrafos: ["Escenario malo y bueno: 1 de cada 10 veces sale peor o mejor. Incluye el colchón y las carteras de cada objetivo; no incluye la jubilación ni la vivienda."],
+        parrafos: [
+          "Lo que tenés invertido cada año, sumando el colchón y la plata de cada objetivo. Baja en los años en que usás la plata de un objetivo. No incluye la jubilación ni la vivienda. Las columnas Malo y Bueno marcan el rango en el que cae 8 de cada 10 veces.",
+        ],
         tabla: {
           columnas: ["Año", "Edad", "Malo", "Medio", "Bueno"],
           derecha: [1, 2, 3, 4],

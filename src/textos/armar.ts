@@ -44,7 +44,6 @@ const estado: Record<string, string> = { cubierto: estadosTexto[0], parcial: est
 
 export function datosPlan(plan: ResultadoPlan, s: Situacion, perfil: string): DatosTextoPlan {
   const c = plan.colchon;
-  const ultimo = plan.proyeccion.at(-1)!;
   return {
     perfil,
     ahorroMensual: dolares(s.ahorroMensual ?? 0),
@@ -66,7 +65,7 @@ export function datosPlan(plan: ResultadoPlan, s: Situacion, perfil: string): Da
     })),
     faltantePorMes: plan.aporteFaltanteTotal > 1 ? dolares(plan.aporteFaltanteTotal) : null,
     sobrantePorMes: plan.sobranteMensual > 1 ? dolares(plan.sobranteMensual) : null,
-    patrimonio: { anio: String(ultimo.anio), medio: dolares(ultimo.medio) },
+    juntado: { hastaAnio: String(plan.juntado.anio), medio: dolares(plan.juntado.medio) },
     proximosPasos: proximosPasos(plan, s).map((p) => p.codigo),
   };
 }

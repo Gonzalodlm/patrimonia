@@ -46,6 +46,8 @@ export function plantillaPlan(d: DatosTextoPlan): string {
     );
   }
   if (d.sobrantePorMes) partes.push(`Te sobran ${d.sobrantePorMes} por mes para tu patrimonio de largo plazo.`);
-  partes.push(`En el escenario medio, tu patrimonio llegaría a ${d.patrimonio.medio} en ${d.patrimonio.anio}, en dólares de hoy.`);
+  partes.push(
+    `En el escenario medio, hasta ${d.juntado.hastaAnio} llegarías a juntar ${d.juntado.medio} en dólares de hoy${d.objetivos.length ? ", contando lo que uses en tus objetivos" : ""}.`,
+  );
   return partes.join(" ");
 }

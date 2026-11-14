@@ -135,6 +135,12 @@ export interface ResultadoPlan {
   /** Cuánto más habría que ahorrar por mes para cubrir todos los objetivos. */
   aporteFaltanteTotal: number;
   proyeccion: PuntoProyeccion[];
+  /**
+   * Todo lo que la persona llega a juntar hasta el último año de la proyección, en dólares de hoy:
+   * lo que le queda invertido más lo que fue usando en sus objetivos. `usado` es esa segunda parte
+   * en el escenario medio (0 si todavía no usó nada).
+   */
+  juntado: { anio: number; malo: number; medio: number; bueno: number; usado: number };
 }
 
 const ordenPrioridad: Record<Prioridad, number> = { imprescindible: 0, importante: 1, deseable: 2 };
@@ -279,7 +285,7 @@ export function armarPlan(e: EntradaPlan): ResultadoPlan {
   const aporteFaltanteTotal = objetivos.reduce((t, o) => t + (o.aporteNecesario === null ? 0 : Math.max(0, o.aporteNecesario - o.aporte)), 0);
 
   // 4. Proyección del patrimonio invertido, año a año, en dólares de hoy.
-  const proyeccion = proyectar(e, {
+  const { puntos: proyeccion, juntado } = proyectar(e, {
     colchonInicial: colchonConAhorros,
     faltanteColchon,
     mesesColchon,
@@ -308,6 +314,7 @@ export function armarPlan(e: EntradaPlan): ResultadoPlan {
     ahorrosSinAsignar: ahorros,
     aporteFaltanteTotal,
     proyeccion,
+    juntado,
   };
 }
 
@@ -328,7 +335,7 @@ interface DatosProyeccion {
  * shocks de mercado. Eso supone que todas las carteras suben y bajan a la vez, así que la banda
  * entre el escenario malo y el bueno queda algo más ancha que la real: es una aproximación prudente.
  */
-function proyectar(e: EntradaPlan, d: DatosProyeccion): PuntoProyeccion[] {
+function proyectar(e: EntradaPlan, d: DatosProyeccion): { puntos: PuntoProyeccion[]; juntado: ResultadoPlan["juntado"] } {
   const ultimo = Math.max(10, ...d.objetivos.map((o) => o.anios + 1));
   const anios = Math.min(ultimo, Math.floor(d.z[0].length / 12));
   const liq = parametrosMensuales(e.carteras.liquidez.retornoAritmetico, e.carteras.liquidez.volatilidad);
@@ -345,7 +352,11 @@ function proyectar(e: EntradaPlan, d: DatosProyeccion): PuntoProyeccion[] {
   const desde = d.mesesAntes ?? Infinity;
 
   const porAnio: number[][] = Array.from({ length: anios + 1 }, () => []);
+  // Por escenario: lo que queda al final más lo usado en objetivos, y lo usado solo. En dólares de hoy.
+  const juntados: number[] = [];
+  const usados: number[] = [];
   for (const fila of d.z) {
+    let usado = 0;
     let colchon = d.colchonInicial;
     let sobrante = d.ahorrosSinAsignar;
     const valores = bolsillos.map((b) => b.inicial);
@@ -365,12 +376,21 @@ function proyectar(e: EntradaPlan, d: DatosProyeccion): PuntoProyeccion[] {
         }
         valores[i] *= Math.exp(b.p.mu + b.p.sigma * zm);
         if (m >= desde) valores[i] += b.aporte;
-        if (m === b.vence - 1) valores[i] = Math.max(0, valores[i] - b.retiro); // se usa la plata del objetivo
+        if (m === b.vence - 1) {
+          // Se usa la plata del objetivo (o lo que haya, si no alcanzó).
+          const uso = Math.min(valores[i], b.retiro);
+          valores[i] -= uso;
+          usado += uso / Math.pow(1 + e.inflacion / 100, (m + 1) / 12);
+        }
       }
       if ((m + 1) % 12 === 0) {
         const y = (m + 1) / 12;
         const total = colchon + sobrante + valores.reduce((a, b) => a + b, 0);
         porAnio[y].push(total / Math.pow(1 + e.inflacion / 100, y));
+        if (y === anios) {
+          juntados.push(total / Math.pow(1 + e.inflacion / 100, y) + usado);
+          usados.push(usado);
+        }
       }
     }
   }
@@ -378,11 +398,19 @@ function proyectar(e: EntradaPlan, d: DatosProyeccion): PuntoProyeccion[] {
     const ord = [...xs].sort((a, b) => a - b);
     return ord[Math.min(ord.length - 1, Math.floor(p * ord.length))];
   };
-  return porAnio.map((xs, y) => ({
+  const puntos = porAnio.map((xs, y) => ({
     anio: e.anioActual + y,
     edad: e.situacion.edad ? e.situacion.edad + y : null,
     malo: percentil(xs, 0.1),
     medio: percentil(xs, 0.5),
     bueno: percentil(xs, 0.9),
   }));
+  const juntado = {
+    anio: e.anioActual + anios,
+    malo: percentil(juntados, 0.1),
+    medio: percentil(juntados, 0.5),
+    bueno: percentil(juntados, 0.9),
+    usado: percentil(usados, 0.5),
+  };
+  return { puntos, juntado };
 }

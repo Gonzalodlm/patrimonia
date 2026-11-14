@@ -90,9 +90,10 @@ describe("colchón", () => {
     expect(r.colchon.mesesParaCompletar).toBe(6);
   });
 
-  it("6 meses si los ingresos varían o hay personas a cargo", () => {
-    expect(armarPlan(entrada({ respuestasTest: { ingresos: "b", dependientes: "a" } })).colchon.meses).toBe(6);
-    expect(armarPlan(entrada({ respuestasTest: { ingresos: "d", dependientes: "c" } })).colchon.meses).toBe(6);
+  it("6 meses si los ingresos varían o no son fijos", () => {
+    expect(armarPlan(entrada({ respuestasTest: { ingresos: "a" } })).colchon.meses).toBe(6);
+    expect(armarPlan(entrada({ respuestasTest: { ingresos: "b" } })).colchon.meses).toBe(6);
+    expect(armarPlan(entrada({ respuestasTest: { ingresos: "d" } })).colchon.meses).toBe(3);
   });
 
   it("los ahorros actuales completan primero el colchón", () => {

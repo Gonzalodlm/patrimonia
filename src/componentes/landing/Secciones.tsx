@@ -87,7 +87,7 @@ export function Numeros({ datos }: { datos: DatosGenerados }) {
 // ─── 3. Cómo funciona ────────────────────────────────────────────────────────
 
 const pasos = [
-  ["Tu perfil de riesgo", "Unas diez preguntas con plata concreta: qué harías si tu inversión cae, cuánto tiempo podés esperar, qué tan estables son tus ingresos."],
+  ["Tu perfil de riesgo", "Diez preguntas simples, como las de un banco: tu edad, para cuándo es la plata, cuánto sabés de inversiones y qué harías si tu inversión cae."],
   ["Tus objetivos", "Lo que querés lograr, cuánto cuesta en dólares de hoy y para cuándo: un fondo de emergencia, una casa, el retiro."],
   ["Tu cartera", "Qué parte va a cada clase de activo, cuánto se espera que rinda, cuánto puede caer en un año malo y qué ETFs la representan."],
   ["Tu plan", "Cuánto ahorrar por mes para cada objetivo, en qué orden y qué hacer si no alcanza para todo. Lo descargás en PDF."],
@@ -168,21 +168,20 @@ export function QueNoEs() {
 
 export function QuienLoHace() {
   return (
-    <Seccion id="quien" rotulo="Quién lo hace" titulo="Un contador uruguayo, con el código a la vista.">
+    <Seccion id="quien" rotulo="Quién lo hace" titulo="Un contador uruguayo, sin nada para venderte.">
       <div className="mt-8 max-w-[62ch] space-y-5 text-[18px] leading-[1.6] text-[var(--gris)]">
         <p>
-          Soy Gonzalo Díaz López, contador. Hice Patrimonia porque mucha gente en Uruguay ahorra en dólares, deja esa plata quieta en
-          el banco y no sabe por dónde empezar. Y casi toda la información sobre inversiones que le llega viene de alguien que quiere
-          venderle algo.
+          Soy Gonzalo Días López. Hice Patrimonia porque en Uruguay mucha gente ahorra en dólares, deja la plata quieta en el banco y
+          no sabe por dónde empezar. Además, casi toda la información sobre inversiones viene de alguien con algo que ofrecer.
         </p>
         <p>
-          El sitio no cobra nada y no tiene socios comerciales: no recibo comisiones de bancos, brokers ni emisores de ETF. Los
-          criterios financieros, desde el test de perfil hasta el orden en que se reparte el ahorro, los reviso yo. El código es
-          público, así que cualquiera puede ver cómo se calcula cada número.
+          Este sitio es gratis y no tiene socios comerciales: no recibo comisiones de bancos, brokers ni de nadie. Todos los criterios
+          los reviso yo, desde el test de perfil hasta cómo se reparte el ahorro. Y el código es público, así que podés ver de dónde
+          sale cada número.
         </p>
         {sitio.contacto && (
           <p>
-            Si encontrás un error o tenés una sugerencia, escribime a{" "}
+            ¿Encontraste un error o tenés una sugerencia? Escribime a{" "}
             <a href={`mailto:${sitio.contacto}`} className="text-[var(--tinta)] underline decoration-[var(--linea)] underline-offset-4 hover:decoration-current">
               {sitio.contacto}
             </a>

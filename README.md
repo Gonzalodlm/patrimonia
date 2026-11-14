@@ -82,7 +82,7 @@ Las preguntas, opciones y puntajes están en `datos/cuestionario.json`.
 - Cada pregunta es de `tolerancia` (cómo reacciona la persona ante una caída) o de `capacidad` (cuánto riesgo puede asumir).
 - `umbrales` dice desde cuántos puntos se pasa al perfil siguiente: con `[4, 8, 12, 16]`, de 0 a 3 es Conservador, de 4 a 7 Moderado conservador, y así.
 - El perfil final es el más bajo de los dos bloques. Una opción con `perfilMaximo` pone un tope: por ejemplo, si la plata se usa en menos de 3 años, Conservador como máximo.
-- La pregunta de tipo `carteras` calcula sola los montos de cada opción a partir de las carteras reales.
+- Si se agrega una pregunta de tipo `carteras`, la página calcula sola los montos de cada opción a partir de las carteras reales (hoy el test no la usa).
 
 Después de cambiarlo, corré `npm test`: hay pruebas que comprueban que cada bloque llegue a 20 puntos y que los cortes den el perfil esperado.
 
@@ -91,7 +91,7 @@ Después de cambiarlo, corré `npm test`: hay pruebas que comprueban que cada bl
 Están en `datos/criterios-plan.json`:
 
 - `plazos`: qué cartera le toca a cada objetivo según cuántos años faltan. Siempre con tope en el perfil de la persona.
-- `fondoEmergencia`: cuántos meses de gastos (3, o 6 si en el test respondió ingresos variables o personas a cargo).
+- `fondoEmergencia`: cuántos meses de gastos (3, o 6 si en el test respondió ingresos variables o no fijos).
 - `deudas`: qué tipos se cancelan siempre antes de invertir y cuáles nunca. Las demás, si su tasa supera el retorno esperado.
 - `retiro`: el multiplicador de la regla del 4% (25 veces el gasto anual) y la edad de retiro sugerida.
 

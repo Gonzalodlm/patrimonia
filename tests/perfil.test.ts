@@ -22,14 +22,17 @@ describe("estructura del cuestionario aprobado", () => {
       const ps = c.preguntas.filter((p) => p.bloque === b);
       expect(ps).toHaveLength(5);
       expect(ps.reduce((s, p) => s + Math.max(...p.opciones.map((o) => o.puntos)), 0)).toBe(20);
-      // El mínimo de capacidad es 1, porque "dos o más personas a cargo" vale 1 punto. Igual cae en Conservador.
       expect(ps.reduce((s, p) => s + Math.min(...p.opciones.map((o) => o.puntos)), 0)).toBeLessThan(c.umbrales[0]);
     }
   });
 
-  it("la pregunta de carteras tiene una opción por perfil, en orden", () => {
-    const p = c.preguntas.find((q) => q.tipo === "carteras")!;
-    expect(p.opciones.map((o) => o.perfil)).toEqual(perfiles);
+  it("si hay pregunta de carteras, tiene una opción por perfil, en orden", () => {
+    for (const p of c.preguntas.filter((q) => q.tipo === "carteras")) expect(p.opciones.map((o) => o.perfil)).toEqual(perfiles);
+  });
+
+  it("los ids de preguntas y de opciones no se repiten", () => {
+    expect(new Set(c.preguntas.map((p) => p.id)).size).toBe(c.preguntas.length);
+    for (const p of c.preguntas) expect(new Set(p.opciones.map((o) => o.id)).size).toBe(p.opciones.length);
   });
 
   it("los topes por horizonte nombran perfiles que existen", () => {
@@ -74,8 +77,8 @@ describe("cálculo del perfil", () => {
     const r = extremo(true);
     r.ingresos = "a"; // 0
     r.colchon = "a"; // 0
-    r.deudas = "d"; // 0
-    // capacidad: horizonte 4 + dependientes 4 = 8 → moderado
+    r.porcentaje = "a"; // 0
+    // capacidad: edad 4 + horizonte 4 = 8 → moderado
     const res = calcularPerfil(c, r, perfiles);
     expect(res.capacidad.puntos).toBe(8);
     expect(res.tolerancia.perfil).toBe("agresivo");
@@ -98,8 +101,8 @@ describe("cálculo del perfil", () => {
 
   it("avisa qué preguntas faltan responder", () => {
     const r = extremo(true);
-    delete r.deudas;
-    expect(faltantes(c, r)).toEqual(["deudas"]);
-    expect(() => calcularPerfil(c, r, perfiles)).toThrow(/deudas/);
+    delete r.colchon;
+    expect(faltantes(c, r)).toEqual(["colchon"]);
+    expect(() => calcularPerfil(c, r, perfiles)).toThrow(/colchon/);
   });
 });

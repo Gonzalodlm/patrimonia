@@ -9,8 +9,8 @@
   "fondoEmergencia": {
     "meses": 3,
     "mesesSiIngresosInestables": 6,
-    "_ayuda": "Se usan 6 meses si en el test la persona respondió estas opciones (ingresos variables o no fijos, o personas a cargo).",
-    "respuestasInestables": { "ingresos": ["a", "b"], "dependientes": ["b", "c"] }
+    "_ayuda": "Se usan 6 meses si en el test la persona respondió estas opciones (ingresos variables o no fijos).",
+    "respuestasInestables": { "ingresos": ["a", "b"] }
   },
   "deudas": {
     "_ayuda": "Las deudas de estos tipos se cancelan siempre antes de invertir; las de 'nuncaCancelarPrimero' nunca. Las demás, si su tasa supera el retorno esperado de la cartera.",

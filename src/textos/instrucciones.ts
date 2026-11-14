@@ -22,7 +22,7 @@ Datos:
 ${JSON.stringify(p.datos, null, 2)}`;
   }
   const pasos = p.datos.proximosPasos.map((c) => pasosConocidos[c]);
-  return `Resumí este plan en uno o dos párrafos: qué hacer primero, cómo quedan los objetivos y cuáles son los próximos pasos. Los objetivos van por tipo, sin nombres.
+  return `Resumí este plan en uno o dos párrafos: qué hacer primero, cómo quedan los objetivos y cuáles son los próximos pasos. Los objetivos van por tipo, sin nombres. Máximo 120 palabras: si hay más de tres objetivos, no los detalles uno por uno; nombrá los más importantes y resumí el resto en una frase.
 
 Datos:
 ${JSON.stringify({ ...p.datos, proximosPasos: pasos }, null, 2)}`;

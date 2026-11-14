@@ -17,6 +17,7 @@ const listas = {
 };
 const cache = new Cache<string>(2000, 7 * 24 * 3600);
 const ESPERA_MAXIMA_MS = 6000;
+const MAX_PALABRAS_PLAN = 200;
 
 function ipDe(request: Request): string {
   return request.headers.get("x-forwarded-for")?.split(",")[0].trim() || request.headers.get("x-real-ip") || "desconocida";
@@ -40,8 +41,10 @@ export async function POST(request: Request) {
   const corte = new AbortController();
   const reloj = setTimeout(() => corte.abort(), ESPERA_MAXIMA_MS);
   try {
-    const texto = await proveedor.redactar({ sistema: SISTEMA, mensaje: mensajePara(pedido), maxTokens: 400, senal: corte.signal });
-    const revision = revisarTexto(texto, pedido.datos);
+    // El resumen del plan puede tener muchos objetivos: se le da más lugar que a la explicación de la cartera.
+    const esPlan = pedido.tipo === "plan";
+    const texto = await proveedor.redactar({ sistema: SISTEMA, mensaje: mensajePara(pedido), maxTokens: esPlan ? 550 : 400, senal: corte.signal });
+    const revision = revisarTexto(texto, pedido.datos, esPlan ? MAX_PALABRAS_PLAN : undefined);
     if (!revision.valido) {
       console.warn(`[textos] respuesta descartada (${pedido.tipo}): ${revision.motivo}`);
       return Response.json({ error: "respuesta_invalida" }, { status: 502 });

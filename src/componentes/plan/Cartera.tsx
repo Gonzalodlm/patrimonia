@@ -210,10 +210,6 @@ export function Cartera({ datos, etfs, perfil, motivoPerfil, tipo, monto, elegid
             </tbody>
           </table>
         </div>
-        <p className="mt-4 max-w-[62ch] text-[14px] leading-[1.6] text-[var(--gris)]">
-          Escenario malo: 1 de cada 10 veces sale peor. Bueno: 1 de cada 10 veces sale mejor. En dólares de cada año, sin descontar la
-          inflación, y con el retorno ya neto de lo que cobran los ETFs.
-        </p>
         <p className="mt-8 max-w-[62ch] border-l-2 border-[var(--acento)] pl-5 text-[17px] leading-[1.6]">
           En un año malo de verdad, de esos que pasan 1 vez cada 20, esta cartera podría perder{" "}
           <span className="tabular">{dolares(caida)}</span> o más

@@ -6,8 +6,8 @@
 //   Cuerpo: { model, system_instruction, input, generation_config: { max_output_tokens } }
 //   Respuesta: el texto está en steps[] (type "model_output") → content[] (type "text") → text
 //
-// Se usa el plan PAGO (proyecto con facturación activa): con el plan gratuito Google usa y puede
-// leer lo que se le envía. Ver la página de privacidad.
+// Se usa el plan GRATUITO: Google puede usar y leer lo que se le envía, por eso solo se mandan
+// números anónimos (ver la página de privacidad). Si se pasa al plan pago, actualizar esa página.
 
 import { ErrorModelo, type PedidoModelo, type ProveedorTexto } from "./proveedor";
 

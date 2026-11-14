@@ -103,8 +103,8 @@ La explicación de la cartera y el resumen del plan los redacta Gemini a partir 
 
 Para activarlo:
 
-1. En [Google AI Studio](https://aistudio.google.com) creá una clave de API en un proyecto de Google Cloud **con facturación activa** (plan pago). En el plan gratuito Google usa y puede leer lo que se le envía, y no se puede usar para visitantes de la Unión Europea, Suiza ni Reino Unido.
-2. En Google Cloud, poné un tope de gasto mensual (presupuesto con alerta) para el proyecto.
+1. En [Google AI Studio](https://aistudio.google.com) creá una clave de API. Hoy se usa el **plan gratuito** (proyecto sin facturación): Google puede usar y leer lo que se le envía, por eso solo se mandan números anónimos; según sus términos no se puede usar para visitantes de la Unión Europea, Suiza ni Reino Unido; y tiene un cupo diario (unos 500 pedidos con Flash-Lite); cuando se agota, la web usa las plantillas. Si se activa la facturación pasa a ser plan pago: hay que cambiar el texto de la página de privacidad.
+2. Si algún día pasás al plan pago, poné un tope de gasto mensual (presupuesto con alerta) en Google Cloud.
 3. Cargá la clave como `GEMINI_API_KEY` en Vercel (y en `.env.local` para probar en tu computadora).
 
 Qué se le manda: el perfil, porcentajes y montos ya calculados, y el tipo de cada objetivo (casa, retiro…). Nunca el mail, el nombre de los objetivos ni nada escrito por la persona. El servidor solo acepta pedidos con esa forma exacta, limita los pedidos por IP y guarda en caché las respuestas iguales.
@@ -156,7 +156,7 @@ Ojo: aunque los números no estén en el repositorio, el sitio publicado los usa
 2. **Vercel.** Ya está creado: el proyecto `patrimonia`, conectado al repositorio, publicado en [patrimonia-plum.vercel.app](https://patrimonia-plum.vercel.app). Ya tiene cargadas `SUPUESTOS_JSON_BASE64`, `SECRETO_BAJAS` y `SITIO_URL`. El archivo `.vercelignore` impide que los archivos de J.P. Morgan se suban si alguien publica desde la computadora con `vercel deploy`.
 3. **Variables de entorno** (Settings → Environment Variables), ver `.env.example`:
    - `SUPUESTOS_JSON_BASE64`: los supuestos reales (ver «Los datos de J.P. Morgan»). Sin esta variable el sitio sale con los datos de ejemplo y un aviso.
-   - `GEMINI_API_KEY`: la clave de Gemini (plan pago).
+   - `GEMINI_API_KEY`: la clave de Gemini (plan gratuito).
    - `DATABASE_URL`: la carga sola Vercel al agregar Neon desde Storage o el Marketplace.
    - `SECRETO_BAJAS`: una frase larga al azar.
    - `SITIO_URL`: la dirección pública del sitio (la de Vercel, `https://….vercel.app`, hasta tener `https://patrimonia.uy`).
@@ -174,7 +174,7 @@ Cada `git push` a `main` publica una versión nueva. Cada cambio en otra rama ge
 - [x] Dirección del repositorio y mail de contacto en `src/lib/sitio.ts`.
 - [ ] Comprar el dominio `patrimonia.uy` y apuntarlo a Vercel.
 - [ ] Cargar las variables de entorno en Vercel, crear la tabla de mails (`npm run mails -- crear`) y probar una suscripción y una baja.
-- [ ] Probar que Gemini responde con la clave real y poner un tope de gasto en Google Cloud.
+- [x] Probar que Gemini responde con la clave real (plan gratuito, probado el 14/11/2026).
 - [ ] Revisar en la página de privacidad la región donde Neon guarda los mails, una vez creada la base.
 
 ## Licencia

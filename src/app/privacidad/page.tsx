@@ -62,9 +62,9 @@ export default function Privacidad() {
             que hayas escrito.
           </p>
           <p>
-            Usamos el servicio pago de Google, en el que, según sus términos, Google no usa lo que se le envía para mejorar sus productos.
-            Google sí guarda esos pedidos por un tiempo limitado, solo para detectar abusos de su servicio. El modelo no calcula nada: los
-            números los calcula Patrimonia y revisamos que el texto no traiga cifras distintas.
+            Usamos el servicio gratuito de Google. Según sus términos, en ese servicio Google puede usar lo que se le envía para mejorar sus
+            productos, y personas de Google pueden leerlo, separado de cualquier cuenta. Por eso solo mandamos esos números anónimos. El
+            modelo no calcula nada: los números los calcula Patrimonia y revisamos que el texto no traiga cifras distintas.
           </p>
           <p>Si el modelo no responde, la explicación se arma con plantillas propias y no sale nada de tu navegador.</p>
         </Bloque>

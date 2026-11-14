@@ -6,13 +6,13 @@ import type { Fuente } from "@/motor/tipos";
 
 /** Pie de todas las páginas: enlaces y avisos legales completos en letra chica. */
 export function Pie({ fuente }: { fuente: Fuente }) {
-  const enlace = "hover:text-[var(--tinta)]";
+  const enlace = "toque hover:text-[var(--tinta)]";
   return (
     <footer className="bg-[var(--fondo-hundido)]">
-      <div className="mx-auto max-w-6xl px-4 pt-14 pb-10 sm:px-8">
-        <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+      <div className="mx-auto max-w-6xl px-4 pt-10 pb-8 sm:px-8 sm:pt-14 sm:pb-10">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
           <p className="font-titular text-[28px] leading-none">Patrimonia</p>
-          <ul className="flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-[var(--gris)]">
+          <ul className="flex flex-wrap gap-x-8 text-[15px] text-[var(--gris)]">
             <li>
               <Link href="/plan" className={enlace}>
                 Armar mi plan
@@ -43,7 +43,7 @@ export function Pie({ fuente }: { fuente: Fuente }) {
             </li>
           </ul>
         </div>
-        <div className="mt-12 border-t border-[var(--linea)] pt-6 text-[12px] leading-[1.65] text-[var(--gris)]">
+        <div className="mt-8 border-t border-[var(--linea)] pt-6 text-[13px] leading-[1.6] text-[var(--gris)] sm:mt-12 sm:text-[12px] sm:leading-[1.65]">
           <p className="max-w-[110ch]">{avisoCorto}</p>
           <p className="mt-3 max-w-[110ch]">
             Supuestos: {fuente.nombre}, edición {fuente.edicion}, con datos al{" "}

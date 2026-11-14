@@ -8,16 +8,16 @@ import { GraficoClases } from "./GraficoClases";
 function Seccion({ id, rotulo, titulo, children }: { id?: string; rotulo: string; titulo: string; children: React.ReactNode }) {
   return (
     <section id={id} className="scroll-mt-6 border-t border-[var(--linea)]">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-8 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-8 sm:py-24">
         <p className="rotulo">{rotulo}</p>
-        <h2 className="font-titular mt-4 max-w-[20ch] text-[36px] leading-[1.06] tracking-[-0.015em] sm:text-[48px]">{titulo}</h2>
+        <h2 className="font-titular mt-4 max-w-[20ch] text-[34px] leading-[1.06] tracking-[-0.015em] sm:text-[48px]">{titulo}</h2>
         {children}
       </div>
     </section>
   );
 }
 
-const parrafo = "max-w-[62ch] text-[18px] leading-[1.6] text-[var(--gris)]";
+const parrafo = "max-w-[62ch] text-[17px] leading-[1.6] text-[var(--gris)] sm:text-[18px]";
 
 // ─── 2. De dónde salen los números ───────────────────────────────────────────
 
@@ -105,7 +105,7 @@ export function ComoFunciona() {
           </li>
         ))}
       </ol>
-      <Link href="/plan" className="mt-14 inline-block rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black">
+      <Link href="/plan" className="mt-10 block w-full text-center rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:mt-14 sm:inline-block sm:w-auto">
         Armar mi plan
       </Link>
     </Seccion>
@@ -241,7 +241,7 @@ export function Preguntas({ datos }: { datos: DatosGenerados }) {
       <div className="mt-12 max-w-3xl border-b border-[var(--linea)]">
         {preguntas.map(([pregunta, respuesta]) => (
           <details key={pregunta} className="group border-t border-[var(--linea)]">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[19px] [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[18px] sm:text-[19px] [&::-webkit-details-marker]:hidden">
               {pregunta}
               <span aria-hidden className="text-[22px] leading-none text-[var(--gris)] transition-transform group-open:rotate-45">
                 +

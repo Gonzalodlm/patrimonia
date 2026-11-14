@@ -63,8 +63,8 @@ export function Test(props: Props) {
         <div className="h-full bg-[var(--tinta)] transition-[width] duration-300" style={{ width: `${((pregunta + 1) / cuestionario.preguntas.length) * 100}%` }} />
       </div>
 
-      <fieldset className="mt-10">
-        <legend className="font-titular text-[32px] leading-[1.12] sm:text-[40px]">{p.texto}</legend>
+      <fieldset className="mt-8 sm:mt-10">
+        <legend className="font-titular text-[30px] leading-[1.12] sm:text-[40px]">{p.texto}</legend>
         {p.ayuda && <p className="mt-4 text-[16px] leading-[1.55] text-[var(--gris)]">{p.ayuda}</p>}
         <div className="mt-8 space-y-3">
           {p.opciones.map((o) => {
@@ -96,17 +96,17 @@ export function Test(props: Props) {
         </div>
       </fieldset>
 
-      <div className="mt-10 flex items-center justify-between">
+      <div className="mt-6 flex items-center justify-between sm:mt-10">
         <button
           type="button"
           onClick={() => props.onIrA(pregunta - 1)}
           disabled={pregunta === 0}
-          className="text-[16px] text-[var(--gris)] hover:text-[var(--tinta)] disabled:invisible"
+          className="toque pr-4 text-[16px] text-[var(--gris)] hover:text-[var(--tinta)] disabled:invisible"
         >
           ← Anterior
         </button>
         {elegida && (
-          <button type="button" onClick={() => props.onIrA(pregunta + 1)} className="text-[16px] text-[var(--gris)] hover:text-[var(--tinta)]">
+          <button type="button" onClick={() => props.onIrA(pregunta + 1)} className="toque pl-4 text-[16px] text-[var(--gris)] hover:text-[var(--tinta)]">
             Siguiente →
           </button>
         )}
@@ -122,7 +122,7 @@ function Resultado({ cuestionario, datos, respuestas, perfilElegido, onElegirPer
     return (
       <div className="max-w-2xl">
         <p className="text-[18px]">Falta responder una pregunta.</p>
-        <button type="button" onClick={() => onIrA(sinResponder)} className="mt-6 rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[var(--fondo)]">
+        <button type="button" onClick={() => onIrA(sinResponder)} className="mt-6 w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[var(--fondo)] sm:w-auto">
           Ir a la pregunta {sinResponder + 1}
         </button>
       </div>
@@ -146,11 +146,11 @@ function Resultado({ cuestionario, datos, respuestas, perfilElegido, onElegirPer
   return (
     <div className="max-w-2xl">
       <p className="rotulo">Tu perfil de riesgo</p>
-      <h1 className="font-titular mt-3 text-[48px] leading-none sm:text-[64px]">{nombre(r.perfil)}</h1>
-      <p className="mt-6 text-[19px] leading-[1.55]">{descripcionPerfil[r.perfil]}</p>
+      <h1 className="font-titular mt-3 text-[44px] leading-none sm:text-[64px]">{nombre(r.perfil)}</h1>
+      <p className="mt-5 text-[18px] leading-[1.55] sm:mt-6 sm:text-[19px]">{descripcionPerfil[r.perfil]}</p>
       <p className="mt-4 text-[16px] leading-[1.6] text-[var(--gris)]">{porque}</p>
 
-      <dl className="tabular mt-8 grid grid-cols-2 gap-6 border-t border-[var(--linea)] pt-5 text-[15px]">
+      <dl className="tabular mt-8 grid gap-5 border-t border-[var(--linea)] pt-5 text-[15px] sm:grid-cols-2 sm:gap-6">
         <div>
           <dt className="text-[var(--gris)]">Tolerancia: cómo reaccionás ante una caída</dt>
           <dd className="mt-1 text-[18px]">
@@ -165,7 +165,7 @@ function Resultado({ cuestionario, datos, respuestas, perfilElegido, onElegirPer
         </div>
       </dl>
 
-      <fieldset className="mt-12">
+      <fieldset className="mt-10 sm:mt-12">
         <legend className="text-[18px]">¿Preferís ir con algo más conservador?</legend>
         <p className="mt-1 text-[15px] text-[var(--gris)]">Podés bajar el riesgo. Subirlo más allá de lo que dio el test, no.</p>
         <div className="mt-4 flex flex-wrap gap-2">
@@ -180,7 +180,7 @@ function Resultado({ cuestionario, datos, respuestas, perfilElegido, onElegirPer
                 aria-checked={activo}
                 disabled={!permitido}
                 onClick={() => onElegirPerfil(p.id)}
-                className={`rounded-[3px] border px-4 py-2.5 text-[15px] ${
+                className={`min-h-11 rounded-[3px] border px-4 py-2.5 text-[15px] ${
                   activo
                     ? "border-[var(--tinta)] bg-[var(--tinta)] text-[var(--fondo)]"
                     : permitido
@@ -195,11 +195,11 @@ function Resultado({ cuestionario, datos, respuestas, perfilElegido, onElegirPer
         </div>
       </fieldset>
 
-      <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--linea)] pt-8">
-        <button type="button" onClick={onSeguir} className="rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black">
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-[var(--linea)] pt-8 sm:mt-12 sm:justify-start">
+        <button type="button" onClick={onSeguir} className="w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:w-auto">
           Seguir
         </button>
-        <button type="button" onClick={() => onIrA(0)} className="text-[15px] text-[var(--gris)] hover:text-[var(--tinta)]">
+        <button type="button" onClick={() => onIrA(0)} className="toque text-[15px] text-[var(--gris)] hover:text-[var(--tinta)]">
           Revisar mis respuestas
         </button>
       </div>

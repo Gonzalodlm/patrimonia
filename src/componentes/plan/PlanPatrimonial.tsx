@@ -61,7 +61,7 @@ export function PlanPatrimonial(props: Props) {
       <div className="max-w-2xl">
         <h1 className="font-titular text-[40px] leading-tight sm:text-[52px]">Falta un dato.</h1>
         <p className="mt-5 text-[18px] leading-[1.6] text-[var(--gris)]">Para armar tu plan necesitamos {plan.faltanDatos.join(" y ")}.</p>
-        <button type="button" onClick={props.onIrASituacion} className="mt-8 rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black">
+        <button type="button" onClick={props.onIrASituacion} className="mt-8 w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:w-auto">
           Completar mi situación
         </button>
       </div>
@@ -91,14 +91,14 @@ export function PlanPatrimonial(props: Props) {
   return (
     <div>
       <p className="rotulo">Tu plan</p>
-      <h1 className="font-titular mt-3 text-[40px] leading-[1.05] tracking-[-0.015em] sm:text-[56px]">Qué hacer con tu plata, y en qué orden.</h1>
+      <h1 className="font-titular mt-3 text-[38px] leading-[1.05] tracking-[-0.015em] sm:text-[56px]">Qué hacer con tu plata, y en qué orden.</h1>
 
       {/* Resumen de una página */}
-      <section className="mt-10 border border-[var(--tinta)] p-5 sm:p-8" aria-labelledby="resumen">
+      <section className="mt-8 border border-[var(--tinta)] p-4 sm:mt-10 sm:p-8" aria-labelledby="resumen">
         <h2 id="resumen" className="rotulo">
           Resumen
         </h2>
-        <dl className="tabular mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-4">
+        <dl className="tabular mt-5 grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-4 sm:gap-x-8">
           <Dato titulo="Perfil" valor={nombrePerfil} detalle={`Cartera ${datos.carteras[tipo].nombre.toLowerCase()}`} />
           <Dato titulo="Ahorro por mes" valor={dolares(situacion.ahorroMensual ?? 0)} detalle={plan.sobranteMensual > 1 ? `Te sobran ${dolares(plan.sobranteMensual)}` : undefined} />
           <Dato titulo="Objetivos cubiertos" valor={`${cubiertos} de ${plan.objetivos.length}`} detalle={plan.aporteFaltanteTotal > 1 ? `Faltan ${dolares(plan.aporteFaltanteTotal)} por mes` : undefined} />
@@ -128,7 +128,7 @@ export function PlanPatrimonial(props: Props) {
             type="button"
             onClick={descargar}
             disabled={generandoPdf}
-            className="rounded-[3px] bg-[var(--tinta)] px-5 py-3 text-[15px] text-[var(--fondo)] hover:bg-black disabled:opacity-50"
+            className="w-full rounded-[3px] bg-[var(--tinta)] px-5 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black disabled:opacity-50 sm:w-auto sm:py-3 sm:text-[15px]"
           >
             {generandoPdf ? "Armando el PDF…" : "Descargar mi plan en PDF"}
           </button>
@@ -392,7 +392,7 @@ function Dato({ titulo, valor, detalle }: { titulo: string; valor: string; detal
   return (
     <div>
       <dt className="text-[13px] text-[var(--gris)]">{titulo}</dt>
-      <dd className="mt-1 text-[22px] leading-tight">{valor}</dd>
+      <dd className="mt-1 text-[20px] leading-tight sm:text-[22px]">{valor}</dd>
       {detalle && <dd className="mt-1 text-[13px] text-[var(--gris)]">{detalle}</dd>}
     </div>
   );
@@ -400,9 +400,9 @@ function Dato({ titulo, valor, detalle }: { titulo: string; valor: string; detal
 
 function Bloque({ numero: n, titulo, children }: { numero: string; titulo: string; children: React.ReactNode }) {
   return (
-    <section className="mt-16">
+    <section className="mt-12 sm:mt-16">
       <p className="rotulo tabular">{n}</p>
-      <h2 className="font-titular mt-2 text-[32px] leading-tight">{titulo}</h2>
+      <h2 className="font-titular mt-2 text-[30px] leading-tight sm:text-[32px]">{titulo}</h2>
       <div className="mt-4 max-w-[68ch] text-[17px] leading-[1.6] text-[var(--gris)]">{children}</div>
     </section>
   );
@@ -412,7 +412,7 @@ function TarjetaResultado({ r }: { r: ResultadoObjetivo }) {
   const o = r.objetivo;
   const faltaPorMes = r.aporteNecesario === null ? null : Math.max(0, r.aporteNecesario - r.aporte);
   return (
-    <article className="rounded-[3px] border border-[var(--linea)] p-5 text-[var(--tinta)]">
+    <article className="rounded-[3px] border border-[var(--linea)] p-4 text-[var(--tinta)] sm:p-5">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <h3 className="font-titular text-[26px] leading-tight">{o.nombre || "Objetivo"}</h3>
         <p className="text-[14px]">
@@ -426,7 +426,7 @@ function TarjetaResultado({ r }: { r: ResultadoObjetivo }) {
         {nombrePrioridad[o.prioridad]} · {o.anio}, dentro de {r.anios} {r.anios === 1 ? "año" : "años"} · {dolares(o.monto)} de hoy ({dolares(r.montoNominal)} de{" "}
         {o.anio})
       </p>
-      <dl className="tabular mt-5 grid gap-x-6 gap-y-4 text-[15px] sm:grid-cols-3">
+      <dl className="tabular mt-5 grid grid-cols-2 gap-x-5 gap-y-4 text-[15px] sm:grid-cols-3 sm:gap-x-6">
         <div>
           <dt className="text-[13px] text-[var(--gris)]">Cartera</dt>
           <dd className="mt-0.5">

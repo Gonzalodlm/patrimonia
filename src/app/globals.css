@@ -30,6 +30,29 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* En celular: el texto no se agranda solo al girar el teléfono, y tocar dos veces un botón no hace zoom. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+a,
+button,
+input,
+select,
+summary,
+label,
+[role="radio"] {
+  touch-action: manipulation;
+}
+
+/* Enlaces y botones de solo texto: zona táctil de 44px de alto sin cambiar cómo se ven. */
+.toque {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
 /* Foco visible para quien navega con teclado. */
 :focus-visible {
   outline: 2px solid var(--acento);

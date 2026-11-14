@@ -104,7 +104,7 @@ export default function Privacidad() {
         </Bloque>
 
         <p className="mt-16 text-[16px]">
-          <Link href="/" className="text-[var(--gris)] underline decoration-[var(--linea)] underline-offset-4 hover:text-[var(--tinta)]">
+          <Link href="/" className="toque text-[var(--gris)] underline decoration-[var(--linea)] underline-offset-4 hover:text-[var(--tinta)]">
             Volver al inicio
           </Link>
         </p>

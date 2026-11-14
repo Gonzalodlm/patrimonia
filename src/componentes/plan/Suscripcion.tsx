@@ -54,7 +54,7 @@ export function Suscripcion() {
         <input tabIndex={-1} autoComplete="off" value={sitio} onChange={(e) => setSitio(e.target.value)} />
       </label>
       <label className="mt-3 flex items-start gap-3 text-[14px] leading-[1.55] text-[var(--gris)]">
-        <input type="checkbox" checked={acepta} onChange={(e) => setAcepta(e.target.checked)} className="mt-1 size-4 shrink-0 accent-[var(--tinta)]" />
+        <input type="checkbox" checked={acepta} onChange={(e) => setAcepta(e.target.checked)} className="mt-0.5 size-5 shrink-0 accent-[var(--tinta)] sm:mt-1 sm:size-4" />
         {consentimiento.texto}
       </label>
       {estado === "error" && <p className="mt-3 text-[14px] text-[var(--acento)]">No pudimos guardarlo. Revisá el mail y probá de nuevo.</p>}

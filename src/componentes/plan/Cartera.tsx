@@ -65,7 +65,7 @@ export function Cartera({ datos, etfs, perfil, motivoPerfil, tipo, monto, elegid
       </h1>
 
       {/* Simple o diversificada */}
-      <div className="mt-8 inline-flex rounded-[3px] border border-[var(--linea)] p-1" role="radiogroup" aria-label="Tipo de cartera">
+      <div className="mt-6 flex rounded-[3px] border border-[var(--linea)] p-1 sm:mt-8 sm:inline-flex" role="radiogroup" aria-label="Tipo de cartera">
         {(["simple", "diversificada"] as const).map((t) => (
           <button
             key={t}
@@ -73,7 +73,7 @@ export function Cartera({ datos, etfs, perfil, motivoPerfil, tipo, monto, elegid
             role="radio"
             aria-checked={tipo === t}
             onClick={() => onTipo(t)}
-            className={`rounded-[2px] px-4 py-2 text-[15px] ${tipo === t ? "bg-[var(--tinta)] text-[var(--fondo)]" : "text-[var(--gris)] hover:text-[var(--tinta)]"}`}
+            className={`min-h-11 flex-1 rounded-[2px] px-4 py-2 text-[15px] sm:flex-none ${tipo === t ? "bg-[var(--tinta)] text-[var(--fondo)]" : "text-[var(--gris)] hover:text-[var(--tinta)]"}`}
           >
             {datos.carteras[t].nombre}
           </button>
@@ -87,7 +87,7 @@ export function Cartera({ datos, etfs, perfil, motivoPerfil, tipo, monto, elegid
       </p>
 
       {/* Los tres números */}
-      <dl className="tabular mt-12 grid gap-8 border-t border-[var(--tinta)] pt-6 sm:grid-cols-3">
+      <dl className="tabular mt-10 grid gap-7 border-t border-[var(--tinta)] pt-6 sm:mt-12 sm:grid-cols-3 sm:gap-8">
         <div>
           <dt className="text-[14px] text-[var(--gris)]">Retorno esperado por año</dt>
           <dd className="font-titular mt-2 text-[48px] leading-none [font-variant-numeric:lining-nums]">{numero(compNeto, 1)}%</dd>
@@ -188,28 +188,36 @@ export function Cartera({ datos, etfs, perfil, motivoPerfil, tipo, monto, elegid
             />
           </span>
         </label>
+        {/* En celular la tabla entra entera: títulos cortos y montos sin "USD" (se aclara abajo). */}
         <div className="mt-6 overflow-x-auto">
-          <table className="tabular w-full min-w-[480px] text-left text-[16px]">
+          <table className="tabular w-full text-left text-[15px] sm:min-w-[480px] sm:text-[16px]">
             <thead>
               <tr className="border-b border-[var(--tinta)] text-[14px] text-[var(--gris)]">
-                <th className="py-2 pr-4 font-normal">Dentro de</th>
-                <th className="py-2 pr-4 text-right font-normal">Escenario malo</th>
-                <th className="py-2 pr-4 text-right font-normal">Escenario medio</th>
-                <th className="py-2 text-right font-normal">Escenario bueno</th>
+                <th className="py-2 pr-2 font-normal sm:pr-4">Dentro de</th>
+                {["malo", "medio", "bueno"].map((e, i) => (
+                  <th key={e} className={`py-2 text-right font-normal ${i < 2 ? "pr-2 sm:pr-4" : ""}`}>
+                    <span className="hidden sm:inline">Escenario </span>
+                    <span className="capitalize sm:normal-case">{e}</span>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {tabla.map((r) => (
                 <tr key={r.anios} className="border-b border-[var(--linea)]">
-                  <td className="py-3 pr-4">{r.anios === 1 ? "1 año" : `${r.anios} años`}</td>
-                  <td className="py-3 pr-4 text-right">{dolares(r.malo)}</td>
-                  <td className="py-3 pr-4 text-right text-[var(--tinta)]">{dolares(r.medio)}</td>
-                  <td className="py-3 text-right">{dolares(r.bueno)}</td>
+                  <td className="py-3 pr-2 whitespace-nowrap sm:pr-4">{r.anios === 1 ? "1 año" : `${r.anios} años`}</td>
+                  {([r.malo, r.medio, r.bueno] as const).map((v, i) => (
+                    <td key={i} className={`py-3 text-right whitespace-nowrap ${i < 2 ? "pr-2 sm:pr-4" : ""} ${i === 1 ? "text-[var(--tinta)]" : ""}`}>
+                      <span className="hidden sm:inline">USD </span>
+                      {numero(v, 0)}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <p className="mt-2 text-[13px] text-[var(--gris)] sm:hidden">Montos en dólares.</p>
         <p className="mt-8 max-w-[62ch] border-l-2 border-[var(--acento)] pl-5 text-[17px] leading-[1.6]">
           En un año malo de verdad, de esos que pasan 1 vez cada 20, esta cartera podría perder{" "}
           <span className="tabular">{dolares(caida)}</span> o más
@@ -276,7 +284,7 @@ function FilaClase({
                   key={e.isin}
                   className={`flex flex-col gap-2 rounded-[3px] border p-3 sm:flex-row sm:items-center sm:justify-between ${activo ? "border-[var(--tinta)]" : "border-[var(--linea)]"}`}
                 >
-                  <button type="button" role="radio" aria-checked={activo} onClick={() => onElegir(e.isin)} className="flex items-start gap-3 text-left">
+                  <button type="button" role="radio" aria-checked={activo} onClick={() => onElegir(e.isin)} className="flex min-h-11 w-full items-start gap-3 text-left sm:w-auto">
                     <span aria-hidden className="mt-1 grid size-4 shrink-0 place-items-center rounded-full border border-[var(--gris-claro)]">
                       {activo && <span className="size-2 rounded-full bg-[var(--tinta)]" />}
                     </span>
@@ -292,7 +300,7 @@ function FilaClase({
                     href={enlaceFicha(e.isin)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="shrink-0 pl-7 text-[13px] text-[var(--gris)] underline decoration-[var(--linea)] underline-offset-4 hover:text-[var(--tinta)] sm:pl-0"
+                    className="toque shrink-0 pl-7 text-[14px] text-[var(--gris)] underline decoration-[var(--linea)] underline-offset-4 hover:text-[var(--tinta)] sm:pl-0 sm:text-[13px]"
                   >
                     Ver ficha
                   </a>

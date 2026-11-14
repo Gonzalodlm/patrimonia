@@ -50,21 +50,22 @@ export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
   return (
     <div ref={arriba} className="scroll-mt-4">
       {/* Barra de avance */}
+      {/* En celular entran los cinco pasos: el actual con su nombre y los demás solo con el número. */}
       <nav aria-label="Pasos del plan" className="border-b border-[var(--linea)]">
-        <ol className="flex gap-6 overflow-x-auto pb-3 text-[14px] [scrollbar-width:none]">
+        <ol className="flex gap-1 text-[14px] sm:gap-6">
           {PASOS.map((nombre, i) => {
             const actual = estado.paso === i;
             return (
-              <li key={nombre} className="shrink-0">
+              <li key={nombre} className={actual ? "min-w-0 flex-1 sm:flex-none" : "shrink-0"}>
                 <button
                   type="button"
                   onClick={() => alcanzable(i) && irAPaso(i)}
                   disabled={!alcanzable(i)}
                   aria-current={actual ? "step" : undefined}
-                  className={`tabular border-b-2 pb-3 ${actual ? "border-[var(--acento)] text-[var(--tinta)]" : "border-transparent text-[var(--gris)] hover:text-[var(--tinta)] disabled:text-[var(--gris-claro)] disabled:hover:text-[var(--gris-claro)]"}`}
+                  className={`tabular -mb-px flex h-11 w-full min-w-11 items-center gap-1.5 border-b-2 whitespace-nowrap sm:min-w-0 ${actual ? "border-[var(--acento)] px-2 text-[var(--tinta)] sm:px-0" : "justify-center border-transparent text-[var(--gris)] hover:text-[var(--tinta)] disabled:text-[var(--gris-claro)] disabled:hover:text-[var(--gris-claro)] sm:justify-start"}`}
                 >
-                  <span className="mr-1.5 text-[12px]">{String(i + 1).padStart(2, "0")}</span>
-                  {nombre}
+                  <span className={actual ? "text-[12px]" : "text-[14px] sm:text-[12px]"}>{String(i + 1).padStart(2, "0")}</span>
+                  <span className={actual ? "truncate" : "sr-only sm:not-sr-only"}>{nombre}</span>
                 </button>
               </li>
             );
@@ -75,7 +76,7 @@ export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
         <p className="mt-4 text-[14px] text-[var(--gris)]">Tu navegador no permite guardar el avance: si cerrás la página, se pierde lo cargado.</p>
       )}
 
-      <div className="pt-10 sm:pt-14">
+      <div className="pt-8 sm:pt-14">
         {estado.paso === 0 && <Explicacion datos={datos} onSeguir={() => irAPaso(1)} />}
 
         {estado.paso === 1 && (
@@ -155,25 +156,25 @@ export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
 
         {estado.paso === 4 && perfil && (
           <div className="mt-12 border-t border-[var(--linea)] pt-8">
-            <button type="button" onClick={() => irAPaso(3)} className="text-[16px] text-[var(--gris)] hover:text-[var(--tinta)]">
+            <button type="button" onClick={() => irAPaso(3)} className="toque text-[16px] text-[var(--gris)] hover:text-[var(--tinta)]">
               ← Volver a mi cartera
             </button>
           </div>
         )}
 
         {estado.paso === 3 && perfil && (
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--linea)] pt-8">
-            <button type="button" onClick={() => irAPaso(1)} className="text-[16px] text-[var(--gris)] hover:text-[var(--tinta)]">
+          <div className="mt-12 flex flex-col-reverse gap-2 border-t border-[var(--linea)] pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+            <button type="button" onClick={() => irAPaso(1)} className="toque justify-center text-[16px] text-[var(--gris)] hover:text-[var(--tinta)] sm:justify-start">
               ← Volver a mi perfil
             </button>
-            <button type="button" onClick={() => irAPaso(4)} className="rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black">
+            <button type="button" onClick={() => irAPaso(4)} className="w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:w-auto">
               Seguir a mi plan
             </button>
           </div>
         )}
       </div>
 
-      <div className="mt-16 text-[13px] text-[var(--gris)]">
+      <div className="mt-12 text-[13px] text-[var(--gris)] sm:mt-16">
         <button
           type="button"
           onClick={() => {
@@ -181,7 +182,7 @@ export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
               tienda.reiniciar();
             }
           }}
-          className="underline decoration-[var(--linea)] underline-offset-4 hover:text-[var(--tinta)]"
+          className="toque underline decoration-[var(--linea)] underline-offset-4 hover:text-[var(--tinta)]"
         >
           Empezar de nuevo
         </button>
@@ -196,7 +197,7 @@ function Pendiente({ titulo, children, onSeguir, boton = "Seguir" }: { titulo: s
     <div className="max-w-2xl">
       <h1 className="font-titular text-[40px] leading-tight sm:text-[52px]">{titulo}</h1>
       <p className="mt-5 text-[18px] leading-[1.6] text-[var(--gris)]">{children}</p>
-      <button type="button" onClick={onSeguir} className="mt-8 rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black">
+      <button type="button" onClick={onSeguir} className="mt-8 w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:w-auto">
         {boton}
       </button>
     </div>

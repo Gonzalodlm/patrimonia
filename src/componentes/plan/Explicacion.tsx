@@ -47,7 +47,7 @@ export function Explicacion({ datos, onSeguir }: { datos: DatosGenerados; onSegu
             onElegir={setIndice}
             titulo="Frontera eficiente con el punto elegido"
           />
-          <label className="mt-4 block">
+          <label className="mt-1 block">
             <span className="sr-only">Riesgo de la cartera</span>
             <input
               type="range"
@@ -55,7 +55,7 @@ export function Explicacion({ datos, onSeguir }: { datos: DatosGenerados; onSegu
               max={frontera.length - 1}
               value={indice}
               onChange={(e) => setIndice(Number(e.target.value))}
-              className="w-full accent-[var(--acento)]"
+              className="h-11 w-full accent-[var(--acento)]"
               aria-valuetext={`Riesgo ${numero(punto.volatilidad, 1)}%, retorno esperado ${numero(punto.retornoCompuesto, 1)}% por año`}
             />
           </label>
@@ -94,7 +94,7 @@ export function Explicacion({ datos, onSeguir }: { datos: DatosGenerados; onSegu
           </p>
         </div>
         <details className="mt-5 text-[16px]">
-          <summary className="cursor-pointer text-[var(--gris)] hover:text-[var(--tinta)]">Ver la fórmula</summary>
+          <summary className="cursor-pointer py-3 text-[var(--gris)] hover:text-[var(--tinta)]">Ver la fórmula</summary>
           <div className="mt-3 border-l-2 border-[var(--linea)] pl-4 text-[var(--gris)]">
             <p className="font-titular text-[22px] text-[var(--tinta)]">Sharpe = (R − R<sub>f</sub>) / σ</p>
             <p className="mt-2 leading-[1.6]">
@@ -105,8 +105,8 @@ export function Explicacion({ datos, onSeguir }: { datos: DatosGenerados; onSegu
         </details>
       </section>
 
-      <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--linea)] pt-8">
-        <button type="button" onClick={onSeguir} className="rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black">
+      <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--linea)] pt-8 sm:mt-16">
+        <button type="button" onClick={onSeguir} className="w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:w-auto">
           Empezar el test
         </button>
         <span className="text-[14px] text-[var(--gris)]">Diez preguntas, una por pantalla.</span>

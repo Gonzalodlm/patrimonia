@@ -8,7 +8,9 @@ import { dolares } from "@/lib/formato";
 
 const ANCHO = 640;
 const ALTO = 320;
-const M = { arriba: 24, derecha: 16, abajo: 36, izquierda: 64 };
+const M = { arriba: 24, derecha: 16, abajo: 40, izquierda: 68 };
+// El dibujo se achica al ancho del celular: ahí la letra del gráfico va más grande para que se lea.
+const LETRA = "tabular fill-[var(--gris)] text-[21px] sm:text-[13px]";
 
 const compacto = new Intl.NumberFormat("es-UY", { notation: "compact", maximumFractionDigits: 1 });
 
@@ -59,14 +61,14 @@ export function GraficoPatrimonio({ puntos, vencimientos }: { puntos: PuntoProye
           {marcasY.map((v) => (
             <g key={v}>
               <line x1={M.izquierda} x2={ANCHO - M.derecha} y1={y(v)} y2={y(v)} stroke="var(--linea)" strokeWidth={1} />
-              <text x={M.izquierda - 8} y={y(v)} dy="0.32em" textAnchor="end" className="tabular fill-[var(--gris)] text-[13px]">
+              <text x={M.izquierda - 8} y={y(v)} dy="0.32em" textAnchor="end" className={LETRA}>
                 {compacto.format(v)}
               </text>
             </g>
           ))}
           {puntos.map((pt, i) =>
             i % cadaCuantos === 0 ? (
-              <text key={pt.anio} x={x(i)} y={ALTO - M.abajo + 20} textAnchor="middle" className="tabular fill-[var(--gris)] text-[13px]">
+              <text key={pt.anio} x={x(i)} y={ALTO - M.abajo + 28} textAnchor={i === 0 ? "start" : i === n ? "end" : "middle"} className={LETRA}>
                 {pt.anio}
               </text>
             ) : null,
@@ -112,8 +114,8 @@ export function GraficoPatrimonio({ puntos, vencimientos }: { puntos: PuntoProye
           <span className="inline-block h-1.5 w-[1.5px] bg-[var(--tinta)]" aria-hidden /> Años en que se usa la plata de un objetivo
         </li>
       </ul>
-      <details className="mt-4 text-[14px]">
-        <summary className="cursor-pointer text-[var(--gris)] hover:text-[var(--tinta)]">Ver los valores en una tabla</summary>
+      <details className="mt-2 text-[14px]">
+        <summary className="cursor-pointer py-3 text-[var(--gris)] hover:text-[var(--tinta)]">Ver los valores en una tabla</summary>
         <div className="mt-3 max-h-80 overflow-auto">
           <table className="tabular w-full text-left">
             <thead className="sticky top-0 bg-[var(--fondo)]">

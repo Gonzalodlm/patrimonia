@@ -101,7 +101,7 @@ export function Situacion({ situacion: s, objetivos, criterios, mesesColchon, an
               <Selector id={`tipo-${d.id}`} etiqueta="Tipo" valor={d.tipo} opciones={tiposDeuda} onCambio={(tipo) => cambiarDeuda(d.id, { tipo })} />
               <CampoNumero id={`saldo-${d.id}`} etiqueta="Lo que debés" requerido prefijo="USD" valor={d.saldo || null} onCambio={(v) => cambiarDeuda(d.id, { saldo: v ?? 0 })} />
               <CampoNumero id={`tasa-${d.id}`} etiqueta="Tasa anual" sufijo="%" decimales max={500} valor={d.tasa} onCambio={(tasa) => cambiarDeuda(d.id, { tasa })} />
-              <button type="button" onClick={() => cambiar({ deudas: s.deudas.filter((x) => x.id !== d.id) })} className="py-2.5 text-[14px] text-[var(--gris)] hover:text-[var(--tinta)]">
+              <button type="button" onClick={() => cambiar({ deudas: s.deudas.filter((x) => x.id !== d.id) })} className="toque justify-center text-[15px] text-[var(--gris)] hover:text-[var(--tinta)] sm:text-[14px]">
                 Quitar
               </button>
             </div>
@@ -109,7 +109,7 @@ export function Situacion({ situacion: s, objetivos, criterios, mesesColchon, an
           <button
             type="button"
             onClick={() => cambiar({ deudas: [...s.deudas, { id: nuevoId(), tipo: "tarjeta", saldo: 0, tasa: null }] })}
-            className="rounded-[3px] border border-[var(--linea)] px-4 py-2.5 text-[15px] hover:border-[var(--tinta)]"
+            className="min-h-11 w-full rounded-[3px] border border-[var(--linea)] px-4 py-2.5 text-[15px] hover:border-[var(--tinta)] sm:w-auto"
           >
             + Agregar una deuda
           </button>
@@ -124,7 +124,7 @@ export function Situacion({ situacion: s, objetivos, criterios, mesesColchon, an
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           {atajos.map((a) => (
-            <button key={a.categoria} type="button" onClick={() => agregar(a)} className="rounded-[3px] border border-[var(--linea)] px-3.5 py-2 text-[15px] hover:border-[var(--tinta)]">
+            <button key={a.categoria} type="button" onClick={() => agregar(a)} className="min-h-11 rounded-[3px] border border-[var(--linea)] px-3.5 py-2 text-[15px] hover:border-[var(--tinta)]">
               + {a.nombre}
             </button>
           ))}
@@ -149,7 +149,7 @@ export function Situacion({ situacion: s, objetivos, criterios, mesesColchon, an
           type="button"
           onClick={onSeguir}
           disabled={faltan.length > 0 || objetivosInvalidos.length > 0}
-          className="rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black disabled:cursor-not-allowed disabled:opacity-40"
+          className="w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:w-auto disabled:cursor-not-allowed disabled:opacity-40"
         >
           Ver mi cartera
         </button>
@@ -179,17 +179,17 @@ function TarjetaObjetivo({
   const anioInvalido = o.anio <= anioActual || o.anio > anioActual + 70;
   return (
     <div className="rounded-[3px] border border-[var(--linea)] p-4 sm:p-5">
-      <div className="flex items-start justify-between gap-4">
-        <label className="block w-full">
+      <div className="flex items-center justify-between gap-3">
+        <label className="block w-full min-w-0">
           <span className="sr-only">Nombre del objetivo</span>
           <input
             value={o.nombre}
             maxLength={60}
             onChange={(e) => onCambio({ nombre: e.target.value })}
-            className="font-titular w-full border-b border-transparent bg-transparent text-[24px] leading-tight outline-none focus:border-[var(--linea)]"
+            className="font-titular h-11 w-full border-b border-transparent bg-transparent text-[22px] leading-tight text-ellipsis outline-none focus:border-[var(--linea)] sm:text-[24px]"
           />
         </label>
-        <button type="button" onClick={onQuitar} className="shrink-0 pt-1 text-[14px] text-[var(--gris)] hover:text-[var(--tinta)]">
+        <button type="button" onClick={onQuitar} className="toque shrink-0 pl-2 text-[15px] text-[var(--gris)] hover:text-[var(--tinta)] sm:text-[14px]">
           Quitar
         </button>
       </div>

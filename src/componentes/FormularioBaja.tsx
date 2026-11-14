@@ -32,7 +32,7 @@ export function FormularioBaja() {
           const r = await fetch("/api/baja", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, firma }) }).catch(() => null);
           setEstado(r?.ok ? "listo" : "error");
         }}
-        className="mt-8 rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black disabled:opacity-50"
+        className="mt-8 w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:w-auto disabled:opacity-50"
       >
         Borrar mi mail
       </button>

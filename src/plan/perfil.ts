@@ -4,10 +4,8 @@ export type Bloque = "tolerancia" | "capacidad";
 
 export interface Opcion {
   id: string;
-  texto?: string;
+  texto: string;
   puntos: number;
-  /** Para la pregunta de carteras: a qué perfil corresponde la opción. */
-  perfil?: string;
   /** Si se elige esta opción, el perfil final no puede pasar este. */
   perfilMaximo?: string;
 }
@@ -17,7 +15,6 @@ export interface Pregunta {
   bloque: Bloque;
   texto: string;
   ayuda?: string;
-  tipo?: "carteras";
   opciones: Opcion[];
 }
 

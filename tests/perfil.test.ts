@@ -26,8 +26,8 @@ describe("estructura del cuestionario aprobado", () => {
     }
   });
 
-  it("si hay pregunta de carteras, tiene una opción por perfil, en orden", () => {
-    for (const p of c.preguntas.filter((q) => q.tipo === "carteras")) expect(p.opciones.map((o) => o.perfil)).toEqual(perfiles);
+  it("todas las opciones tienen texto", () => {
+    for (const p of c.preguntas) for (const o of p.opciones) expect(o.texto.trim().length).toBeGreaterThan(0);
   });
 
   it("los ids de preguntas y de opciones no se repiten", () => {

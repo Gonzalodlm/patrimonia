@@ -23,12 +23,6 @@ const parrafo = "max-w-[62ch] text-[17px] leading-[1.6] text-[var(--gris)] sm:te
 
 export function Numeros({ datos }: { datos: DatosGenerados }) {
   const clases = datos.clases.filter((c) => datos.carteras.diversificada.clases.includes(c.id));
-  const cifras = [
-    ["31", "ediciones anuales del informe"],
-    ["10 a 15", "años de horizonte de las estimaciones"],
-    ["200+", "activos estudiados por más de 90 especialistas"],
-    ["7,0%", "retorno anual esperado de una cartera con 60% en acciones de todo el mundo y 40% en bonos de EE.UU."],
-  ];
   return (
     <Seccion id="numeros" rotulo="De dónde salen los números" titulo="Una estimación de largo plazo, no un pronóstico del año que viene.">
       <div className="mt-8 grid gap-14 lg:grid-cols-2 lg:gap-16">
@@ -62,16 +56,6 @@ export function Numeros({ datos }: { datos: DatosGenerados }) {
         </div>
         <GraficoClases clases={clases} />
       </div>
-
-      <dl className="mt-20 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-        {cifras.map(([cifra, texto]) => (
-          <div key={texto} className="border-t border-[var(--tinta)] pt-4">
-            <dt className="font-titular text-[46px] leading-none [font-variant-numeric:lining-nums]">{cifra}</dt>
-            <dd className="mt-3 text-[15px] leading-[1.45] text-[var(--gris)]">{texto}</dd>
-          </div>
-        ))}
-      </dl>
-      <p className="mt-8 text-[13px] text-[var(--gris)]">Cifras del informe {datos.fuente.edicion} de J.P. Morgan Asset Management.</p>
 
       <aside className="mt-16 max-w-[62ch] border-l-2 border-[var(--acento)] pl-5">
         <p className="text-[16px] leading-[1.6] text-[var(--gris)]">
@@ -112,42 +96,7 @@ export function ComoFunciona() {
   );
 }
 
-// ─── 4. Qué busca el proyecto ────────────────────────────────────────────────
-
-export function Principios() {
-  const principios = [
-    ["Abierto", "El código es público. Cualquiera puede revisar cómo se calcula cada número."],
-    ["Sin fines de lucro", "No cobra, no vende productos y no recibe comisiones de ningún banco, broker ni emisor de ETF."],
-    ["Una guía, no un asesoramiento", "Muestra un método y un resultado orientativo. La decisión es de cada persona."],
-    [
-      "Privado",
-      "Lo que cargás no se guarda en ningún servidor. Lo único que sale de tu navegador son números anónimos para redactar la explicación de tu plan.",
-    ],
-  ];
-  return (
-    <Seccion id="principios" rotulo="Qué busca el proyecto" titulo="Que invertir con método no dependa de quién te quiere vender algo.">
-      <dl className="mt-14 max-w-4xl">
-        {principios.map(([titulo, texto]) => (
-          <div key={titulo} className="grid gap-2 border-t border-[var(--linea)] py-6 sm:grid-cols-[16rem_1fr] sm:gap-8">
-            <dt className="font-titular text-[24px] leading-tight">{titulo}</dt>
-            <dd className="max-w-[54ch] text-[17px] leading-[1.6] text-[var(--gris)]">{texto}</dd>
-          </div>
-        ))}
-      </dl>
-      <p className="mt-8 text-[16px] text-[var(--gris)]">
-        {sitio.repositorio ? (
-          <a href={sitio.repositorio} className="underline decoration-[var(--linea)] underline-offset-4 hover:decoration-current">
-            Ver el código en GitHub
-          </a>
-        ) : (
-          "El código se publica en GitHub antes del lanzamiento."
-        )}
-      </p>
-    </Seccion>
-  );
-}
-
-// ─── 5. Qué no es ────────────────────────────────────────────────────────────
+// ─── 4. Qué no es ────────────────────────────────────────────────────────────
 
 export function QueNoEs() {
   return (
@@ -164,7 +113,7 @@ export function QueNoEs() {
   );
 }
 
-// ─── 6. Quién lo hace ────────────────────────────────────────────────────────
+// ─── 5. Quién lo hace ────────────────────────────────────────────────────────
 
 export function QuienLoHace() {
   return (
@@ -176,8 +125,15 @@ export function QuienLoHace() {
         </p>
         <p>
           Este sitio es gratis y no tiene socios comerciales: no recibo comisiones de bancos, brokers ni de nadie. Todos los criterios
-          los reviso yo, desde el test de perfil hasta cómo se reparte el ahorro. Y el código es público, así que podés ver de dónde
-          sale cada número.
+          los reviso yo, desde el test de perfil hasta cómo se reparte el ahorro. Y{" "}
+          {sitio.repositorio ? (
+            <a href={sitio.repositorio} className="text-[var(--tinta)] underline decoration-[var(--linea)] underline-offset-4 hover:decoration-current">
+              el código es público
+            </a>
+          ) : (
+            "el código es público"
+          )}
+          , así que podés ver de dónde sale cada número.
         </p>
         {sitio.contacto && (
           <p>
@@ -193,14 +149,10 @@ export function QuienLoHace() {
   );
 }
 
-// ─── 7. Preguntas frecuentes ─────────────────────────────────────────────────
+// ─── 6. Preguntas frecuentes ─────────────────────────────────────────────────
 
 export function Preguntas({ datos }: { datos: DatosGenerados }) {
   const preguntas: [string, React.ReactNode][] = [
-    [
-      "¿Es gratis de verdad?",
-      "Sí. No cobra, no tiene publicidad, no vende productos y no recibe comisiones de bancos, brokers ni emisores de ETF. Es un proyecto sin fines de lucro y el código es público.",
-    ],
     [
       "¿Qué hacen con mis datos?",
       <>
@@ -224,16 +176,6 @@ export function Preguntas({ datos }: { datos: DatosGenerados }) {
     [
       "¿Cada cuánto se actualiza?",
       `Una vez por año, cuando J.P. Morgan publica una edición nueva de sus supuestos. Hoy usamos la edición ${datos.fuente.edicion}, con datos al ${fechaLarga(datos.fuente.fechaDatos)}.`,
-    ],
-    [
-      "¿Quién está detrás?",
-      <>
-        Un contador uruguayo, sin socios comerciales. Más arriba está{" "}
-        <a href="#quien" className="underline decoration-[var(--linea)] underline-offset-4 hover:decoration-current">
-          quién lo hace
-        </a>
-        , y el código está abierto para que cualquiera lo revise.
-      </>,
     ],
   ];
   return (

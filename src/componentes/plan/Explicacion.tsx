@@ -6,7 +6,7 @@ import { numero } from "@/lib/formato";
 import { BarraMezcla } from "./BarraMezcla";
 import { FronteraInteractiva } from "./FronteraInteractiva";
 
-export function Explicacion({ datos, onSeguir }: { datos: DatosGenerados; onSeguir: () => void }) {
+export function Explicacion({ datos, preguntas, onSeguir }: { datos: DatosGenerados; preguntas: number; onSeguir: () => void }) {
   const cartera = datos.carteras.diversificada;
   const frontera = cartera.frontera;
   const clases = datos.clases.filter((c) => cartera.clases.includes(c.id));
@@ -15,7 +15,6 @@ export function Explicacion({ datos, onSeguir }: { datos: DatosGenerados; onSegu
   const punto = frontera[indice];
   const pesos = Object.fromEntries(cartera.clases.map((id, i) => [id, punto.pesos[i]]));
   const sharpe = cartera.maximoSharpe;
-  const liquidez = datos.clases.find((c) => c.id === "liquidez_usd")!;
 
   return (
     <div>
@@ -93,23 +92,13 @@ export function Explicacion({ datos, onSeguir }: { datos: DatosGenerados; onSegu
             todos esa cartera: cada persona se ubica en el punto de la frontera que corresponde a su perfil.
           </p>
         </div>
-        <details className="mt-5 text-[16px]">
-          <summary className="cursor-pointer py-3 text-[var(--gris)] hover:text-[var(--tinta)]">Ver la fórmula</summary>
-          <div className="mt-3 border-l-2 border-[var(--linea)] pl-4 text-[var(--gris)]">
-            <p className="font-titular text-[22px] text-[var(--tinta)]">Sharpe = (R − R<sub>f</sub>) / σ</p>
-            <p className="mt-2 leading-[1.6]">
-              R es el retorno esperado de la cartera, R<sub>f</sub> el de la liquidez en dólares ({numero(liquidez.retornoAritmetico, 1)}%
-              según el informe) y σ la volatilidad de la cartera. Como en el informe, se usa el retorno aritmético.
-            </p>
-          </div>
-        </details>
       </section>
 
       <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--linea)] pt-8 sm:mt-16">
         <button type="button" onClick={onSeguir} className="w-full rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:w-auto">
           Empezar el test
         </button>
-        <span className="text-[14px] text-[var(--gris)]">Diez preguntas, una por pantalla.</span>
+        <span className="text-[14px] text-[var(--gris)]">{preguntas} preguntas, una por pantalla.</span>
       </div>
     </div>
   );

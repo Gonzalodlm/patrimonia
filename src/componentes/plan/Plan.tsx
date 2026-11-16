@@ -78,7 +78,7 @@ export function Plan({ datos, cuestionario, etfs, criterios, avisoPorMail }: Pro
       )}
 
       <div className="pt-8 sm:pt-14">
-        {estado.paso === 0 && <Explicacion datos={datos} onSeguir={() => irAPaso(1)} />}
+        {estado.paso === 0 && <Explicacion datos={datos} preguntas={cuestionario.preguntas.length} onSeguir={() => irAPaso(1)} />}
 
         {estado.paso === 1 && (
           <Test

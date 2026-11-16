@@ -2,10 +2,8 @@
 
 import type { DatosGenerados } from "@/motor/generado";
 import { calcularPerfil, type Cuestionario } from "@/plan/perfil";
-import { valorEnPercentil, Z } from "@/plan/proyecciones";
-import { dolares } from "@/lib/formato";
 
-export const descripcionPerfil: Record<string, string> = {
+const descripcionPerfil: Record<string, string> = {
   conservador: "Priorizás que tu plata no oscile. La cartera es casi toda renta fija y liquidez: rinde menos, pero en un año malo cae poco.",
   moderado_conservador:
     "Aceptás algo de oscilación a cambio de un poco más de retorno. La mayor parte sigue en renta fija, con una porción de acciones y otros activos.",
@@ -13,8 +11,6 @@ export const descripcionPerfil: Record<string, string> = {
   moderado_agresivo: "Podés esperar y aguantar caídas importantes para buscar más retorno. Las acciones pasan a ser la parte más grande de la cartera.",
   agresivo: "Tu prioridad es que la plata crezca a muchos años, aunque en el camino haya caídas fuertes. La cartera es casi toda acciones y otros activos de riesgo.",
 };
-
-const redondear10 = (x: number) => Math.round(x / 10) * 10;
 
 interface Props {
   cuestionario: Cuestionario;
@@ -34,25 +30,6 @@ export function Test(props: Props) {
 
   const p = cuestionario.preguntas[pregunta];
   const elegida = props.respuestas[p.id];
-  const textoOpcion = (o: (typeof p.opciones)[number]): React.ReactNode => {
-    if (p.tipo !== "carteras" || !o.perfil) return o.texto ?? "";
-    const c = props.datos.carteras.diversificada.perfiles[o.perfil];
-    const malo = valorEnPercentil(10000, 1, c.retornoAritmetico, c.volatilidad, Z.p10);
-    const bueno = valorEnPercentil(10000, 1, c.retornoAritmetico, c.volatilidad, Z.p90);
-    return (
-      <span className="grid flex-1 grid-cols-2 gap-4">
-        <span>
-          <span className="block text-[13px] opacity-70">Año malo</span>
-          {dolares(redondear10(malo))}
-        </span>
-        <span>
-          <span className="block text-[13px] opacity-70">Año bueno</span>
-          {dolares(redondear10(bueno))}
-        </span>
-      </span>
-    );
-  };
-
   return (
     <div className="max-w-2xl">
       <h1 className="sr-only">Test de perfil de riesgo</h1>
@@ -89,7 +66,7 @@ export function Test(props: Props) {
                 >
                   {activa && <span className="size-2.5 rounded-full bg-[var(--fondo)]" />}
                 </span>
-                {textoOpcion(o)}
+                {o.texto}
               </button>
             );
           })}

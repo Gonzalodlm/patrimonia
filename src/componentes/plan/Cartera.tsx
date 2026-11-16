@@ -8,7 +8,6 @@ import { enlaceFicha, terDeReferencia, type ListaEtfs } from "@/plan/etfs";
 import { avisos } from "@/lib/avisos";
 import { dolares, numero } from "@/lib/formato";
 import { BarraMezcla } from "./BarraMezcla";
-import { FronteraInteractiva } from "./FronteraInteractiva";
 import { colorDeGrupo, pesosPorGrupo } from "./grupos";
 import type { TipoCartera } from "./estado";
 import { TextoGenerado } from "./TextoGenerado";
@@ -42,7 +41,6 @@ export function Cartera({ datos, etfs, perfil, motivoPerfil, tipo, monto, elegid
   const tabla = rangos(monto, aritNeto, cp.volatilidad);
   const caida = peorCaidaUnAnio(monto, aritNeto, cp.volatilidad);
   const filas = clases.filter((x) => (cp.pesos[x.id] ?? 0) >= 0.05).sort((a, b) => cp.pesos[b.id] - cp.pesos[a.id]);
-  const indicePerfil = datos.perfiles.findIndex((p) => p.id === perfil);
   // Lo que se le manda al modelo: números de la cartera tipo, sin el monto de la persona.
   const datosTexto = datosCartera({
     perfil: nombrePerfil,
@@ -142,32 +140,6 @@ export function Cartera({ datos, etfs, perfil, motivoPerfil, tipo, monto, elegid
             />
           ))}
         </ul>
-      </section>
-
-      {/* Dónde cae en la frontera */}
-      <section className="mt-16 grid gap-10 lg:grid-cols-2 lg:gap-14">
-        <div className="max-w-[56ch]">
-          <h2 className="font-titular text-[30px] leading-tight">Dónde cae en la frontera</h2>
-          <p className="mt-4 text-[17px] leading-[1.6] text-[var(--gris)]">
-            Tu cartera es el punto de la frontera {c.nombre.toLowerCase()} con un riesgo de {numero(cp.volatilidad, 0)}%: la de mayor
-            retorno esperado sin pasar ese riesgo.
-          </p>
-          {indicePerfil >= 3 && (
-            <p className="mt-4 text-[17px] leading-[1.6] text-[var(--gris)]">
-              Fijate que arriba de cierto riesgo la línea casi no sube: asumir más riesgo no siempre paga más.
-            </p>
-          )}
-          <p className="mt-4 text-[17px] leading-[1.6] text-[var(--gris)]">
-            La de máximo Sharpe tiene {numero(c.maximoSharpe.volatilidad, 1)}% de riesgo. No es la de todos: cada perfil se ubica donde le
-            corresponde.
-          </p>
-        </div>
-        <FronteraInteractiva
-          frontera={c.frontera}
-          elegido={{ volatilidad: cp.volatilidad, retorno: cp.retornoCompuesto }}
-          marcas={[{ volatilidad: c.maximoSharpe.volatilidad, retorno: c.maximoSharpe.retornoCompuesto, etiqueta: "Máximo Sharpe" }]}
-          titulo={`Frontera ${c.nombre.toLowerCase()} con tu cartera marcada`}
-        />
       </section>
 
       {/* Qué puede pasar */}

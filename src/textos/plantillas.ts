@@ -31,7 +31,7 @@ export function plantillaPlan(d: DatosTextoPlan): string {
   const partes: string[] = [];
   if (d.colchon.estado === "falta") {
     partes.push(
-      `Lo primero es tu fondo de emergencia: te faltan ${d.colchon.faltante}${d.colchon.mesesParaCompletar ? `, que completás en ${d.colchon.mesesParaCompletar} meses con tu ahorro` : ""}.`,
+      `Lo primero es tu fondo de emergencia: te faltan ${d.colchon.faltante}${d.colchon.mesesParaCompletar ? `, que completás en ${d.colchon.mesesParaCompletar} ${d.colchon.mesesParaCompletar === "1" ? "mes" : "meses"} con tu ahorro` : ""}.`,
     );
   } else if (d.colchon.estado === "completo") {
     partes.push("Tu fondo de emergencia ya está cubierto con tus ahorros.");
@@ -41,8 +41,11 @@ export function plantillaPlan(d: DatosTextoPlan): string {
   if (d.deudasACancelar > 0) partes.push(d.deudasACancelar === 1 ? "Conviene cancelar una deuda antes de invertir." : "Conviene cancelar tus deudas de consumo antes de invertir.");
   const cubiertos = d.objetivos.filter((o) => o.estado === "cubierto").length;
   if (d.objetivos.length) {
+    const n = d.objetivos.length;
     partes.push(
-      `Con ${d.ahorroMensual} por mes cubrís ${cubiertos} de tus ${d.objetivos.length} objetivos${d.faltantePorMes ? `; para cubrirlos todos te faltarían ${d.faltantePorMes} por mes` : ""}.`,
+      n === 1
+        ? `Con ${d.ahorroMensual} por mes ${cubiertos ? "cubrís tu objetivo" : `no llegás a cubrir tu objetivo${d.faltantePorMes ? `: te faltarían ${d.faltantePorMes} por mes` : ""}`}.`
+        : `Con ${d.ahorroMensual} por mes cubrís ${cubiertos} de tus ${n} objetivos${d.faltantePorMes ? `; para cubrirlos todos te faltarían ${d.faltantePorMes} por mes` : ""}.`,
     );
   }
   if (d.sobrantePorMes) partes.push(`Te sobran ${d.sobrantePorMes} por mes para tu patrimonio de largo plazo.`);

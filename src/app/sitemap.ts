@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
+import { urlSitio } from "@/lib/sitio";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const sitio = process.env.SITIO_URL || "https://patrimonia.uy";
-  return ["", "/plan", "/privacidad"].map((ruta) => ({ url: `${sitio}${ruta}` }));
+  return ["", "/plan", "/privacidad"].map((ruta) => ({ url: `${urlSitio()}${ruta}` }));
 }

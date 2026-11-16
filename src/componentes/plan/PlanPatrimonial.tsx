@@ -32,6 +32,8 @@ interface Props {
   objetivos: Objetivo[];
   respuestas: Record<string, string>;
   anioActual: number;
+  /** Si está configurada la base de mails: sin ella no se muestra el formulario del aviso anual. */
+  avisoPorMail: boolean;
   onIrASituacion: () => void;
 }
 
@@ -114,7 +116,7 @@ export function PlanPatrimonial(props: Props) {
             <TextoGenerado pedido={{ tipo: "plan", datos: datosTexto }} plantilla={plantillaPlan(datosTexto)} onTexto={setTextoResumen} />
           </div>
         </div>
-        <h3 className="mt-8 text-[17px]">Tus próximos tres pasos</h3>
+        <h3 className="mt-8 text-[17px]">Tus próximos pasos</h3>
         <ol className="mt-3 space-y-3">
           {pasos.map((p, i) => (
             <li key={p} className="grid grid-cols-[2rem_1fr] text-[16px] leading-[1.55]">
@@ -153,8 +155,8 @@ export function PlanPatrimonial(props: Props) {
                 Antes de invertir, tené {plan.colchon.meses} meses de gastos guardados en liquidez en dólares:{" "}
                 <span className="tabular text-[var(--tinta)]">{dolares(plan.colchon.objetivo)}</span>.{" "}
                 {plan.colchon.meses === 6
-                  ? "Son 6 y no 3 porque tus ingresos varían o tenés personas a cargo."
-                  : "Con ingresos estables y sin personas a cargo, alcanza con 3."}
+                  ? "Son 6 y no 3 porque en el test dijiste que tus ingresos no son estables."
+                  : "Con ingresos estables, alcanza con 3."}
               </p>
               <p className="mt-3">
                 {plan.colchon.faltante <= 0
@@ -267,9 +269,11 @@ export function PlanPatrimonial(props: Props) {
         </p>
       </Bloque>
 
-      <section className="mt-16 border-t border-[var(--linea)] pt-10">
-        <Suscripcion />
-      </section>
+      {props.avisoPorMail && (
+        <section className="mt-16 border-t border-[var(--linea)] pt-10">
+          <Suscripcion />
+        </section>
+      )}
 
       <Avisos />
     </div>
@@ -311,7 +315,7 @@ function contenidoPdf(a: {
           a.resumen.replace(/\n+/g, " "),
         ],
       },
-      { titulo: "Tus próximos tres pasos", lista: a.pasos },
+      { titulo: "Tus próximos pasos", lista: a.pasos },
       {
         titulo: `Tu cartera de largo plazo (perfil ${a.nombrePerfil.toLowerCase()})`,
         parrafos: [

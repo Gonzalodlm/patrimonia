@@ -26,20 +26,20 @@ export function GraficoClases({ clases }: { clases: ClaseActivo[] }) {
         {[3, 5, 7, 9].map((r) => (
           <g key={r}>
             <line x1={M.izquierda} x2={ANCHO - M.derecha} y1={y(r)} y2={y(r)} stroke="var(--linea)" strokeWidth={1} />
-            <text x={M.izquierda - 8} y={y(r)} dy="0.32em" textAnchor="end" className="tabular fill-[var(--gris)] text-[15px]">
+            <text x={M.izquierda - 8} y={y(r)} dy="0.32em" textAnchor="end" className="tabular fill-[var(--gris)] text-[19px] sm:text-[15px]">
               {r}%
             </text>
           </g>
         ))}
         {[0, 5, 10, 15, 20].map((v) => (
-          <text key={v} x={x(v)} y={ALTO - M.abajo + 24} textAnchor="middle" className="tabular fill-[var(--gris)] text-[15px]">
+          <text key={v} x={x(v)} y={ALTO - M.abajo + 24} textAnchor="middle" className="tabular fill-[var(--gris)] text-[19px] sm:text-[15px]">
             {v}%
           </text>
         ))}
-        <text x={ANCHO - M.derecha} y={ALTO - 4} textAnchor="end" className="fill-[var(--gris)] text-[15px]">
+        <text x={ANCHO - M.derecha} y={ALTO - 4} textAnchor="end" className="fill-[var(--gris)] text-[19px] sm:text-[15px]">
           Riesgo: cuánto puede oscilar por año →
         </text>
-        <text x={M.izquierda - 8} y={M.arriba - 14} className="fill-[var(--gris)] text-[15px]">
+        <text x={M.izquierda - 8} y={M.arriba - 14} className="fill-[var(--gris)] text-[19px] sm:text-[15px]">
           ↑ Retorno anual esperado
         </text>
 

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { urlSitio } from "@/lib/sitio";
 import "./globals.css";
 
 // Dirección tipográfica "Inscripción": titulares romanos y texto sans para leer.
@@ -10,7 +11,7 @@ const texto = Source_Sans_3({ subsets: ["latin"], variable: "--fuente-texto", di
 const descripcion = "Una guía gratuita y de código abierto para armar una cartera de inversión a largo plazo y un plan para tu patrimonio.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITIO_URL || "https://patrimonia.uy"),
+  metadataBase: new URL(urlSitio()),
   title: "Patrimonia",
   description: descripcion,
   openGraph: { title: "Patrimonia", description: descripcion, locale: "es_UY", type: "website", siteName: "Patrimonia" },

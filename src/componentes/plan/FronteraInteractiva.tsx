@@ -64,20 +64,20 @@ export function FronteraInteractiva({ frontera, clases = [], elegido, marcas = [
       {[3, 5, 7, 9].map((r) => (
         <g key={r}>
           <line x1={M.izquierda} x2={ANCHO - M.derecha} y1={y(r)} y2={y(r)} stroke="var(--linea)" strokeWidth={1} />
-          <text x={M.izquierda - 8} y={y(r)} dy="0.32em" textAnchor="end" className="tabular fill-[var(--gris)] text-[15px]">
+          <text x={M.izquierda - 8} y={y(r)} dy="0.32em" textAnchor="end" className="tabular fill-[var(--gris)] text-[19px] sm:text-[15px]">
             {r}%
           </text>
         </g>
       ))}
       {[0, 5, 10, 15, 20].map((v) => (
-        <text key={v} x={x(v)} y={ALTO - M.abajo + 24} textAnchor="middle" className="tabular fill-[var(--gris)] text-[15px]">
+        <text key={v} x={x(v)} y={ALTO - M.abajo + 24} textAnchor="middle" className="tabular fill-[var(--gris)] text-[19px] sm:text-[15px]">
           {v}%
         </text>
       ))}
-      <text x={ANCHO - M.derecha} y={ALTO - 4} textAnchor="end" className="fill-[var(--gris)] text-[15px]">
+      <text x={ANCHO - M.derecha} y={ALTO - 4} textAnchor="end" className="fill-[var(--gris)] text-[19px] sm:text-[15px]">
         Riesgo →
       </text>
-      <text x={M.izquierda - 8} y={M.arriba - 14} className="fill-[var(--gris)] text-[15px]">
+      <text x={M.izquierda - 8} y={M.arriba - 14} className="fill-[var(--gris)] text-[19px] sm:text-[15px]">
         ↑ Retorno esperado por año
       </text>
 
@@ -90,7 +90,7 @@ export function FronteraInteractiva({ frontera, clases = [], elegido, marcas = [
       {marcas.map((m) => (
         <g key={m.etiqueta}>
           <circle cx={x(m.volatilidad)} cy={y(m.retorno)} r={4.5} fill="var(--fondo)" stroke="var(--tinta)" strokeWidth={2} />
-          <text x={x(m.volatilidad) + 2} y={y(m.retorno) + 24} className="fill-[var(--gris)] text-[14px]">
+          <text x={x(m.volatilidad) + 2} y={y(m.retorno) + 24} className="fill-[var(--gris)] text-[18px] sm:text-[14px]">
             {m.etiqueta}
           </text>
         </g>
@@ -102,7 +102,7 @@ export function FronteraInteractiva({ frontera, clases = [], elegido, marcas = [
         x={Math.min(x(elegido.volatilidad), ANCHO - M.derecha - 4)}
         y={y(elegido.retorno) - 14}
         textAnchor={x(elegido.volatilidad) > ANCHO - 120 ? "end" : "middle"}
-        className="tabular fill-[var(--tinta)] text-[15px]"
+        className="tabular fill-[var(--tinta)] text-[19px] sm:text-[15px]"
       >
         {numero(elegido.retorno, 1)}%
       </text>

@@ -18,6 +18,8 @@ export const metadata: Metadata = {
 };
 
 const d = datos as DatosGenerados;
+// El formulario del aviso anual solo se muestra si hay dónde guardar los mails.
+const avisoPorMail = !!process.env.DATABASE_URL && !!process.env.SECRETO_BAJAS;
 
 export default function PaginaPlan() {
   return (
@@ -25,7 +27,7 @@ export default function PaginaPlan() {
       {d.ejemplo && <AvisoEjemplo />}
       <Encabezado />
       <main id="contenido" className="mx-auto min-h-[70vh] max-w-6xl px-4 pt-4 pb-20 sm:px-8">
-        <Plan datos={d} cuestionario={cuestionario as Cuestionario} etfs={etfs as ListaEtfs} criterios={criterios as Criterios} />
+        <Plan datos={d} cuestionario={cuestionario as Cuestionario} etfs={etfs as ListaEtfs} criterios={criterios as Criterios} avisoPorMail={avisoPorMail} />
       </main>
       <Pie fuente={d.fuente} />
     </>

@@ -140,7 +140,8 @@ export async function descargarPdf(c: ContenidoPdf) {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7.5);
     doc.setTextColor(...GRIS);
-    doc.text(`patrimonia.uy · página ${i} de ${paginas}`, ancho - margen, alto - 10, { align: "right" });
+    // La dirección desde la que se generó: así el PDF siempre lleva una dirección que existe.
+    doc.text(`${window.location.host} · página ${i} de ${paginas}`, ancho - margen, alto - 10, { align: "right" });
   }
   doc.save(c.nombreArchivo);
 }

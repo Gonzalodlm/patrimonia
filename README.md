@@ -1,6 +1,6 @@
 # Patrimonia
 
-Patrimonia ([patrimonia.uy](https://patrimonia.uy)) es una web gratuita y de código abierto que enseña a armar una cartera de inversión a largo plazo y un plan para el patrimonio. No cobra, no vende productos y no recibe comisiones. Es una guía educativa, no un asesoramiento.
+Patrimonia ([patrimonia-plum.vercel.app](https://patrimonia-plum.vercel.app); el dominio patrimonia.uy todavía no está comprado) es una web gratuita y de código abierto que enseña a armar una cartera de inversión a largo plazo y un plan para el patrimonio. No cobra, no vende productos y no recibe comisiones. Es una guía educativa, no un asesoramiento.
 
 Este documento está escrito para alguien que no programa.
 
@@ -84,6 +84,8 @@ Las preguntas, opciones y puntajes están en `datos/cuestionario.json`.
 - El perfil final es el más bajo de los dos bloques. Una opción con `perfilMaximo` pone un tope: por ejemplo, si la plata se usa en menos de 3 años, Conservador como máximo.
 - Si se agrega una pregunta de tipo `carteras`, la página calcula sola los montos de cada opción a partir de las carteras reales (hoy el test no la usa).
 
+Si cambiás, agregás o sacás preguntas, subí también el número `VERSION` en `src/componentes/plan/estado.ts`: quien ya había hecho el test lo vuelve a hacer, y conserva su situación y sus objetivos.
+
 Después de cambiarlo, corré `npm test`: hay pruebas que comprueban que cada bloque llegue a 20 puntos y que los cortes den el perfil esperado.
 
 ## Cómo cambiar los criterios del plan patrimonial
@@ -165,6 +167,15 @@ Ojo: aunque los números no estén en el repositorio, el sitio publicado los usa
 6. Volvé a desplegar (Deployments → Redeploy) para que tome las variables, y recorré el sitio entero una vez.
 
 Cada `git push` a `main` publica una versión nueva. Cada cambio en otra rama genera una vista previa con su propia dirección.
+
+## Seguridad, en pocas palabras
+
+- **Lo que llega al modelo de lenguaje.** La API (`src/app/api/textos`) no reenvía lo que recibe: arma el pedido de nuevo solo con los campos conocidos (`src/textos/pedido.ts`), y cada campo tiene que ser una cifra o un valor de una lista fija. Cualquier otra cosa se descarta. Si agregás un dato nuevo al texto, hay que sumarlo ahí o no llega.
+- **Política de contenido.** `next.config.ts` le indica al navegador que solo cargue código, estilos, letras e imágenes del propio sitio, y que solo mande datos al propio sitio. Si algún día sumás un servicio externo (un video, un mapa, otra estadística), hay que agregarlo en esa lista o el navegador lo bloquea.
+- **Lo guardado en el navegador.** Se revisa campo por campo al leerlo (`src/componentes/plan/estado.ts`). Si cambiás las preguntas del test, subí el número `VERSION` de ese archivo: así nadie queda con respuestas viejas que ya no significan lo mismo.
+- **El formulario del aviso por mail** solo aparece si están cargadas `DATABASE_URL` y `SECRETO_BAJAS`. Sin la base de datos, no se muestra.
+- **Dirección del sitio.** Sale de `SITIO_URL` y, si falta, de la dirección que da Vercel. El sitio y el PDF nunca muestran un dominio que todavía no esté comprado.
+- En Vercel, las claves conviene cargarlas marcadas como **Sensitive**: así nadie puede volver a leerlas desde el panel.
 
 ## Antes de lanzar
 

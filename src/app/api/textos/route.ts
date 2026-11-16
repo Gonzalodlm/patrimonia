@@ -7,6 +7,7 @@ import perfiles from "@datos/perfiles.json";
 import { proveedorConfigurado } from "@/servidor/modelo";
 import { ErrorModelo } from "@/servidor/modelo/proveedor";
 import { Cache, permitir } from "@/servidor/limites";
+import { ipDe, leerJson } from "@/servidor/pedidos";
 import { validarPedido } from "@/textos/pedido";
 import { mensajePara, SISTEMA } from "@/textos/instrucciones";
 import { revisarTexto, sinSaludo } from "@/textos/validar";
@@ -19,16 +20,12 @@ const cache = new Cache<string>(2000, 7 * 24 * 3600);
 const ESPERA_MAXIMA_MS = 6000;
 const MAX_PALABRAS_PLAN = 200;
 
-function ipDe(request: Request): string {
-  return request.headers.get("x-forwarded-for")?.split(",")[0].trim() || request.headers.get("x-real-ip") || "desconocida";
-}
-
 export async function POST(request: Request) {
   const proveedor = proveedorConfigurado();
   if (!proveedor) return Response.json({ error: "sin_modelo" }, { status: 503 });
 
-  const cuerpo = await request.json().catch(() => null);
-  const pedido = validarPedido(cuerpo, listas);
+  // validarPedido arma el pedido de nuevo solo con los campos conocidos: lo demás se descarta.
+  const pedido = validarPedido(await leerJson(request), listas);
   if (!pedido) return Response.json({ error: "pedido_invalido" }, { status: 400 });
 
   // Muchos usuarios comparten perfil: la misma combinación de datos se responde desde la caché.

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
+import { urlSitio } from "@/lib/sitio";
 
 export default function robots(): MetadataRoute.Robots {
-  const sitio = process.env.SITIO_URL || "https://patrimonia.uy";
-  return { rules: [{ userAgent: "*", allow: "/", disallow: ["/api/", "/baja"] }], sitemap: `${sitio}/sitemap.xml` };
+  return { rules: [{ userAgent: "*", allow: "/", disallow: ["/api/", "/baja"] }], sitemap: `${urlSitio()}/sitemap.xml` };
 }

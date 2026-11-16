@@ -47,7 +47,7 @@ export function Pie({ fuente }: { fuente: Fuente }) {
           <p className="max-w-[110ch]">{avisoCorto}</p>
           <p className="mt-3 max-w-[110ch]">
             Supuestos: {fuente.nombre}, edición {fuente.edicion}, con datos al{" "}
-            {fechaLarga(fuente.fechaDatos)}. Código bajo licencia MIT. {sitio.dominio}
+            {fechaLarga(fuente.fechaDatos)}.
           </p>
         </div>
       </div>

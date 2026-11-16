@@ -19,11 +19,12 @@ interface Props {
   cuestionario: Cuestionario;
   etfs: ListaEtfs;
   criterios: Criterios;
+  avisoPorMail: boolean;
 }
 
 const sinCambios = () => () => {};
 
-export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
+export function Plan({ datos, cuestionario, etfs, criterios, avisoPorMail }: Props) {
   // En el servidor: estado inicial y el año anterior a la edición de los supuestos. En el navegador: lo guardado y el año real.
   const estado = useSyncExternalStore(tienda.suscribir, tienda.obtener, tienda.inicial);
   const setEstado = tienda.cambiar;
@@ -62,7 +63,7 @@ export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
                   onClick={() => alcanzable(i) && irAPaso(i)}
                   disabled={!alcanzable(i)}
                   aria-current={actual ? "step" : undefined}
-                  className={`tabular -mb-px flex h-11 w-full min-w-11 items-center gap-1.5 border-b-2 whitespace-nowrap sm:min-w-0 ${actual ? "border-[var(--acento)] px-2 text-[var(--tinta)] sm:px-0" : "justify-center border-transparent text-[var(--gris)] hover:text-[var(--tinta)] disabled:text-[var(--gris-claro)] disabled:hover:text-[var(--gris-claro)] sm:justify-start"}`}
+                  className={`tabular -mb-px flex h-11 w-full min-w-10 items-center gap-1.5 border-b-2 whitespace-nowrap sm:min-w-0 ${actual ? "border-[var(--acento)] px-1 text-[var(--tinta)] sm:px-0" : "justify-center border-transparent text-[var(--gris)] hover:text-[var(--tinta)] disabled:text-[var(--gris-claro)] disabled:hover:text-[var(--gris-claro)] sm:justify-start"}`}
                 >
                   <span className={actual ? "text-[12px]" : "text-[14px] sm:text-[12px]"}>{String(i + 1).padStart(2, "0")}</span>
                   <span className={actual ? "truncate" : "sr-only sm:not-sr-only"}>{nombre}</span>
@@ -146,6 +147,7 @@ export function Plan({ datos, cuestionario, etfs, criterios }: Props) {
               objetivos={estado.objetivos}
               respuestas={estado.respuestas}
               anioActual={anioActual}
+              avisoPorMail={avisoPorMail}
               onIrASituacion={() => irAPaso(2)}
             />
           ) : (

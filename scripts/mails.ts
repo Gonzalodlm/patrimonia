@@ -3,7 +3,7 @@
 //   npm run mails -- crear      crea la tabla en Neon (una sola vez)
 //   npm run mails -- exportar   escribe suscriptores.csv con cada mail y su enlace para darse de baja
 //
-// Necesita DATABASE_URL y SECRETO_BAJAS (y opcionalmente SITIO_URL) en el entorno o en .env.local.
+// Necesita DATABASE_URL y SECRETO_BAJAS (y SITIO_URL para exportar) en el entorno o en .env.local.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { neon } from "@neondatabase/serverless";
 import { enlaceBaja, SQL_TABLA } from "../src/servidor/suscripciones";
@@ -29,7 +29,9 @@ async function main() {
   if (tarea === "exportar") {
     const secreto = process.env.SECRETO_BAJAS;
     if (!secreto) throw new Error("Falta SECRETO_BAJAS");
-    const sitio = process.env.SITIO_URL || "https://patrimonia.uy";
+    // Sin la dirección real del sitio, los enlaces de baja apuntarían a un lugar que no existe.
+    const sitio = process.env.SITIO_URL;
+    if (!sitio) throw new Error("Falta SITIO_URL (la dirección pública del sitio, por ejemplo https://patrimonia-plum.vercel.app)");
     const filas = (await sql.query("SELECT email FROM suscriptores ORDER BY fecha")) as { email: string }[];
     const csv = ["email,enlace_baja", ...filas.map((f) => `${f.email},${enlaceBaja(f.email, secreto, sitio)}`)].join("\n");
     writeFileSync("suscriptores.csv", csv + "\n");

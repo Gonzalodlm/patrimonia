@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Qué datos guarda Patrimonia, cuáles no, dónde y cómo pedir que se borren.",
 };
 
-const ACTUALIZADA = "13 de noviembre de 2026";
+const ACTUALIZADA = "16 de noviembre de 2026";
 
 function Bloque({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
@@ -78,8 +78,8 @@ export default function Privacidad() {
           <p>El texto que aceptás es este (versión {consentimiento.version}):</p>
           <blockquote className="border-l-2 border-[var(--linea)] pl-4 text-[17px]">{consentimiento.texto}</blockquote>
           <p>
-            Los mails se guardan en una base de datos de Neon, un servicio de bases de datos en la nube. Solo quien mantiene Patrimonia tiene
-            acceso.
+            Los mails se guardan en una base de datos de Neon, un servicio de bases de datos en la nube, en sus servidores de San Pablo,
+            Brasil. Solo quien mantiene Patrimonia tiene acceso.
           </p>
         </Bloque>
 

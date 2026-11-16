@@ -38,7 +38,7 @@ export function Apertura({ datos }: { datos: DatosGenerados }) {
           <Link href="/plan" className="block w-full text-center rounded-[3px] bg-[var(--tinta)] px-6 py-3.5 text-[16px] text-[var(--fondo)] hover:bg-black sm:inline-block sm:w-auto">
             Armar mi plan
           </Link>
-          <span className="text-[14px] text-[var(--gris)]">Sin registrarte. Tus datos no salen de tu navegador.</span>
+          <span className="text-[14px] text-[var(--gris)]">Sin registrarte. Patrimonia no guarda lo que cargás.</span>
         </div>
       </div>
       <GraficoFrontera

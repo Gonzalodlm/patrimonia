@@ -64,8 +64,8 @@ export function Situacion({ situacion: s, objetivos, criterios, mesesColchon, an
       <p className="rotulo">Tu situación</p>
       <h1 className="font-titular mt-3 text-[40px] leading-[1.05] tracking-[-0.015em] sm:text-[52px]">Dónde estás y adónde querés llegar.</h1>
       <p className="mt-5 max-w-[60ch] text-[17px] leading-[1.6] text-[var(--gris)]">
-        Todo en dólares. Si algo lo tenés en pesos, pasalo a dólares al tipo de cambio de hoy. Estos datos quedan en tu navegador: no se
-        guardan en ningún servidor.
+        Todo en dólares. Si algo lo tenés en pesos, pasalo a dólares al tipo de cambio de hoy. Estos datos se guardan solo en tu
+        navegador: Patrimonia no los guarda en ningún servidor.
       </p>
 
       <section className="mt-12">

@@ -57,16 +57,22 @@ export default function Privacidad() {
         <Bloque titulo="Lo que sale de tu navegador">
           <p>
             Para redactar la explicación de tu cartera y el resumen de tu plan, mandamos <strong>números anónimos</strong> a Gemini, el
-            modelo de lenguaje de Google: tu perfil de riesgo, los porcentajes de la cartera, los montos ya calculados y el tipo de cada
-            objetivo (por ejemplo «casa» o «retiro»). <strong>No mandamos</strong> tu mail, los nombres que les pusiste a tus objetivos ni nada
-            que hayas escrito.
+            modelo de lenguaje de Google: tu perfil de riesgo, los porcentajes de la cartera, cuánto ahorrás por mes, los montos que
+            calcula el plan y el tipo de cada objetivo (por ejemplo «casa» o «retiro»), con su plazo y su prioridad.
+          </p>
+          <p>
+            <strong>No mandamos</strong> tu edad, tus ingresos, tus gastos, el total de tus ahorros, el detalle de tus deudas (solo cuántas
+            conviene cancelar), tu mail, los nombres que les pusiste a tus objetivos ni nada que hayas escrito.
           </p>
           <p>
             Usamos el servicio gratuito de Google. Según sus términos, en ese servicio Google puede usar lo que se le envía para mejorar sus
             productos, y personas de Google pueden leerlo, separado de cualquier cuenta. Por eso solo mandamos esos números anónimos. El
             modelo no calcula nada: los números los calcula Patrimonia y revisamos que el texto no traiga cifras distintas.
           </p>
-          <p>Si el modelo no responde, la explicación se arma con plantillas propias y no sale nada de tu navegador.</p>
+          <p>
+            Esos números se envían cada vez que abrís tu cartera o tu plan. Si el modelo no responde, tarda o su texto no pasa nuestros
+            controles, ves una explicación armada con plantillas propias; el envío ya se hizo igual.
+          </p>
         </Bloque>
 
         <Bloque titulo="Lo que sí guardamos, solo si nos lo pedís">

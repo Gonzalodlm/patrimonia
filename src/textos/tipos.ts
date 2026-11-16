@@ -32,12 +32,12 @@ export interface DatosTextoPlan {
 
 /** Los próximos pasos posibles, por código. El modelo recibe la descripción, no texto de la persona. */
 export const pasosConocidos: Record<string, string> = {
-  calcular_colchon: "calcular sus gastos y separar entre 3 y 6 meses como fondo de emergencia",
+  calcular_colchon: "calcular tus gastos y separar entre 3 y 6 meses como fondo de emergencia",
   completar_colchon: "completar el fondo de emergencia en liquidez en dólares",
   cancelar_deuda: "cancelar deudas de consumo antes de invertir",
   abrir_broker: "abrir una cuenta en un broker con acceso a bolsas europeas",
-  programar_aporte: "programar un aporte mensual y repartirlo entre las carteras de sus objetivos",
-  invertir_ahorros: "invertir sus ahorros en las carteras de sus objetivos",
+  programar_aporte: "programar un aporte mensual y repartirlo entre las carteras de tus objetivos",
+  invertir_ahorros: "invertir tus ahorros en las carteras de tus objetivos",
   ajustar_objetivos: "decidir qué ajustar: ahorrar más, esperar más o bajar algún objetivo",
   revisar_anual: "revisar el plan una vez por año al rebalancear",
 };

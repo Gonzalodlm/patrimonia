@@ -156,8 +156,9 @@ export function Preguntas({ datos }: { datos: DatosGenerados }) {
     [
       "¿Qué hacen con mis datos?",
       <>
-        Lo que cargás en el plan queda en tu navegador: no se guarda en ningún servidor. Para redactar la explicación de tu plan se
-        envían números anónimos, sin tu nombre, tu mail ni nada que hayas escrito. Si dejás tu mail para recibir avisos, se guarda
+        Lo que cargás en el plan se guarda solo en tu navegador: Patrimonia no lo guarda en ningún servidor. Para redactar la
+        explicación de tu cartera y de tu plan se envían números anónimos a un modelo de lenguaje de Google, sin tu nombre, tu mail
+        ni nada que hayas escrito. Si dejás tu mail para recibir avisos, se guarda
         solo el mail. El detalle está en la{" "}
         <Link href="/privacidad" className="underline decoration-[var(--linea)] underline-offset-4 hover:decoration-current">
           página de privacidad

@@ -188,7 +188,7 @@ export function Plan({ datos, cuestionario, etfs, criterios, avisoPorMail }: Pro
         >
           Empezar de nuevo
         </button>
-        <span className="ml-2">Lo que cargás queda solo en este navegador.</span>
+        <span className="ml-2">Lo que cargás se guarda solo en este navegador.</span>
       </div>
     </div>
   );

@@ -184,9 +184,10 @@ Cada `git push` a `main` publica una versión nueva. Cada cambio en otra rama ge
 - [x] Texto de «Quién lo hace» (`src/componentes/landing/Secciones.tsx`).
 - [x] Dirección del repositorio y mail de contacto en `src/lib/sitio.ts`.
 - [ ] Comprar el dominio `patrimonia.uy` y apuntarlo a Vercel.
-- [ ] Cargar las variables de entorno en Vercel, crear la tabla de mails (`npm run mails -- crear`) y probar una suscripción y una baja.
+- [x] Base de mails: Neon `patrimonia-mails` (plan gratuito, San Pablo), conectada al proyecto de Vercel, con la tabla creada. Suscripción probada en el sitio el 16/11/2026.
+- [ ] Guardar una copia de `SECRETO_BAJAS`: en Vercel está cargada como secreta y no se puede volver a leer. Sin ella no se puede exportar la lista con los enlaces de baja. Mientras no haya mails enviados se puede reemplazar: cargá una frase nueva en Vercel (Settings → Environment Variables), guardala en un gestor de contraseñas, ponela también en `.env.local` y volvé a desplegar. Después, probá una baja con un enlace de `npm run mails -- exportar`.
 - [x] Probar que Gemini responde con la clave real (plan gratuito, probado el 14/11/2026).
-- [ ] Revisar en la página de privacidad la región donde Neon guarda los mails, una vez creada la base.
+- [x] La página de privacidad dice dónde se guardan los mails (Neon, San Pablo).
 
 ## Licencia
 

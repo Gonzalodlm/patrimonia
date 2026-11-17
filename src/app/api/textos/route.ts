@@ -17,7 +17,8 @@ const listas = {
   clases: clases.clases.map((c) => c.nombre),
 };
 const cache = new Cache<string>(2000, 7 * 24 * 3600);
-const ESPERA_MAXIMA_MS = 6000;
+// Alcanza para dos intentos; el navegador espera 9 segundos en total.
+const ESPERA_MAXIMA_MS = 8000;
 const MAX_PALABRAS_PLAN = 200;
 
 export async function POST(request: Request) {
@@ -40,14 +41,17 @@ export async function POST(request: Request) {
   try {
     // El resumen del plan puede tener muchos objetivos: se le da más lugar que a la explicación de la cartera.
     const esPlan = pedido.tipo === "plan";
-    const texto = sinSaludo(await proveedor.redactar({ sistema: SISTEMA, mensaje: mensajePara(pedido), maxTokens: esPlan ? 550 : 400, senal: corte.signal }));
-    const revision = revisarTexto(texto, pedido.datos, esPlan ? MAX_PALABRAS_PLAN : undefined);
-    if (!revision.valido) {
-      console.warn(`[textos] respuesta descartada (${pedido.tipo}): ${revision.motivo}`);
-      return Response.json({ error: "respuesta_invalida" }, { status: 502 });
+    // Si el texto no pasa los controles se pide otra vez (una sola), dentro del mismo tiempo máximo.
+    for (let intento = 1; intento <= 2; intento++) {
+      const texto = sinSaludo(await proveedor.redactar({ sistema: SISTEMA, mensaje: mensajePara(pedido), maxTokens: esPlan ? 550 : 400, senal: corte.signal }));
+      const revision = revisarTexto(texto, pedido.datos, esPlan ? MAX_PALABRAS_PLAN : undefined);
+      if (revision.valido) {
+        cache.guardar(clave, texto);
+        return Response.json({ texto, origen: "modelo" });
+      }
+      console.warn(`[textos] respuesta descartada (${pedido.tipo}, intento ${intento}): ${revision.motivo}`);
     }
-    cache.guardar(clave, texto);
-    return Response.json({ texto, origen: "modelo" });
+    return Response.json({ error: "respuesta_invalida" }, { status: 502 });
   } catch (e) {
     const motivo = e instanceof ErrorModelo ? e.message : corte.signal.aborted ? "tiempo agotado" : "error";
     console.warn(`[textos] sin texto del modelo (${pedido.tipo}): ${motivo}`);

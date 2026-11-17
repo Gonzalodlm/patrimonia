@@ -108,6 +108,27 @@ describe("validación del pedido (lo único que puede llegar al modelo)", () => 
     expect(m).toContain("abrir una cuenta en un broker");
     expect(m).not.toContain("abrir_broker");
   });
+
+  it("el mensaje al modelo no lleva nombres de campos que pueda copiar", () => {
+    for (const m of [mensajePara({ tipo: "plan", datos: plan }), mensajePara({ tipo: "cartera", datos: cartera })]) {
+      expect(m).not.toMatch(/\b[a-z]+[A-Z]\w*\b/);
+      expect(m).not.toContain("{");
+    }
+    expect(mensajePara({ tipo: "plan", datos: plan })).toContain("le faltan USD 4.500 para completarlo, y con su ahorro lo completa en 6 meses");
+  });
+});
+
+describe("texto con nombres de campos copiados", () => {
+  it("se descarta", () => {
+    const r = revisarTexto("Te faltan USD 4.500, que completás en mesesParaCompletar 6 meses con tu ahorroMensual de USD 800.", plan);
+    expect(r.valido).toBe(false);
+    expect(r.motivo).toContain("mesesParaCompletar");
+    expect(revisarTexto('Hasta "2056" llegarías a juntar USD 341.484.', plan).valido).toBe(false);
+  });
+
+  it("no confunde siglas ni palabras normales", () => {
+    expect(revisarTexto("Tenés acciones de EE.UU. y ETFs; te faltan USD 4.500 para tu fondo de emergencia.", plan).valido).toBe(true);
+  });
 });
 
 describe("control del texto del modelo", () => {

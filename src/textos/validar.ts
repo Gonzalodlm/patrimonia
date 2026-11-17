@@ -34,7 +34,10 @@ export function revisarTexto(texto: string, datos: unknown, maxPalabras = 160): 
   if (!limpio) return { valido: false, motivo: "vacío" };
   const palabras = limpio.split(/\s+/).length;
   if (palabras > maxPalabras) return { valido: false, motivo: `demasiado largo (${palabras} palabras)` };
-  if (/[*#_`>|]|https?:\/\//.test(limpio)) return { valido: false, motivo: "formato o enlaces no permitidos" };
+  if (/[*#_`>|{}"]|https?:\/\//.test(limpio)) return { valido: false, motivo: "formato o enlaces no permitidos" };
+  // Nombres de campos copiados de los datos ("ahorroMensual", "hastaAnio"): minúscula seguida de mayúscula dentro de una palabra.
+  const campos = limpio.match(/\b[a-záéíóúñ]+[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñ]*\b/g);
+  if (campos) return { valido: false, motivo: `nombres de campos en el texto: ${[...new Set(campos)].join(", ")}` };
   const permitidos = numerosPermitidos(datos);
   const ajenos = (limpio.match(NUMERO) ?? []).filter((n) => !permitidos.has(n));
   if (ajenos.length) return { valido: false, motivo: `números que no están en los datos: ${ajenos.join(", ")}` };

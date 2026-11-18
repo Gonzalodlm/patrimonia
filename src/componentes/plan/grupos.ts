@@ -7,7 +7,7 @@ export const grupos: { id: TipoClase; nombre: string; color: string; textoSobreC
   { id: "liquidez", nombre: "Liquidez", color: "#3f8a5a", textoSobreColor: "#ffffff" },
   { id: "renta_fija", nombre: "Renta fija", color: "#2e66a8", textoSobreColor: "#ffffff" },
   { id: "acciones", nombre: "Acciones", color: "#a33a28", textoSobreColor: "#ffffff" },
-  { id: "alternativos", nombre: "Inmobiliario, oro y materias primas", color: "#b58e1a", textoSobreColor: "#0b0b0b" },
+  { id: "alternativos", nombre: "Inmobiliario y oro", color: "#b58e1a", textoSobreColor: "#0b0b0b" },
 ];
 
 export const colorDeGrupo = (tipo: TipoClase) => grupos.find((g) => g.id === tipo)!.color;

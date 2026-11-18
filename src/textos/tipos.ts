@@ -45,6 +45,6 @@ export const pasosConocidos: Record<string, string> = {
 export const categoriasObjetivo = ["fondo de emergencia", "casa", "auto", "educación de los hijos", "viaje", "retiro", "otro objetivo"];
 export const prioridadesTexto = ["imprescindible", "importante", "deseable"];
 export const estadosTexto = ["cubierto", "cubierto a medias", "sin cubrir"];
-export const gruposTexto = ["Liquidez", "Renta fija", "Acciones", "Inmobiliario, oro y materias primas"];
+export const gruposTexto = ["Liquidez", "Renta fija", "Acciones", "Inmobiliario y oro"];
 
 export type PedidoTexto = { tipo: "cartera"; datos: DatosTextoCartera } | { tipo: "plan"; datos: DatosTextoPlan };

@@ -87,7 +87,7 @@ export function GraficoClases({ clases }: { clases: ClaseActivo[] }) {
       </div>
 
       <details className="mt-4 text-[15px]">
-        <summary className="cursor-pointer py-3 text-[var(--gris)] hover:text-[var(--tinta)]">Ver los 15 valores en una tabla</summary>
+        <summary className="cursor-pointer py-3 text-[var(--gris)] hover:text-[var(--tinta)]">Ver los {clases.length} valores en una tabla</summary>
         <table className="tabular mt-3 w-full text-left text-[14px]">
           <thead>
             <tr className="border-b border-[var(--linea)] text-[var(--gris)]">

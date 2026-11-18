@@ -11,23 +11,19 @@
     },
     "diversificada": {
       "nombre": "Diversificada",
-      "descripcion": "Quince clases de activo, ninguna con más de 20% de la cartera.",
+      "descripcion": "Once clases de activo, ninguna con más de 20% de la cartera.",
       "clases": [
         "liquidez_usd",
         "tesoro_medio",
         "tesoro_largo",
-        "tips",
         "renta_fija_agregada",
-        "corporativos_ig",
         "corporativos_hy",
-        "deuda_emergente",
         "acciones_eeuu_grandes",
         "acciones_eeuu_chicas",
         "acciones_desarrollados_ex_eeuu",
         "acciones_emergentes",
         "inmobiliario_cotizado",
-        "oro",
-        "materias_primas"
+        "oro"
       ],
       "topeGeneral": 20,
       "topes": {},

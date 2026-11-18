@@ -22,7 +22,7 @@ const cartera: DatosTextoCartera = {
     { grupo: "Liquidez", peso: "0%" },
     { grupo: "Renta fija", peso: "45%" },
     { grupo: "Acciones", peso: "21%" },
-    { grupo: "Inmobiliario, oro y materias primas", peso: "34%" },
+    { grupo: "Inmobiliario y oro", peso: "34%" },
   ],
   principales: [
     { clase: "Bonos del Tesoro de EE.UU. a largo plazo", peso: "20,0%" },

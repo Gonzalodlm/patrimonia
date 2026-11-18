@@ -90,7 +90,7 @@ export function GraficoFrontera({ datos, conClases = true, titulo }: Props) {
       </svg>
       <figcaption className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-[13px] text-[var(--gris)]">
         <span className="inline-flex items-center gap-2">
-          <span className="inline-block h-[2px] w-5 bg-[var(--acento)]" aria-hidden /> Frontera con 15 clases de activo
+          <span className="inline-block h-[2px] w-5 bg-[var(--acento)]" aria-hidden /> Frontera con {div.clases.length} clases de activo
         </span>
         <span className="inline-flex items-center gap-2">
           <span className="inline-block h-[2px] w-5 bg-[var(--gris-claro)]" aria-hidden /> Frontera con 2 (acciones y bonos globales)

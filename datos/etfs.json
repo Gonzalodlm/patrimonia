@@ -24,12 +24,6 @@
         { "nombre": "SPDR Bloomberg 10+ Year U.S. Treasury Bond UCITS ETF (Dist)", "emisor": "State Street (SPDR)", "ticker": "LUTR", "bolsa": "Londres, USD", "isin": "IE00BYSZ5V04", "domicilio": "Irlanda", "moneda": "USD", "politica": "distribuye", "ter": 0.05, "indice": "Bloomberg US 10+ Year Treasury Bond", "tipo": "ETF UCITS" }
       ]
     },
-    "tips": {
-      "nota": "Encontramos una sola opción verificada de un emisor grande.",
-      "etfs": [
-        { "nombre": "iShares $ TIPS UCITS ETF (Acc)", "emisor": "iShares", "ticker": "IDTP", "bolsa": "Londres, USD", "isin": "IE00B1FZSC47", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.10, "indice": "Bloomberg US Government Inflation-Linked Bond", "tipo": "ETF UCITS" }
-      ]
-    },
     "renta_fija_agregada": {
       "nota": "El de SPDR solo existe en versión que distribuye los intereses.",
       "etfs": [
@@ -37,24 +31,10 @@
         { "nombre": "SPDR Bloomberg U.S. Aggregate Bond UCITS ETF (Dist)", "emisor": "State Street (SPDR)", "ticker": "USAG", "bolsa": "Londres, USD", "isin": "IE00B459R192", "domicilio": "Irlanda", "moneda": "USD", "politica": "distribuye", "ter": 0.17, "indice": "Bloomberg US Aggregate Bond", "tipo": "ETF UCITS" }
       ]
     },
-    "corporativos_ig": {
-      "nota": null,
-      "etfs": [
-        { "nombre": "iShares $ Corp Bond UCITS ETF (Acc)", "emisor": "iShares", "ticker": "LQDA", "bolsa": "Londres, USD", "isin": "IE00BYXYYJ35", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.20, "indice": "iBoxx USD Liquid Investment Grade", "tipo": "ETF UCITS" },
-        { "nombre": "Vanguard USD Corporate Bond UCITS ETF Accumulating", "emisor": "Vanguard", "ticker": "VDPA", "bolsa": "Londres, USD", "isin": "IE00BGYWFK87", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.07, "indice": "Bloomberg Global Aggregate Corporate USD", "tipo": "ETF UCITS" }
-      ]
-    },
     "corporativos_hy": {
       "nota": "Encontramos una sola opción verificada de un emisor grande.",
       "etfs": [
         { "nombre": "iShares $ High Yield Corp Bond UCITS ETF (Acc)", "emisor": "iShares", "ticker": "IHYA", "bolsa": "Londres, USD", "isin": "IE00BYXYYL56", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.50, "indice": "iBoxx USD Liquid High Yield Capped", "tipo": "ETF UCITS" }
-      ]
-    },
-    "deuda_emergente": {
-      "nota": null,
-      "etfs": [
-        { "nombre": "iShares J.P. Morgan $ EM Bond UCITS ETF (Acc)", "emisor": "iShares", "ticker": "JPEA", "bolsa": "Londres, USD", "isin": "IE00BYXYYK40", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.45, "indice": "J.P. Morgan EMBI Global Core", "tipo": "ETF UCITS" },
-        { "nombre": "Vanguard USD Emerging Markets Government Bond UCITS ETF Accumulating", "emisor": "Vanguard", "ticker": "VDEA", "bolsa": "Londres, USD", "isin": "IE00BGYWCB81", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.23, "indice": "Bloomberg EM USD Sovereign + Quasi-Sovereign", "tipo": "ETF UCITS" }
       ]
     },
     "acciones_eeuu_grandes": {
@@ -99,13 +79,6 @@
       "etfs": [
         { "nombre": "Invesco Physical Gold ETC", "emisor": "Invesco", "ticker": "SGLD", "bolsa": "Londres, USD", "isin": "IE00B579F325", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.12, "indice": "Precio del oro en USD", "tipo": "ETC" },
         { "nombre": "iShares Physical Gold ETC", "emisor": "iShares", "ticker": "IGLN", "bolsa": "Londres, USD", "isin": "IE00B4ND3602", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.12, "indice": "Precio del oro en USD", "tipo": "ETC" }
-      ]
-    },
-    "materias_primas": {
-      "nota": "Los dos replican el índice con un contrato con un banco (swap), no comprando materias primas.",
-      "etfs": [
-        { "nombre": "Invesco Bloomberg Commodity UCITS ETF Acc", "emisor": "Invesco", "ticker": "CMOD", "bolsa": "Londres, USD", "isin": "IE00BD6FTQ80", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.19, "indice": "Bloomberg Commodity", "tipo": "ETF UCITS" },
-        { "nombre": "iShares Diversified Commodity Swap UCITS ETF", "emisor": "iShares", "ticker": "ICOM", "bolsa": "Londres, USD", "isin": "IE00BDFL4P12", "domicilio": "Irlanda", "moneda": "USD", "politica": "acumula", "ter": 0.19, "indice": "Bloomberg Commodity", "tipo": "ETF UCITS" }
       ]
     },
     "acciones_globales": {

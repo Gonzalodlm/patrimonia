@@ -44,29 +44,29 @@ describe.skipIf(!hayDatosReales)("datos reales", () => {
   });
 
   // Calculadas con scipy (SLSQP, 40 puntos de partida, ftol 1e-15) sobre los mismos datos redondeados
-  // a dos decimales que usa el sitio, el 13/11/2026.
-  // Una primera corrida con datos sin redondear y tolerancia floja daba deuda_emergente 0,6% en el
-  // perfil Moderado: rendía lo mismo (7,8737% contra 7,8744%) pero con un poco menos de volatilidad que
-  // el objetivo. La frontera es casi plana ahí, así que la mezcla exacta es sensible a la precisión.
+  // a dos decimales que usa el sitio, el 18/11/2026, con las once clases (sin TIPS, corporativos de
+  // grado inversor, deuda emergente ni materias primas).
+  // Sin esas clases la cartera de menor riesgo posible tiene 4,33%: el perfil Conservador (4%) queda en ella.
   describe("cartera diversificada (tope 20% parejo)", () => {
     const problema = () => crearProblema(supuestosReales(), reglas("diversificada"));
     const tabla: [string, Esperado][] = [
-      ["Conservador", { volatilidad: 4, retornoAritmetico: 5.45, pesos: { liquidez_usd: 20.0, tesoro_medio: 20.0, tesoro_largo: 0.94, tips: 3.62, renta_fija_agregada: 20.0, corporativos_ig: 7.8, corporativos_hy: 20.0, acciones_eeuu_chicas: 1.37, inmobiliario_cotizado: 1.96, oro: 1.97, materias_primas: 2.34 } }],
-      ["Moderado conservador", { volatilidad: 7, retornoAritmetico: 6.84, pesos: { tesoro_medio: 14.16, tesoro_largo: 9.15, renta_fija_agregada: 20.0, corporativos_hy: 20.0, deuda_emergente: 8.52, acciones_eeuu_chicas: 7.53, inmobiliario_cotizado: 12.13, oro: 8.01, materias_primas: 0.5 } }],
-      ["Moderado", { volatilidad: 10, retornoAritmetico: 7.87, pesos: { tesoro_largo: 20.0, renta_fija_agregada: 3.52, corporativos_hy: 20.0, deuda_emergente: 1.77, acciones_eeuu_chicas: 13.64, acciones_desarrollados_ex_eeuu: 7.54, inmobiliario_cotizado: 20.0, oro: 13.52 } }],
+      ["Conservador", { volatilidad: 4.33, retornoAritmetico: 5.53, pesos: { liquidez_usd: 20.0, tesoro_medio: 20.0, tesoro_largo: 10.59, renta_fija_agregada: 20.0, corporativos_hy: 20.0, acciones_eeuu_grandes: 1.41, acciones_eeuu_chicas: 1.94, oro: 6.06 } }],
+      ["Moderado conservador", { volatilidad: 7, retornoAritmetico: 6.83, pesos: { tesoro_medio: 18.24, tesoro_largo: 9.97, renta_fija_agregada: 20.0, corporativos_hy: 20.0, acciones_eeuu_chicas: 8.31, acciones_desarrollados_ex_eeuu: 1.64, inmobiliario_cotizado: 12.93, oro: 8.9 } }],
+      ["Moderado", { volatilidad: 10, retornoAritmetico: 7.87, pesos: { tesoro_largo: 20.0, renta_fija_agregada: 4.66, corporativos_hy: 20.0, acciones_eeuu_chicas: 13.71, acciones_desarrollados_ex_eeuu: 8.02, inmobiliario_cotizado: 20.0, oro: 13.62 } }],
       ["Moderado agresivo", { volatilidad: 13, retornoAritmetico: 8.61, pesos: { tesoro_largo: 17.37, acciones_eeuu_grandes: 7.21, acciones_eeuu_chicas: 20.0, acciones_desarrollados_ex_eeuu: 20.0, acciones_emergentes: 3.63, inmobiliario_cotizado: 20.0, oro: 11.79 } }],
       ["Agresivo", { volatilidad: 16, retornoAritmetico: 9.11, pesos: { tesoro_largo: 2.04, acciones_eeuu_grandes: 18.53, acciones_eeuu_chicas: 20.0, acciones_desarrollados_ex_eeuu: 20.0, acciones_emergentes: 13.38, inmobiliario_cotizado: 20.0, oro: 6.04 } }],
     ];
-    it.each(tabla)("%s", (_perfil, esperada) => {
-      compararCartera(carteraParaVolatilidad(problema(), esperada.volatilidad), esperada);
+    it.each(tabla)("%s", (perfil, esperada) => {
+      // El Conservador pide 4%, pero lo más bajo posible es 4,33%: se usa esa cartera.
+      compararCartera(carteraParaVolatilidad(problema(), perfil === "Conservador" ? 4 : esperada.volatilidad), esperada);
     });
     it("máximo retorno: 9,30% con 17,27% de volatilidad", () => {
       const c = carteraMaximoRetorno(problema());
       expect(Math.abs(c.retornoAritmetico - 9.3)).toBeLessThanOrEqual(0.05);
       expect(Math.abs(c.volatilidad - 17.27)).toBeLessThanOrEqual(0.05);
     });
-    it("mínima volatilidad: 3,56%", () => {
-      expect(Math.abs(carteraMinimaVolatilidad(problema()).volatilidad - 3.56)).toBeLessThanOrEqual(0.05);
+    it("mínima volatilidad: 4,33%", () => {
+      expect(Math.abs(carteraMinimaVolatilidad(problema()).volatilidad - 4.33)).toBeLessThanOrEqual(0.05);
     });
   });
 

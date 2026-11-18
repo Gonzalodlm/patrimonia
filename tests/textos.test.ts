@@ -7,6 +7,8 @@ import { Cache, permitir } from "../src/servidor/limites";
 import { ipDe, leerJson } from "../src/servidor/pedidos";
 import { crearGemini } from "../src/servidor/modelo/gemini";
 import type { DatosTextoCartera, DatosTextoPlan } from "../src/textos/tipos";
+import { estadoObjetivos } from "../src/plan/pasos";
+import type { ResultadoPlan } from "../src/plan/patrimonio";
 
 const listas = { perfiles: ["Moderado", "Agresivo"], clases: ["Oro", "Acciones de EE.UU., empresas chicas", "Bonos del Tesoro de EE.UU. a largo plazo"] };
 
@@ -164,6 +166,33 @@ describe("plantillas", () => {
     expect(uno).toContain("no llegás a cubrir tu objetivo: te faltarían USD 120 por mes");
     const cubierto = plantillaPlan({ ...plan, faltantePorMes: null, objetivos: [{ ...plan.objetivos[0], estado: "cubierto" }] });
     expect(cubierto).toContain("cubrís tu objetivo.");
+  });
+
+  it("con varios objetivos y ninguno cubierto no dice «0 de»", () => {
+    const sinCubrir = { ...plan.objetivos[0], estado: "sin cubrir" };
+    const ninguno = plantillaPlan({ ...plan, objetivos: [sinCubrir, sinCubrir] });
+    expect(ninguno).not.toContain("0 de");
+    expect(ninguno).toContain("no llegás a cubrir tus objetivos: te faltarían USD 120 por mes");
+    const todos = plantillaPlan({ ...plan, faltantePorMes: null, objetivos: [{ ...sinCubrir, estado: "cubierto" }, { ...sinCubrir, estado: "cubierto" }] });
+    expect(todos).toContain("cubrís tus 2 objetivos.");
+  });
+});
+
+describe("estado de los objetivos en el resumen", () => {
+  const conEstados = (estados: string[], falta: number) => ({ objetivos: estados.map((estado) => ({ estado })), aporteFaltanteTotal: falta }) as unknown as ResultadoPlan;
+
+  it("si no se cubre ninguno muestra cuánto falta, no «0 de 1»", () => {
+    const uno = estadoObjetivos(conEstados(["sin_cubrir"], 300))!;
+    expect(uno).toMatchObject({ titulo: "Para cubrir tu objetivo", valor: "USD 300", detalle: "más de ahorro por mes" });
+    expect(uno.frase).toBe("Para cubrir tu objetivo te faltan USD 300 por mes.");
+    expect(estadoObjetivos(conEstados(["parcial", "sin_cubrir"], 500))!.titulo).toBe("Para cubrir tus objetivos");
+  });
+
+  it("si se cubren todos o algunos lo dice en palabras", () => {
+    expect(estadoObjetivos(conEstados(["cubierto"], 0))!.valor).toBe("Cubierto");
+    expect(estadoObjetivos(conEstados(["cubierto", "cubierto"], 0))!.valor).toBe("Todos cubiertos");
+    expect(estadoObjetivos(conEstados(["cubierto", "parcial"], 200))).toMatchObject({ valor: "1 de 2", detalle: "Faltan USD 200 por mes" });
+    expect(estadoObjetivos(conEstados([], 0))).toBeNull();
   });
 });
 

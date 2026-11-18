@@ -1,5 +1,5 @@
 // Los próximos tres pasos del plan, con un código fijo (lo que se manda al modelo) y el texto que ve la persona.
-import { dolares } from "@/lib/formato";
+import { dolares } from "../lib/formato";
 import type { ResultadoPlan, Situacion } from "./patrimonio";
 
 export const nombreDeuda: Record<string, string> = {
@@ -8,6 +8,32 @@ export const nombreDeuda: Record<string, string> = {
   hipoteca: "la hipoteca",
   otra: "la deuda",
 };
+
+/**
+ * Cómo quedan los objetivos, para el resumen y el PDF. Si no se cubre ninguno, en vez de "0 de 1"
+ * se muestra cuánto falta ahorrar por mes para cubrirlos.
+ */
+export function estadoObjetivos(plan: ResultadoPlan): { titulo: string; valor: string; detalle?: string; frase: string } | null {
+  const n = plan.objetivos.length;
+  if (!n) return null;
+  const cubiertos = plan.objetivos.filter((o) => o.estado === "cubierto").length;
+  const falta = plan.aporteFaltanteTotal > 1 ? dolares(plan.aporteFaltanteTotal) : null;
+  const tus = n === 1 ? "tu objetivo" : "tus objetivos";
+  if (cubiertos === n || !falta)
+    return {
+      titulo: n === 1 ? "Tu objetivo" : "Tus objetivos",
+      valor: cubiertos === n ? (n === 1 ? "Cubierto" : "Todos cubiertos") : `${cubiertos} de ${n} cubiertos`,
+      frase: cubiertos === n ? (n === 1 ? "Tu objetivo queda cubierto." : `Tus ${n} objetivos quedan cubiertos.`) : `Cubrís ${cubiertos} de tus ${n} objetivos.`,
+    };
+  if (cubiertos === 0)
+    return { titulo: `Para cubrir ${tus}`, valor: falta, detalle: "más de ahorro por mes", frase: `Para cubrir ${tus} te faltan ${falta} por mes.` };
+  return {
+    titulo: "Objetivos cubiertos",
+    valor: `${cubiertos} de ${n}`,
+    detalle: `Faltan ${falta} por mes`,
+    frase: `Cubrís ${cubiertos} de tus ${n} objetivos; para cubrirlos todos te faltan ${falta} por mes.`,
+  };
+}
 
 export function proximosPasos(plan: ResultadoPlan, s: Situacion): { codigo: string; texto: string }[] {
   const pasos: { codigo: string; texto: string }[] = [];

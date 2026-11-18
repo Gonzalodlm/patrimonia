@@ -5,7 +5,7 @@ import type { DatosGenerados } from "@/motor/generado";
 import { armarPlan, type Criterios, type Objetivo, type ResultadoObjetivo, type ResultadoPlan, type Situacion } from "@/plan/patrimonio";
 import { carterasResumen } from "@/plan/carterasResumen";
 import type { ListaEtfs } from "@/plan/etfs";
-import { nombreDeuda, proximosPasos } from "@/plan/pasos";
+import { estadoObjetivos, nombreDeuda, proximosPasos } from "@/plan/pasos";
 import { descargarPdf, type ContenidoPdf } from "@/plan/pdf";
 import { avisoCorto } from "@/lib/avisos";
 import { dolares, fechaLarga, numero, porcentaje } from "@/lib/formato";
@@ -71,7 +71,7 @@ export function PlanPatrimonial(props: Props) {
   }
 
   const nombrePerfil = datos.perfiles.find((p) => p.id === perfil)!.nombre;
-  const cubiertos = plan.objetivos.filter((o) => o.estado === "cubierto").length;
+  const estadoObj = estadoObjetivos(plan);
   const juntado = plan.juntado;
   const pasos = proximosPasos(plan, situacion).map((p) => p.texto);
   const deudasACancelar = plan.deudas.filter((d) => d.cancelarPrimero);
@@ -103,7 +103,7 @@ export function PlanPatrimonial(props: Props) {
         <dl className="tabular mt-5 grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-4 sm:gap-x-8">
           <Dato titulo="Perfil" valor={nombrePerfil} detalle={`Cartera ${datos.carteras[tipo].nombre.toLowerCase()}`} />
           <Dato titulo="Ahorro por mes" valor={dolares(situacion.ahorroMensual ?? 0)} detalle={plan.sobranteMensual > 1 ? `Te sobran ${dolares(plan.sobranteMensual)}` : undefined} />
-          <Dato titulo="Objetivos cubiertos" valor={`${cubiertos} de ${plan.objetivos.length}`} detalle={plan.aporteFaltanteTotal > 1 ? `Faltan ${dolares(plan.aporteFaltanteTotal)} por mes` : undefined} />
+          {estadoObj ? <Dato titulo={estadoObj.titulo} valor={estadoObj.valor} detalle={estadoObj.detalle} /> : <Dato titulo="Objetivos" valor="Ninguno cargado" />}
           <Dato
             titulo={`Vas a juntar hasta ${juntado.anio}`}
             valor={dolares(juntado.medio)}
@@ -311,7 +311,7 @@ function contenidoPdf(a: {
       {
         titulo: "Resumen",
         parrafos: [
-          `Perfil ${a.nombrePerfil.toLowerCase()}, cartera ${c.nombre.toLowerCase()}. Ahorro de ${dolares(a.situacion.ahorroMensual ?? 0)} por mes. Objetivos cubiertos: ${plan.objetivos.filter((o) => o.estado === "cubierto").length} de ${plan.objetivos.length}. Hasta ${plan.juntado.anio} vas a juntar ${dolares(plan.juntado.medio)} en dólares de hoy (entre ${dolares(plan.juntado.malo)} y ${dolares(plan.juntado.bueno)})${plan.juntado.usado > 1 ? ", contando lo que usás en tus objetivos" : ""}.`,
+          `Perfil ${a.nombrePerfil.toLowerCase()}, cartera ${c.nombre.toLowerCase()}. Ahorro de ${dolares(a.situacion.ahorroMensual ?? 0)} por mes. ${estadoObjetivos(plan)?.frase ?? ""} Hasta ${plan.juntado.anio} vas a juntar ${dolares(plan.juntado.medio)} en dólares de hoy (entre ${dolares(plan.juntado.malo)} y ${dolares(plan.juntado.bueno)})${plan.juntado.usado > 1 ? ", contando lo que usás en tus objetivos" : ""}.`,
           a.resumen.replace(/\n+/g, " "),
         ],
       },

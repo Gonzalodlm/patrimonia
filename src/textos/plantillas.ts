@@ -45,7 +45,11 @@ export function plantillaPlan(d: DatosTextoPlan): string {
     partes.push(
       n === 1
         ? `Con ${d.ahorroMensual} por mes ${cubiertos ? "cubrís tu objetivo" : `no llegás a cubrir tu objetivo${d.faltantePorMes ? `: te faltarían ${d.faltantePorMes} por mes` : ""}`}.`
-        : `Con ${d.ahorroMensual} por mes cubrís ${cubiertos} de tus ${n} objetivos${d.faltantePorMes ? `; para cubrirlos todos te faltarían ${d.faltantePorMes} por mes` : ""}.`,
+        : cubiertos === n
+          ? `Con ${d.ahorroMensual} por mes cubrís tus ${n} objetivos.`
+          : cubiertos === 0
+            ? `Con ${d.ahorroMensual} por mes no llegás a cubrir tus objetivos${d.faltantePorMes ? `: te faltarían ${d.faltantePorMes} por mes` : ""}.`
+            : `Con ${d.ahorroMensual} por mes cubrís ${cubiertos} de tus ${n} objetivos${d.faltantePorMes ? `; para cubrirlos todos te faltarían ${d.faltantePorMes} por mes` : ""}.`,
     );
   }
   if (d.sobrantePorMes) partes.push(`Te sobran ${d.sobrantePorMes} por mes para tu patrimonio de largo plazo.`);
